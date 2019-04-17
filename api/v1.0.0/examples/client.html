@@ -1,0 +1,51 @@
+<html>
+<head>
+</head>
+<body>
+	
+<script>
+	window.fgAsyncInit = function() {
+    	FG.init({
+    		host: '/',
+			path_api: 'api/v1.0.0/api.php/'
+    	});
+		
+		testAPI();
+	};
+
+  	// Load the SDK asynchronously
+  	(function(d, s, id) {
+    	var js, fjs = d.getElementsByTagName(s)[0];
+    	if (d.getElementById(id)) return;
+   		js = d.createElement(s); js.id = id;
+    	js.src = "/api/v1.0.0/sdk/ES_CO/sdk.js";
+    	fjs.parentNode.insertBefore(js, fjs);
+  	}(document, 'script', 'feliphegomez-jssdk'));
+
+  	// Here we run a very simple test of the Graph API after login is successful.  See statusChangeCallback() for when this call is made.
+  	function testAPI() {
+    	console.log('Welcome!  Fetching your information.... ');
+    	FG.api(
+		'GET'
+		,'posts'
+		,{
+			transform: 1, 
+			include: "categories,tags,comments", 
+			filter: "id,eq,1"
+		}
+		,function(r)
+		{
+			console.log(r);
+			document.getElementById('output').innerHTML = JSON.stringify(r, undefined, 4);
+		});
+ 	}
+	
+
+//xhttp.open("GET", "http://monteverde.dataservix.com/api/v1.0.0/api.php/posts?include=categories,tags,comments&filter=id,eq,1", true);
+//xhttp.send();
+</script>
+	
+<pre id="output"></pre>
+</body>
+</html>
+
