@@ -2,6 +2,99 @@
    <banner-page></banner-page>
    <router-view></router-view>
 </div>
+<template id="component-sidebar-meaccount">
+	<div>
+		<hr>
+		<div class="custom-collapse">
+		  <button class="collapse-toggle visible-xs-no btn btn-sm btn-primary " type="button" data-toggle="collapse" data-parent="custom-collapse" data-target="#side-menu-collapse">
+			  <span class="fa fa-list"></span>
+			  <span class="icon-bar"></span>
+			  <span class="icon-bar"></span>
+			  <span class="icon-bar"></span>
+		  </button> 
+		  <button class="collapse-toggle visible-xsno- btn btn-sm btn-primary " type="button" data-toggle="collapse" data-parent="custom-collapse" data-target="#side-menu-collapse-2">
+			  <span class="fa fa-plus"></span>
+			  <span class="icon-bar"></span>
+			  <span class="icon-bar"></span>
+			  <span class="icon-bar"></span>
+		  </button> 
+		  <ul class="list-group collapse" id="side-menu-collapse">
+			<router-link v-bind:to="{ name: 'me-home-page' }" tag="li" class="list-group-item dropdown-toggle text-muted cursor-pointer">
+				<i class="fa fa-dashboard fa-1x"></i> Inicio
+			</router-link>
+			<router-link v-bind:to="{ name: 'me-accounts-page' }" tag="li" class="list-group-item dropdown-toggle text-muted cursor-pointer">
+				<i class="fa fa-dashboard fa-1x"></i> Mis Cuentas
+			</router-link>
+		  </ul>
+		  <ul class="list-group collapse" id="side-menu-collapse-2">
+			<li class="list-group-item dropdown-toggle">Conteo <i class="fa fa-dashboard fa-1x"></i></li>
+			<router-link tag="li" v-bind:to="{ name: 'me-accounts-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
+				<span class="pull-left"><strong class="">Cuentas</strong></span> {{ busineses.length }}
+			</router-link>
+			<router-link tag="li" v-bind:to="{ name: 'me-auditors-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
+				<span class="pull-left"><strong class="">Auditores</strong></span> {{ auditors.length }}
+			</router-link>
+			<router-link tag="li" v-bind:to="{ name: 'me-contracts-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
+				<span class="pull-left"><strong class="">Contratos</strong></span> {{ contracts.length }}
+			</router-link>
+			<router-link tag="li" v-bind:to="{ name: 'me-contacts-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
+				<span class="pull-left"><strong class="">Contactos</strong></span> {{ contacts.length }}
+			</router-link>
+			<router-link tag="li" v-bind:to="{ name: 'me-invoices-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
+				<span class="pull-left"><strong class="">Facturas</strong></span> {{ invoices.length }}
+			</router-link>
+			<router-link tag="li" v-bind:to="{ name: 'me-quotations-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
+				<span class="pull-left"><strong class="">Propuestas</strong></span> {{ quotations.length }}
+			</router-link>
+			<router-link tag="li" v-bind:to="{ name: 'me-redicateds-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
+				<span class="pull-left"><strong class="">Radicados</strong></span> {{ redicateds.length }}
+			</router-link>
+			<router-link tag="li" v-bind:to="{ name: 'me-requests-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
+				<span class="pull-left"><strong class="">Solicitudes</strong></span> {{ requests.length }}
+			</router-link>
+			<router-link tag="li" v-bind:to="{ name: 'me-users-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
+				<span class="pull-left"><strong class="">Usuarios</strong></span> {{ users.length }}
+			</router-link>
+			<router-link tag="li" v-bind:to="{ name: 'me-users-pending-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
+				<span class="pull-left"><strong class="">Usuarios Pdte de Aprobacion</strong></span> {{ users_pending.length }}
+			</router-link>
+		  </ul>
+		</div>
+		
+		<hr>
+		<div class="hr"></div>
+		
+		   <!-- //
+		   <ul class="list-group">
+				<li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
+			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Shares</strong></span> 125</li>
+			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Likes</strong></span> 13</li>
+			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Posts</strong></span> 37</li>
+			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Followers</strong></span> 78</li>
+		   </ul>
+		   <ul class="list-group">
+			  <li class="list-group-item text-muted" contenteditable="false">Profile</li>
+			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Joined</strong></span> 2.13.2014</li>
+			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Last seen</strong></span> Yesterday</li>
+			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Real name</strong></span> Joseph Doe</li>
+				<li class="list-group-item text-right"><span class="pull-left"><strong class="">Role: </strong></span> Pet Sitter</li>
+			</ul>
+			<div class="panel panel-default">
+				<div class="panel-heading">Insured / Bonded?</div>
+				<div class="panel-body"><i style="color:green" class="fa fa-check-square"></i> Yes, I am insured and bonded.</div>
+			</div>
+			-->
+	</div>
+</template>
+<style scope="component-sidebar-meaccount">
+	@media screen and (min-width: 768px) {
+
+	.custom-collapse .collapse{
+				display:block;
+		  }  
+	}
+</style>
+
 <template id="component-menu-meaccount">
    <div>
       <nav class="menu-meaccount">
@@ -659,943 +752,1359 @@
    </div>
 </template>
 <template id="page-me-home">
-   <div>
-      <div class="container target">
-         <div class="row">
-            <div class="col-sm-12">
-               <br>
-				<button type="button" class="btn btn-info"><i class="fa fa-question"></i></button>
-               <button type="button" class="btn btn-success">Enviar un mensaje</button>
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9 target" style="" contenteditable="false">
+				<hr>
+					<div class="panel panel-default">
+						<div class="panel-heading">Panel central</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-6 w3ls_banner_bottom_grids">
+									<router-link :to="{ name: 'me-accounts-page' }" class="agile_offer_grid" tag="div" style="cursor:pointer;" >
+										<div class="agile_offer_grid_pos"><p><i class="fa fa-tachometer" aria-hidden="true"></i></p></div>
+										<div class="wthree_offer_grid1">
+											<h4>Mis Cuentas</h4>
+											<p class="w3_agileits_service_para">Aquì encontraras tus cuentas principales, datos de contacto y preferencias.</p>
+										</div>
+										<div class="clearfix"> </div>
+									</router-link>
+									<router-link :to="{ name: 'me-requests-list-page' }" class="agile_offer_grid" tag="div" style="cursor:pointer;" >
+										<div class="agile_offer_grid_pos"><p><i class="fa fa-shopping-bag" aria-hidden="true"></i></p></div>
+										<div class="wthree_offer_grid1">
+											<h4>Mis Solicitudes</h4>
+											<p class="w3_agileits_service_para">Todas sus solicitudes y con sus cotizaciones.</p>
+										</div>
+										<div class="clearfix"> </div>
+									</router-link>
+								</div>
+								<div class="col-md-6 w3ls_banner_bottom_grids">
+									<router-link :to="{ name: 'me-invoices-list-page' }" class="agile_offer_grid" tag="div" style="cursor:pointer;" >
+										<div class="agile_offer_grid_pos"><p><i class="fa fa-tachometer" aria-hidden="true"></i></p></div>
+										<div class="wthree_offer_grid1">
+											<h4>Mis Facturas</h4>
+											<p class="w3_agileits_service_para">Encuentre todas tus facturas en un solo lugar.</p>
+										</div>
+										<div class="clearfix"> </div>
+									</router-link>
+									<router-link :to="{ name: 'me-requests-list-page' }" class="agile_offer_grid" tag="div" style="cursor:pointer;" >
+										<div class="agile_offer_grid_pos"><p><i class="fa fa-shopping-bag" aria-hidden="true"></i></p></div>
+										<div class="wthree_offer_grid1">
+											<h4>Mi Calendario</h4>
+											<p class="w3_agileits_service_para">Encuentre toda la informacion de sus programaciones y notifique un cambio de ser necesario.</p>
+										</div>
+										<div class="clearfix"> </div>
+									</router-link>
+								</div>
+							<div class="clearfix"> </div>
+						 </div>
+					  </div>
+				   </div>
+				<div class="panel panel-default">
+					<div class="panel-heading">Starfox221's Bio</div>
+					<div class="panel-body"> A long description about me.</div>
+				</div>
+				<div class="panel panel-default target">
+					<div class="panel-heading" contenteditable="false">Pets I Own</div>
+					<div class="panel-body">
+						 <div class="row">
+							<div class="col-md-4">
+							   <div class="thumbnail">
+								  <img alt="300x200" src="http://lorempixel.com/600/200/people">
+								  <div class="caption">
+									 <h3>Rover</h3>
+									 <p>Cocker Spaniel who loves treats.</p>
+									 <p></p>
+								  </div>
+							   </div>
+							</div>
+							<div class="col-md-4">
+							   <div class="thumbnail">
+								  <img alt="300x200" src="http://lorempixel.com/600/200/city">
+								  <div class="caption">
+									 <h3>Marmaduke</h3>
+									 <p>Is just another friendly dog.</p>
+									 <p></p>
+								  </div>
+							   </div>
+							</div>
+							<div class="col-md-4">
+							   <div class="thumbnail">
+								  <img alt="300x200" src="http://lorempixel.com/600/200/sports">
+								  <div class="caption">
+									 <h3>Rocky</h3>
+									 <p>Loves catnip and naps. Not fond of children.</p>
+									 <p></p>
+								  </div>
+							   </div>
+							</div>
+						 </div>
+					</div>
+				</div>
             </div>
-         </div>
-         <br>
-         <div class="row">
-            <div class="col-sm-3">
-               	<ul class="list-group">
-					<li class="list-group-item text-muted">Conteo <i class="fa fa-dashboard fa-1x"></i></li>
-					
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Cuentas</strong></span> {{ busineses.length }}</li>
-					<li class="list-group-item text-right">
-						<span class="pull-left">
-							<strong class="">Auditores</strong>
-						</span> 						
-						<router-link tag="a" v-bind:to="{ name: 'me-auditors-list-page' }">
-							{{ auditors.length }}
-						</router-link>
-					</li>
-				   
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Contratos</strong></span> {{ contracts.length }}</li>
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Contactos</strong></span> {{ contacts.length }}</li>
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Facturas</strong></span> {{ invoices.length }}</li>
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Cotizaciones</strong></span> {{ quotations.length }}</li>
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Radicados</strong></span> {{ redicateds.length }}</li>
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Solicitudes</strong></span> {{ requests.length }}</li>
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Servicios Solicitado</strong></span> {{ services_requests.length }}</li>
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Usuarios</strong></span> {{ users.length }}</li>
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Usuarios Pdte de Aprobacion</strong></span> {{ users_pending.length }}</li>
-               </ul>
-               <ul class="list-group">
-                  <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Shares</strong></span> 125</li>
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Likes</strong></span> 13</li>
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Posts</strong></span> 37</li>
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Followers</strong></span> 78</li>
-               </ul>
-               <ul class="list-group">
-                  <li class="list-group-item text-muted" contenteditable="false">Profile</li>
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Joined</strong></span> 2.13.2014</li>
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Last seen</strong></span> Yesterday</li>
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Real name</strong></span> Joseph Doe</li>
-                  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Role: </strong></span> Pet Sitter</li>
-               </ul>
-               <div class="panel panel-default">
-                  <div class="panel-heading">Insured / Bonded?</div>
-                  <div class="panel-body"><i style="color:green" class="fa fa-check-square"></i> Yes, I am insured and bonded.</div>
-               </div>
-            </div>
-            <!--/col-3-->
-            <div class="col-sm-9" style="" contenteditable="false">
-               <div class="panel panel-default">
-                  <div class="panel-heading">Panel central</div>
-                  <div class="panel-body">
-                     <div class="row">
-                        <div class="col-md-6 w3ls_banner_bottom_grids">
-                           <router-link :to="{ name: 'me-accounts-page' }" class="agile_offer_grid" tag="div" style="cursor:pointer;" >
-                              <div class="agile_offer_grid_pos">
-                                 <p>
-                                    <i class="fa fa-tachometer" aria-hidden="true"></i>
-                                 </p>
-                              </div>
-                              <div class="wthree_offer_grid1">
-                                 <h4>Mis Cuentas</h4>
-                                 <p class="w3_agileits_service_para">Aquì encontraras tus cuentas principales, datos de contacto y preferencias.</p>
-                              </div>
-                              <div class="clearfix"> </div>
-                           </router-link>
-                           <div class="agile_offer_grid">
-                              <div class="agile_offer_grid_pos">
-                                 <p>
-                                    <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-                                 </p>
-                              </div>
-                              <div class="wthree_offer_grid1">
-                                 <h4>Mis Solicitudes</h4>
-                                 <p class="w3_agileits_service_para">Todas sus solicitudes y con sus cotizaciones.</p>
-                              </div>
-                              <div class="clearfix"> </div>
-                           </div>
-                        </div>
-                        <div class="col-md-6 w3ls_banner_bottom_grids w3l-plant">
-                           <div class="agile_offer_grid w3l-grid-mk">
-                              <div class="agile_offer_grid_pos">
-                                 <p><i class="fa fa-balance-scale" aria-hidden="true"></i></p>
-                              </div>
-                              <div class="wthree_offer_grid1">
-                                 <h4>Mis Facturas</h4>
-                                 <p class="w3_agileits_service_para">Encuentre todas tus facturas en un solo lugar.</p>
-                              </div>
-                              <div class="clearfix"> </div>
-                           </div>
-                           <div class="agile_offer_grid">
-                              <div class="agile_offer_grid_pos">
-                                 <p><i class="fa fa-calendar" aria-hidden="true"></i></p>
-                              </div>
-                              <div class="wthree_offer_grid1">
-                                 <h4>Mi Calendario</h4>
-                                 <p class="w3_agileits_service_para">Encuentre toda la informacion de sus programaciones y notifique un cambio de ser necesario.</p>
-                              </div>
-                              <div class="clearfix"> </div>
-                           </div>
-                        </div>
-                        <div class="clearfix"> </div>
-                     </div>
-                  </div>
-               </div>
-               <div class="panel panel-default">
-                  <div class="panel-heading">Starfox221's Bio</div>
-                  <div class="panel-body"> A long description about me.</div>
-               </div>
-               <div class="panel panel-default target">
-                  <div class="panel-heading" contenteditable="false">Pets I Own</div>
-                  <div class="panel-body">
-                     <div class="row">
-                        <div class="col-md-4">
-                           <div class="thumbnail">
-                              <img alt="300x200" src="http://lorempixel.com/600/200/people">
-                              <div class="caption">
-                                 <h3>Rover</h3>
-                                 <p>Cocker Spaniel who loves treats.</p>
-                                 <p></p>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-md-4">
-                           <div class="thumbnail">
-                              <img alt="300x200" src="http://lorempixel.com/600/200/city">
-                              <div class="caption">
-                                 <h3>Marmaduke</h3>
-                                 <p>Is just another friendly dog.</p>
-                                 <p></p>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-md-4">
-                           <div class="thumbnail">
-                              <img alt="300x200" src="http://lorempixel.com/600/200/sports">
-                              <div class="caption">
-                                 <h3>Rocky</h3>
-                                 <p>Loves catnip and naps. Not fond of children.</p>
-                                 <p></p>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div id="push"></div>
-         </div>
-      </div>
-   </div>
+			<div id="push"></div>
+		</div>
+	</div>
+</div>
 </template>
 <template id="page-me-accounts">
-   <div>
-      <div class="jumbotron">
-         <div class="container text-center">
-            <h1 class="page-header">MIS CUENTAS</h1>
-            <p class="lead">Gestiona tus cuentas de una manera fácil y rápida.</p>
-         </div>
-      </div>
-      <div class="container ">
-         <div class="row">
-            <div class="col-md-4 well pricing-table" v-for="(item, itemKey) in busineses">
-               <div class="pricing-table-holder">
-                  <center>
-                     <!-- <img src="http://www.placehold.it/100X100" class="img-responsive img-circle" alt=""> -->
-                     <h3>{{ item.client.name }}</h3>
-                     <p class="caption">
-                        {{ item.client.type.name }}
-                     </p>
-                  </center>
-               </div>
-               <div class="custom-button-group" style="">
-                  <div class="col-md-8 col-sm-9" style="padding:0;">
-                     <button type="button" class="btn btn-royal-blue btn-block dropdown-toggle" style="border-radius:0;" data-toggle="dropdown" aria-expanded="false">
-                     Select Bundle
-                     <span class="caret"></span>
-                     </button>
-                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Dropdown link</a></li>
-                        <li><a href="#">Dropdown link</a></li>
-                     </ul>
-                  </div>
-                  <div class="col-md-4 col-sm-3" style="padding:0;">
-                     <button class="btn btn-primary  btn-block" style="border-radius:0;" >
-                     Get It
-                     </button>
-                  </div>
-               </div>
-               <div class="pricing-feature-list">
-                  <ul class="list-group">
-                     <li class="list-group-item"><b>{{ item.client.identification_type.name }}: </b><br> {{ item.client.identification_number }}</li>
-                     <li class="list-group-item"><b>Direccion Principal: </b><br> {{ item.client.address_principal }}, {{ item.client.address_invoices_city.name }}, {{ item.client.address_principal_department.name }}</li>
-                     <li class="list-group-item"><b>Direccion Facturacion: </b><br> {{ item.client.address_invoices }}, {{ item.client.address_invoices_city.name }}, {{ item.client.address_invoices_department.name }}</li>
-                     <li class="list-group-item"><b>Responsable: </b><br> {{ item.client.represent_legal.first_name }} {{ item.client.represent_legal.second_name }} {{ item.client.represent_legal.surname }} {{ item.client.represent_legal.second_surname }}</li>
-                     <li class="list-group-item"><b>Contacto: </b><br> {{ item.client.contact.first_name }} {{ item.client.contact.second_name }} {{ item.client.contact.surname }} {{ item.client.contact.second_surname }}</li>
-                     <li class="list-group-item" v-if="item.client.audit_enabled == 1"><i class="fa fa-check"></i> Interventoria Habilitada</li>
-                     <!-- // <li class="list-group-item"> Solicitar Interventoria</li> -->
-                     <!-- <li class="list-group-item" v-for="(v, k) in item.client"><b>{{ k }}: </b><br> {{ v }}</li> -->
-                  </ul>
-               </div>
-               <div class="price-table-button-holder">
-                  <router-link 
-                     tag="button" 
-                     class="btn btn-info btn-block" 
-                     v-bind:to="{ name: 'me-account-view-page', params: { account_id: item.id } }">
-                     <i class="fa fa-user-alt"></i> 
-                     VER TODO
-                  </router-link>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">					
+					  <div class="jumbotron">
+						 <div class="text-center">
+							<h1 class="page-header">MIS CUENTAS</h1>
+							<p class="lead">Gestiona tus cuentas de una manera fácil y rápida.</p>
+						 </div>
+						 <div class="row">
+							<div class="col-sm-12 col-md-6 well col-lg-6 well pricing-table" v-for="(item, itemKey) in busineses">
+							   <div class="pricing-table-holder">
+								  <center>
+									 <!-- <img src="http://www.placehold.it/100X100" class="img-responsive img-circle" alt=""> -->
+									 <h3>{{ item.client.name }}</h3>
+									 <p class="caption">
+										{{ item.client.type.name }}
+									 </p>
+								  </center>
+							   </div>
+							   <div class="custom-button-group" style="">
+								  <div class="col-md-8 col-sm-9" style="padding:0;">
+									 <button type="button" class="btn btn-royal-blue btn-block dropdown-toggle" style="border-radius:0;" data-toggle="dropdown" aria-expanded="false">
+									 Select Bundle
+									 <span class="caret"></span>
+									 </button>
+									 <ul class="dropdown-menu" role="menu">
+										<li><a href="#">Dropdown link</a></li>
+										<li><a href="#">Dropdown link</a></li>
+									 </ul>
+								  </div>
+								  <div class="col-md-4 col-sm-3" style="padding:0;">
+									 <button class="btn btn-primary  btn-block" style="border-radius:0;" >
+									 Get It
+									 </button>
+								  </div>
+							   </div>
+							   <div class="pricing-feature-list">
+								  <ul class="list-group">
+									 <li class="list-group-item"><b>{{ item.client.identification_type.name }}: </b><br> {{ item.client.identification_number }}</li>
+									 <li class="list-group-item"><b>Direccion Principal: </b><br> {{ item.client.address_principal }}, {{ item.client.address_invoices_city.name }}, {{ item.client.address_principal_department.name }}</li>
+									 <li class="list-group-item"><b>Direccion Facturacion: </b><br> {{ item.client.address_invoices }}, {{ item.client.address_invoices_city.name }}, {{ item.client.address_invoices_department.name }}</li>
+									 <li class="list-group-item"><b>Responsable: </b><br> {{ item.client.represent_legal.first_name }} {{ item.client.represent_legal.second_name }} {{ item.client.represent_legal.surname }} {{ item.client.represent_legal.second_surname }}</li>
+									 <li class="list-group-item"><b>Contacto: </b><br> {{ item.client.contact.first_name }} {{ item.client.contact.second_name }} {{ item.client.contact.surname }} {{ item.client.contact.second_surname }}</li>
+									 <li class="list-group-item" v-if="item.client.audit_enabled == 1"><i class="fa fa-check"></i> Interventoria Habilitada</li>
+									 <!-- // <li class="list-group-item"> Solicitar Interventoria</li> -->
+									 <!-- <li class="list-group-item" v-for="(v, k) in item.client"><b>{{ k }}: </b><br> {{ v }}</li> -->
+								  </ul>
+							   </div>
+							   <div class="price-table-button-holder">
+								  <router-link 
+									 tag="button" 
+									 class="btn btn-info btn-block" 
+									 v-bind:to="{ name: 'me-account-view-page', params: { account_id: item.id } }">
+									 <i class="fa fa-user-alt"></i> 
+									 VER TODO
+								  </router-link>
+							   </div>
+							</div>
+						 </div>
+					  </div>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 <template id="page-me-account-view">
    <div>
-      <div class="container">
-         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-               <div class="">
-                  <component-menu-meaccount></component-menu-meaccount>
-               </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-               <div class="panel panel-info">
-                  <div class="panel-heading">
-                     <h3 class=" text-center">
-                        <b>{{ post.name }}</b>
-                        <router-link class="p-2 btn btn-sm btn-info btn-circle" v-bind:to="{ name: 'me-account-edit-page', params: { account_id: $route.params.account_id } }" type="button">
-                           <i class="fa fa-edit"></i>
-                           <!-- // Modificar Datos -->
-                        </router-link>
-                     </h3>
-                     <br>
-                     <table class="table table-responsive">
-                        <tr>
-                           <td><b>TIPO DE CLIENTE:</b></td>
-                           <td>{{ post.type.name }}</td>
-                           <td><b>TIPO DE DOCUMENTO</b></td>
-                           <td>{{ post.identification_type.name }}</td>
-                        </tr>
-                        <tr>
-                           <td><b>NUMERO DE DOCUMENTO</b></td>
-                           <td>{{ post.identification_number }}</td>
-                           <td><b>INTERVENTORIA HABILITADA</b></td>
-                           <td v-if="post.audit_enabled == 1">Habilitada</td>
-                           <td v-if="post.audit_enabled == 0">No Habilitada</td>
-                        </tr>
-                     </table>
-                  </div>
-                  <div class="panel-body">
-                     <div class="row">
-                        <div class="col-sm-12 col-md-6 col-lg-6">
-                           <table class="table table-user-information">
-                              <tbody>
-                                 <tr>
-                                    <th colspan="2" class="text-center">Direccion Principal</th>
-                                 </tr>
-                                 <tr>
-                                    <td colspan="2" class="text-center">{{ post.address_principal }}</td>
-                                 </tr>
-                                 <tr>
-                                    <td>Departamento:</td>
-                                    <td>{{ post.address_principal_department.name }}</td>
-                                 </tr>
-                                 <tr>
-                                    <td>Ciudad:</td>
-                                    <td>{{ post.address_principal_city.name }}</td>
-                                 </tr>
-                                 <tr>
-                                    <th colspan="2" class="text-center">Representante Legal</th>
-                                 </tr>
-                                 <tr>
-                                    <td>Nombre:</td>
-                                    <td>{{ post.represent_legal.first_name }} {{ post.represent_legal.second_name }} {{ post.represent_legal.surname }} {{ post.represent_legal.second_surname }} </td>
-                                 </tr>
-                                 <tr>
-                                    <td>Correo Electronico:</td>
-                                    <td>{{ post.represent_legal.mail }}</td>
-                                 </tr>
-                                 <tr>
-                                    <td>Numeros de Teléfonos</td>
-                                    <td>{{ post.represent_legal.phone }} (Landline)<br><br>{{ post.represent_legal.phone_mobile }} (Mobile)</td>
-                                 </tr>
-                              </tbody>
-                           </table>
-                           <a v-if="post.audit_enabled == 1" href="#" class="btn btn-primary">Mis Interventores</a>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6">
-                           <table class="table table-user-information">
-                              <tbody>
-                                 <tr>
-                                    <th colspan="2" class="text-center">Direccion de Facturacion</th>
-                                 </tr>
-                                 <tr>
-                                    <td colspan="2" class="text-center">{{ post.address_invoices }}</td>
-                                 </tr>
-                                 <tr>
-                                    <td>Departamento:</td>
-                                    <td>{{ post.address_invoices_department.name }}</td>
-                                 </tr>
-                                 <tr>
-                                    <td>Ciudad:</td>
-                                    <td>{{ post.address_invoices_city.name }}</td>
-                                 </tr>
-                                 <tr>
-                                    <th colspan="2" class="text-center">Contacto Principal</th>
-                                 </tr>
-                                 <tr>
-                                    <td>Nombre:</td>
-                                    <td>{{ post.contact.first_name }} {{ post.contact.second_name }} {{ post.contact.surname }} {{ post.contact.second_surname }} </td>
-                                 </tr>
-                                 <tr>
-                                    <td>Correo Electronico:</td>
-                                    <td>{{ post.contact.mail }}</td>
-                                 </tr>
-                                 <tr>
-                                    <td>Numeros de Teléfonos</td>
-                                    <td>{{ post.contact.phone }} (Landline)<br><br>{{ post.contact.phone_mobile }} (Mobile)</td>
-                                 </tr>
-                              </tbody>
-                           </table>
-                           <a v-if="post.audit_enabled == 1" href="#" class="btn btn-primary">Mis Interventores</a>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+						   <div class="">
+							  <component-menu-meaccount></component-menu-meaccount>
+						   </div>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+						   <div class="panel panel-info">
+							  <div class="panel-heading">
+								 <h3 class=" text-center">
+									<b>{{ post.name }}</b>
+									<router-link class="p-2 btn btn-sm btn-info btn-circle" v-bind:to="{ name: 'me-account-edit-page', params: { account_id: $route.params.account_id } }" type="button">
+									   <i class="fa fa-edit"></i>
+									   <!-- // Modificar Datos -->
+									</router-link>
+								 </h3>
+								 <br>
+								 <table class="table table-responsive">
+									<tr>
+									   <td><b>TIPO DE CLIENTE:</b></td>
+									   <td>{{ post.type.name }}</td>
+									   <td><b>TIPO DE DOCUMENTO</b></td>
+									   <td>{{ post.identification_type.name }}</td>
+									</tr>
+									<tr>
+									   <td><b>NUMERO DE DOCUMENTO</b></td>
+									   <td>{{ post.identification_number }}</td>
+									   <td><b>INTERVENTORIA HABILITADA</b></td>
+									   <td v-if="post.audit_enabled == 1">Habilitada</td>
+									   <td v-if="post.audit_enabled == 0">No Habilitada</td>
+									</tr>
+								 </table>
+							  </div>
+							  <div class="panel-body">
+								 <div class="row">
+									<div class="col-sm-12 col-md-6 col-lg-6">
+									   <table class="table table-user-information">
+										  <tbody>
+											 <tr>
+												<th colspan="2" class="text-center">Direccion Principal</th>
+											 </tr>
+											 <tr>
+												<td colspan="2" class="text-center">{{ post.address_principal }}</td>
+											 </tr>
+											 <tr>
+												<td>Departamento:</td>
+												<td>{{ post.address_principal_department.name }}</td>
+											 </tr>
+											 <tr>
+												<td>Ciudad:</td>
+												<td>{{ post.address_principal_city.name }}</td>
+											 </tr>
+											 <tr>
+												<th colspan="2" class="text-center">Representante Legal</th>
+											 </tr>
+											 <tr>
+												<td>Nombre:</td>
+												<td>{{ post.represent_legal.first_name }} {{ post.represent_legal.second_name }} {{ post.represent_legal.surname }} {{ post.represent_legal.second_surname }} </td>
+											 </tr>
+											 <tr>
+												<td>Correo Electronico:</td>
+												<td>{{ post.represent_legal.mail }}</td>
+											 </tr>
+											 <tr>
+												<td>Numeros de Teléfonos</td>
+												<td>{{ post.represent_legal.phone }} (Landline)<br><br>{{ post.represent_legal.phone_mobile }} (Mobile)</td>
+											 </tr>
+										  </tbody>
+									   </table>
+									   <a v-if="post.audit_enabled == 1" href="#" class="btn btn-primary">Mis Interventores</a>
+									</div>
+									<div class="col-sm-12 col-md-6 col-lg-6">
+									   <table class="table table-user-information">
+										  <tbody>
+											 <tr>
+												<th colspan="2" class="text-center">Direccion de Facturacion</th>
+											 </tr>
+											 <tr>
+												<td colspan="2" class="text-center">{{ post.address_invoices }}</td>
+											 </tr>
+											 <tr>
+												<td>Departamento:</td>
+												<td>{{ post.address_invoices_department.name }}</td>
+											 </tr>
+											 <tr>
+												<td>Ciudad:</td>
+												<td>{{ post.address_invoices_city.name }}</td>
+											 </tr>
+											 <tr>
+												<th colspan="2" class="text-center">Contacto Principal</th>
+											 </tr>
+											 <tr>
+												<td>Nombre:</td>
+												<td>{{ post.contact.first_name }} {{ post.contact.second_name }} {{ post.contact.surname }} {{ post.contact.second_surname }} </td>
+											 </tr>
+											 <tr>
+												<td>Correo Electronico:</td>
+												<td>{{ post.contact.mail }}</td>
+											 </tr>
+											 <tr>
+												<td>Numeros de Teléfonos</td>
+												<td>{{ post.contact.phone }} (Landline)<br><br>{{ post.contact.phone_mobile }} (Mobile)</td>
+											 </tr>
+										  </tbody>
+									   </table>
+									   <a v-if="post.audit_enabled == 1" href="#" class="btn btn-primary">Mis Interventores</a>
+									</div>
+								 </div>
+							  </div>
+						   </div>
+						</div>
+					 </div>
+				</div>
+			</div>
+		</div>
    </div>
 </template>
 <template id="page-me-account-update">
    <div>
-      <div class="container">
-         <br>
-         <div class="row">
-            <div class="col-sm-12 col-md-12 col-lg-12">
-               <h2 class="text-center">Actualizacion de Datos</h2>
-               <hr>
-            </div>
-            <div class="col-sm-12 col-md-12 col-lg-12">
-               <div class="form-group">
-                  <label for="">Nombre Completo del Cliente / Empresa</label>
-                  <input type="text" class="form-control" required v-model="post.name" />
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-6">
-               <div class="form-group">
-                  <label for="">Representante Legal</label>
-                  <select class="form-control" v-model="post.represent_legal">
-                     <option value="0">Elije una opcion...</option>
-                     <option v-bind:value="item.id" v-for="item in list_crew">
-                        {{ item.identification_number }} - {{ item.first_name }} {{ item.second_name }} {{ item.surname }} {{ item.second_surname }}
-                     </option>
-                  </select>
-               </div>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6">
-               <div class="form-group">
-                  <label>Contacto Principal</label>
-                  <select class="form-control" v-model="post.contact">
-                     <option value="0">Elije una opcion...</option>
-                     <option v-bind:value="item.id" v-for="item in list_crew">
-                        {{ item.identification_number }} - {{ item.first_name }} {{ item.second_name }} {{ item.surname }} {{ item.second_surname }}
-                     </option>
-                  </select>
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-sm-12 col-md-6 col-lg-6">
-               <h4>Direccion Principal</h4>
-               <hr>
-               <div class="form-row">
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Departamento</label>
-                        <select class="form-control" @change="departmentChangeToCityPrincipal" v-model="post.address_principal_department">
-                           <option value="0">Elije una opcion...</option>
-                           <option v-bind:value="item.id" v-for="item in list_departments">{{ item.name }}</option>
-                        </select>
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Ciudad</label>
-                        <select class="form-control" v-model="post.address_principal_city">
-                           <option value="0">Elije una opcion...</option>
-                           <option v-bind:value="item.id" v-for="item in list_citysPrincipal">{{ item.name }}</option>
-                        </select>
-                     </div>
-                  </div>
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label class="control-label">Direccion</label>
-                        <input type="text" class="form-control" required v-model="post.address_principal" />
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-6">
-               <h4>Direccion Facturacion</h4>
-               <hr>
-               <div class="form-row">
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Departamento</label>
-                        <select class="form-control" @change="departmentChangeToCityInvoice" v-model="post.address_invoices_department">
-                           <option value="0">Elije una opcion...</option>
-                           <option v-bind:value="item.id" v-for="item in list_departments">{{ item.name }}</option>
-                        </select>
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Ciudad</label>
-                        <select class="form-control" v-model="post.address_invoices_city">
-                           <option value="0">Elije una opcion...</option>
-                           <option v-bind:value="item.id" v-for="item in list_citysInvoice">{{ item.name }}</option>
-                        </select>
-                     </div>
-                  </div>
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label class="control-label">Direccion</label>
-                        <input type="text" class="form-control" required v-model="post.address_invoices" />
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <hr>
-            <div class="col-md-12">
-               <div class="btn-group flex-row flex-row-reverse-not">
-                  <router-link class="btn btn-secondary btn-circle" v-bind:to="{ name: 'me-account-view-page', params: { account_id: $route.params.account_id } }" type="button" tag="button">
-                     <i class="fa fa-times"></i>
-                     Cancelar
-                  </router-link>
-                  <button class="p-2 btn btn-success btn-circle" @click="updateData" type="button">
-                  <i class="fa fa-save fa-lg"></i> 
-                  Guardar
-                  </button>
-               </div>
-            </div>
-         </div>
-      </div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<br>
+				   <div class="panel panel-default">
+					  <div class="panel-heading">Actualizacion de Datos</div>
+					  <div class="panel-body">
+						<div class="row">
+							<div class="col-sm-12 col-md-12 col-lg-12">
+							   <div class="form-group">
+								  <label for="">Nombre Completo del Cliente / Empresa</label>
+								  <input type="text" class="form-control" required v-model="post.name" />
+							   </div>
+							</div>
+						 </div>
+						 <div class="row">
+							<div class="col-sm-12 col-md-6 col-lg-6">
+							   <div class="form-group">
+								  <label for="">Representante Legal</label>
+								  <select class="form-control" v-model="post.represent_legal">
+									 <option value="0">Elije una opcion...</option>
+									 <option v-bind:value="item.id" v-for="item in list_crew">
+										{{ item.identification_number }} - {{ item.first_name }} {{ item.second_name }} {{ item.surname }} {{ item.second_surname }}
+									 </option>
+								  </select>
+							   </div>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-6">
+							   <div class="form-group">
+								  <label>Contacto Principal</label>
+								  <select class="form-control" v-model="post.contact">
+									 <option value="0">Elije una opcion...</option>
+									 <option v-bind:value="item.id" v-for="item in list_crew">
+										{{ item.identification_number }} - {{ item.first_name }} {{ item.second_name }} {{ item.surname }} {{ item.second_surname }}
+									 </option>
+								  </select>
+							   </div>
+							</div>
+						 </div>
+						 <div class="row">
+							<div class="col-sm-12 col-md-6 col-lg-6">
+							   <h4>Direccion Principal</h4>
+							   <hr>
+							   <div class="form-row">
+								  <div class="col-md-6">
+									 <div class="form-group">
+										<label class="control-label">Departamento</label>
+										<select class="form-control" @change="departmentChangeToCityPrincipal" v-model="post.address_principal_department">
+										   <option value="0">Elije una opcion...</option>
+										   <option v-bind:value="item.id" v-for="item in list_departments">{{ item.name }}</option>
+										</select>
+									 </div>
+								  </div>
+								  <div class="col-md-6">
+									 <div class="form-group">
+										<label class="control-label">Ciudad</label>
+										<select class="form-control" v-model="post.address_principal_city">
+										   <option value="0">Elije una opcion...</option>
+										   <option v-bind:value="item.id" v-for="item in list_citysPrincipal">{{ item.name }}</option>
+										</select>
+									 </div>
+								  </div>
+								  <div class="col-md-12">
+									 <div class="form-group">
+										<label class="control-label">Direccion</label>
+										<input type="text" class="form-control" required v-model="post.address_principal" />
+									 </div>
+								  </div>
+							   </div>
+							</div>
+							<div class="col-sm-12 col-md-6 col-lg-6">
+							   <h4>Direccion Facturacion</h4>
+							   <hr>
+							   <div class="form-row">
+								  <div class="col-md-6">
+									 <div class="form-group">
+										<label class="control-label">Departamento</label>
+										<select class="form-control" @change="departmentChangeToCityInvoice" v-model="post.address_invoices_department">
+										   <option value="0">Elije una opcion...</option>
+										   <option v-bind:value="item.id" v-for="item in list_departments">{{ item.name }}</option>
+										</select>
+									 </div>
+								  </div>
+								  <div class="col-md-6">
+									 <div class="form-group">
+										<label class="control-label">Ciudad</label>
+										<select class="form-control" v-model="post.address_invoices_city">
+										   <option value="0">Elije una opcion...</option>
+										   <option v-bind:value="item.id" v-for="item in list_citysInvoice">{{ item.name }}</option>
+										</select>
+									 </div>
+								  </div>
+								  <div class="col-md-12">
+									 <div class="form-group">
+										<label class="control-label">Direccion</label>
+										<input type="text" class="form-control" required v-model="post.address_invoices" />
+									 </div>
+								  </div>
+							   </div>
+							</div>
+						 </div>
+					  </div>
+					  <div class="panel-footer">
+						   <div class="btn-group flex-row flex-row-reverse-not">
+							  <router-link class="btn btn-secondary btn-circle" v-bind:to="{ name: 'me-account-view-page', params: { account_id: $route.params.account_id } }" type="button" tag="button">
+								 <i class="fa fa-times"></i>
+								 Cancelar
+							  </router-link>
+							  <button class="p-2 btn btn-success btn-circle" @click="updateData" type="button">
+							  <i class="fa fa-save fa-lg"></i> 
+							  Guardar
+							  </button>
+						   </div>
+					  </div>
+				   </div>
+
+				</div>
+			</div>
+		</div>
    </div>
 </template>
 <template id="page-me-contacts">
    <div>
-      <div class="container">
-         <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-               <div class="">
-                  <component-menu-meaccount></component-menu-meaccount>
-               </div>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-               <h1 class="text-center">
-                  <span class="icons glyphicon glyphicon-user" aria-hidden="true"></span>
-                  Mis Contactos 
-               </h1>
-               <hr>
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-               <div class="row">
-                  <div class="col-md-6" v-for="item in posts" style="padding: 15px;">
-                     <h2 class="title-contact">
-                        <span class="icons glyphicon glyphicon-user" aria-hidden="true"></span>
-                        {{ item.contact.first_name }} {{ item.contact.second_name }} {{ item.contact.surname }} {{ item.contact.second_surname }} 
-                     </h2>
-                     <h3>
-                        Relacion: {{ item.type_contact.name }}
-                     </h3>
-                     <h5>{{ item.contact.identification_type.name }} - {{ item.contact.identification_number }}</h5>
-                     <hr>
-                     <div>
-                        <div class="col-md-6">
-                           <a href="http://joey-meyer.com"><i class="glyphicon glyphicon-phone icons"></i> {{ item.contact.phone }}</a>
-                        </div>
-                        <div class="col-md-6 pull-right">
-                           <a href="http://joey-meyer.com"><i class="glyphicon glyphicon-phone icons"></i> {{ item.contact.phone_mobile }}</a>
-                        </div>
-                     </div>
-                     <div>
-                        <div class="col-md-6">
-                           <a href="http://joey-meyer.com"><i class="glyphicon glyphicon-envelope icons"></i> {{ item.contact.mail }}</a>
-                        </div>
-                        <div class="col-md-6 pull-right">
-                           <a href="http://joey-meyer.com"><i class="glyphicon glyphicon-home icons"></i> {{ item.contact.department.name }}, {{ item.contact.city.name }}</a>
-                        </div>
-                     </div>
-                     <!-- //
-                        <router-link tag="a" class="btn btn-sm btn-info float-right" v-bind:to="{ name: 'Business-Contacts-Single', params: { busineses_id: $route.params.busineses_id, contact_id: item.contact.id } }">
-                        	<i class="fas fa-eye fa-lg"></i>
-                        </router-link>
-                        -->
-                     <br>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+						   <div class="">
+							  <component-menu-meaccount></component-menu-meaccount>
+						   </div>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+						   <h1 class="text-center">
+							  <span class="icons glyphicon glyphicon-user" aria-hidden="true"></span>
+							  Mis Contactos 
+						   </h1>
+						   <hr>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+							<div class="row">
+								<div class="col-sm-6" v-for="item in posts" style="padding: 15px;">
+									<div class="panel panel-default">
+										<div class="panel-heading text-right">
+											<b class="title-contact">
+												{{ item.contact.first_name }} {{ item.contact.second_name }} {{ item.contact.surname }} {{ item.contact.second_surname }} 
+												<span class="icons glyphicon glyphicon-user" aria-hidden="true"></span>
+											 </b>
+											 <p>Relacion: {{ item.type_contact.name }} - {{ item.contact.identification_type.name }} - {{ item.contact.identification_number }}</p>
+										</div>
+										<div class="panel-body">
+											 <div>
+												<div class="col-md-6">
+												   <a href="#"><i class="glyphicon glyphicon-phone icons"></i> {{ item.contact.phone }}</a>
+												</div>
+												<div class="col-md-6 pull-right">
+												   <a href="#"><i class="glyphicon glyphicon-phone icons"></i> {{ item.contact.phone_mobile }}</a>
+												</div>
+											 </div>
+											 <div>
+												<div class="col-md-6">
+												   <a href="#"><i class="glyphicon glyphicon-envelope icons"></i> {{ item.contact.mail }}</a>
+												</div>
+												<div class="col-md-6 pull-right">
+												   <a href="#"><i class="glyphicon glyphicon-home icons"></i> {{ item.contact.department.name }}, {{ item.contact.city.name }}</a>
+												</div>
+											 </div>
+										</div>
+									</div>
+								</div>
+						   
+							
+							  <div class="col-sm-12" v-for="item in posts" style="padding: 15px;">
+								 
+								 
+								 <!-- //
+									<router-link tag="a" class="btn btn-sm btn-info float-right" v-bind:to="{ name: 'Business-Contacts-Single', params: { busineses_id: $route.params.busineses_id, contact_id: item.contact.id } }">
+										<i class="fas fa-eye fa-lg"></i>
+									</router-link>
+									-->
+								 <br>
+							  </div>
+						   </div>
+						</div>
+					 </div>
+				</div>
+			</div>
+		</div>
    </div>
 </template>
 <style scope="page-me-contacts">
    .icons {
-   padding: 8px;
-   border-radius: 50%;
-   background-color: #3c763d;
-   color: white;
-   border: 2px solid;
+	   padding: 8px;
+	   border-radius: 50%;
+	   background-color: #3c763d;
+	   color: white;
+	   border: 2px solid;
    }
 </style>
 <template id="page-me-contacts-add">
    <div>
-      <div class="container">
-         <div class="row">
-            <div class="col-md-12">
-               <component-menu-meaccount></component-menu-meaccount>
-            </div>
-            <div class="col-md-12">
-               <div class="form-row">
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Tipo de Documento (*)</label>
-                        <select class="form-control" v-model="post.identification_type">
-                           <option value="0">Elije una opcion...</option>
-                           <option v-bind:value="item.id" v-for="item in list_types_identifications">{{ item.name }}</option>
-                        </select>
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Nro. Documento (*)</label>
-                        <input type="text" class="form-control" required v-model="post.identification_number" />
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Primer Nombre (*)</label>
-                        <input type="text" class="form-control" required v-model="post.first_name" />
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Segundo Nombre</label>
-                        <input type="text" class="form-control" required v-model="post.second_name" />
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Primer Apellido (*)</label>
-                        <input type="text" class="form-control" required v-model="post.surname" />
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Segundo Apellido</label>
-                        <input type="text" class="form-control" required v-model="post.second_surname" />
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Teléfono (*)</label>
-                        <input type="text" class="form-control" required v-model="post.phone" />
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Teléfono Móvil</label>
-                        <input type="text" class="form-control" required v-model="post.phone_mobile" />
-                     </div>
-                  </div>
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label class="control-label">Correo Electronico</label>
-                        <input type="text" class="form-control" required v-model="post.mail" />
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Departamento</label>
-                        <select class="form-control" @change="departmentChangeToCity" v-model="post.department" >
-                           <option value="0">Elije una opcion...</option>
-                           <option v-bind:value="item.id" v-for="item in list_departments">{{ item.name }}</option>
-                        </select>
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Ciudad</label>
-                        <select class="form-control" v-model="post.city">
-                           <option value="0">Elije una opcion...</option>
-                           <option v-bind:value="item.id" v-for="item in list_citys">{{ item.name }}</option>
-                        </select>
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Direccion</label>
-                        <input type="text" class="form-control" required v-model="post.address" />
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Relacion (*)</label>
-                        <select class="form-control" v-model="post_crew.type_contact">
-                           <option value="0">Elije una opcion...</option>
-                           <option v-bind:value="item.id" v-for="item in list_types_contacts">{{ item.name }}</option>
-                        </select>
-                     </div>
-                  </div>
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label class="control-label">Direccion Normalizada</label>
-                        <input type="text" class="form-control" required v-model="post.geo_address" readonly="" />
-                     </div>
-                  </div>
-               </div>
-               <hr>
-               <div class="d-flex flex-row-reverse">
-                  <router-link tag="button" type="button" class="btn btn-secondary btn-circle" v-bind:to="{ name: 'me-contacts-page' }">
-                     <i class="fas fa-times fa-lg"></i>
-                     Cancelar
-                  </router-link>
-                  <button @click="createContactBusineses" class="p-2 btn btn-success btn-circle" type="button">
-                  <i class="fas fa-save fa-lg"></i>
-                  Guardar
-                  </button>
-               </div>
-            </div>
-         </div>
-      </div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<div class="row">
+						<div class="col-md-12">
+						   <component-menu-meaccount></component-menu-meaccount>
+						</div>
+						<div class="col-md-12">
+						   <div class="form-row">
+							  <div class="col-md-6">
+								 <div class="form-group">
+									<label class="control-label">Tipo de Documento (*)</label>
+									<select class="form-control" v-model="post.identification_type">
+									   <option value="0">Elije una opcion...</option>
+									   <option v-bind:value="item.id" v-for="item in list_types_identifications">{{ item.name }}</option>
+									</select>
+								 </div>
+							  </div>
+							  <div class="col-md-6">
+								 <div class="form-group">
+									<label class="control-label">Nro. Documento (*)</label>
+									<input type="text" class="form-control" required v-model="post.identification_number" />
+								 </div>
+							  </div>
+							  <div class="col-md-6">
+								 <div class="form-group">
+									<label class="control-label">Primer Nombre (*)</label>
+									<input type="text" class="form-control" required v-model="post.first_name" />
+								 </div>
+							  </div>
+							  <div class="col-md-6">
+								 <div class="form-group">
+									<label class="control-label">Segundo Nombre</label>
+									<input type="text" class="form-control" required v-model="post.second_name" />
+								 </div>
+							  </div>
+							  <div class="col-md-6">
+								 <div class="form-group">
+									<label class="control-label">Primer Apellido (*)</label>
+									<input type="text" class="form-control" required v-model="post.surname" />
+								 </div>
+							  </div>
+							  <div class="col-md-6">
+								 <div class="form-group">
+									<label class="control-label">Segundo Apellido</label>
+									<input type="text" class="form-control" required v-model="post.second_surname" />
+								 </div>
+							  </div>
+							  <div class="col-md-6">
+								 <div class="form-group">
+									<label class="control-label">Teléfono (*)</label>
+									<input type="text" class="form-control" required v-model="post.phone" />
+								 </div>
+							  </div>
+							  <div class="col-md-6">
+								 <div class="form-group">
+									<label class="control-label">Teléfono Móvil</label>
+									<input type="text" class="form-control" required v-model="post.phone_mobile" />
+								 </div>
+							  </div>
+							  <div class="col-md-12">
+								 <div class="form-group">
+									<label class="control-label">Correo Electronico</label>
+									<input type="text" class="form-control" required v-model="post.mail" />
+								 </div>
+							  </div>
+							  <div class="col-md-6">
+								 <div class="form-group">
+									<label class="control-label">Departamento</label>
+									<select class="form-control" @change="departmentChangeToCity" v-model="post.department" >
+									   <option value="0">Elije una opcion...</option>
+									   <option v-bind:value="item.id" v-for="item in list_departments">{{ item.name }}</option>
+									</select>
+								 </div>
+							  </div>
+							  <div class="col-md-6">
+								 <div class="form-group">
+									<label class="control-label">Ciudad</label>
+									<select class="form-control" v-model="post.city">
+									   <option value="0">Elije una opcion...</option>
+									   <option v-bind:value="item.id" v-for="item in list_citys">{{ item.name }}</option>
+									</select>
+								 </div>
+							  </div>
+							  <div class="col-md-6">
+								 <div class="form-group">
+									<label class="control-label">Direccion</label>
+									<input type="text" class="form-control" required v-model="post.address" />
+								 </div>
+							  </div>
+							  <div class="col-md-6">
+								 <div class="form-group">
+									<label class="control-label">Relacion (*)</label>
+									<select class="form-control" v-model="post_crew.type_contact">
+									   <option value="0">Elije una opcion...</option>
+									   <option v-bind:value="item.id" v-for="item in list_types_contacts">{{ item.name }}</option>
+									</select>
+								 </div>
+							  </div>
+							  <div class="col-md-12">
+								 <div class="form-group">
+									<label class="control-label">Direccion Normalizada</label>
+									<input type="text" class="form-control" required v-model="post.geo_address" readonly="" />
+								 </div>
+							  </div>
+						   </div>
+						   <hr>
+						   <div class="d-flex flex-row-reverse">
+							  <router-link tag="button" type="button" class="btn btn-secondary btn-circle" v-bind:to="{ name: 'me-contacts-page' }">
+								 <i class="fas fa-times fa-lg"></i>
+								 Cancelar
+							  </router-link>
+							  <button @click="createContactBusineses" class="p-2 btn btn-success btn-circle" type="button">
+							  <i class="fas fa-save fa-lg"></i>
+							  Guardar
+							  </button>
+						   </div>
+						</div>
+					 </div>
+				</div>
+			</div>
+		</div>
    </div>
 </template>
 <template id="page-me-requests">
    <div>
-      <div class="container">
-         <div class="row">
-            <div class="col-md-12">
-               <component-menu-meaccount></component-menu-meaccount>
-            </div>
-            <div class="col-md-12">
-               <table class="table table-hover">
-                  <thead>
-                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Direccion</th>
-                        <th scope="col"></th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     <tr v-for="item in posts">
-                        <th scope="row">{{ $parent.zfill(item.id, 11) }}</th>
-                        <td>{{ item.address_invoice }}</td>
-                        <td>
-                           <router-link class="btn btn-sm btn-info" v-bind:to="{ name: 'me-requests-view-page', params: { account_id: $route.params.account_id, request_id: item.id } }">
-                              Ver
-                           </router-link>
-                        </td>
-                     </tr>
-                  </tbody>
-               </table>
-            </div>
-         </div>
-      </div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<div class="row">
+						<div class="col-md-12">
+						   <component-menu-meaccount></component-menu-meaccount>
+						</div>
+						<div class="col-md-12">
+						   <table class="table table-hover">
+							  <thead>
+								 <tr>
+									<th scope="col">#</th>
+									<th scope="col">Direccion</th>
+									<th scope="col"></th>
+								 </tr>
+							  </thead>
+							  <tbody>
+								 <tr v-for="item in posts">
+									<th scope="row">{{ $parent.zfill(item.id, 11) }}</th>
+									<td>{{ item.address_invoice }}</td>
+									<td>
+									   <router-link class="btn btn-sm btn-info" v-bind:to="{ name: 'me-requests-view-page', params: { account_id: $route.params.account_id, request_id: item.id } }">
+										  Ver
+									   </router-link>
+									</td>
+								 </tr>
+							  </tbody>
+						   </table>
+						</div>
+					 </div>
+				</div>
+			</div>
+		</div>
    </div>
 </template>
 <template id="page-me-requests-view">
    <div>
-      <div class="container">
-         <div class="row">
-            <div class="col-md-12">
-               <component-menu-meaccount></component-menu-meaccount>
-            </div>
-            <div class="col-md-8">
-               <h5 class="mb-0">
-                  INFORMACION BASICA
-               </h5>
-               <div class="row">
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label class="control-label">Contacto de la Solicitud</label>
-                        {{ post.contact.first_name }} {{ post.contact.second_name }} {{ post.contact.surname }} {{ post.contact.second_surname }} 
-                     </div>
-                  </div>
-                  <div class="col-md-12">
-                     <hr>
-                     <h4>Direccion de Facturacion</h4>
-                     <hr>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Departamento</label>
-                        {{ post.address_invoice_department.name }}
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Ciudad</label>
-                        {{ post.address_invoice_city.name }}
-                     </div>
-                  </div>
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label class="control-label">Direccion del Servicio</label>
-                        {{ post.address_invoice }}
-                     </div>
-                  </div>
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label class="control-label">Notas de la Solicitud</label>
-                        {{ post.request_notes }}
-                     </div>
-                  </div>
-                  <div class="col-md-12">
-                     <iframe frameborder="0" style="width: 100%;height: 350px;" v-bind:src="urlMapSearchNewIframe"></iframe>
-                  </div>
-               </div>
-               <h5 class="mb-0">
-                  PROPUESTAS ({{ post.quotations.length }})
-               </h5>
-               <table class="table table-sm table-bordered">
-                  <thead>
-                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Creacion</th>
-                        <th scope="col">Vigencia</th>
-                        <th scope="col"></th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     <tr v-for="item in post.quotations">
-                        <th scope="row">{{ $parent.zfill(item.id, 11) }}</th>
-                        <td>{{ item.status.name }}</td>
-                        <td>{{ item.create }}</td>
-                        <td>{{ item.validity }}</td>
-                        <td>
-                           <router-link class="btn btn-sm btn-info" v-bind:to="{ name: 'me-requests-add-page', params: { account_id: $route.params.account_id, request_id: $route.params.request_id, quotation_id: item.id, } }">
-                              <i class="fas fa-eye"></i>
-                           </router-link>
-                        </td>
-                     </tr>
-                  </tbody>
-               </table>
-            </div>
-            <div class="col-md-4">
-               <h5 class="mb-0">
-                  SERVICIOS ({{ post.services_requests.length }})
-               </h5>
-               <div class="card-body">
-                  <table class="table table-hover">
-                     <thead>
-                        <tr>
-                           <th scope="col">#</th>
-                           <th scope="col">Nombre</th>
-                           <th scope="col">Repeticion</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <tr v-for="service in post.services_requests">
-                           <th scope="row"></th>
-                           <td>{{ service.service.name }}</td>
-                           <td>{{ service.repeat.name }}</td>
-                        </tr>
-                     </tbody>
-                  </table>
-               </div>
-            </div>
-         </div>
-      </div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<div class="row">
+						<div class="col-md-12">
+						   <component-menu-meaccount></component-menu-meaccount>
+						</div>
+								<div class="col-md-8">
+									
+								   <div class="panel panel-default">
+									  <div class="panel-heading">INFORMACION BASICA</div>
+									  <div class="panel-body">
+										   <div class="row">
+											  <div class="col-md-12">
+												 <div class="form-group">
+													<label class="control-label">Contacto de la Solicitud</label>
+													{{ post.contact.first_name }} {{ post.contact.second_name }} {{ post.contact.surname }} {{ post.contact.second_surname }} 
+												 </div>
+											  </div>
+											  <div class="col-md-12">
+												 <hr>
+												 <h4>Direccion de Facturacion</h4>
+												 <hr>
+											  </div>
+											  <div class="col-md-6">
+												 <div class="form-group">
+													<label class="control-label">Departamento</label>
+													{{ post.address_invoice_department.name }}
+												 </div>
+											  </div>
+											  <div class="col-md-6">
+												 <div class="form-group">
+													<label class="control-label">Ciudad</label>
+													{{ post.address_invoice_city.name }}
+												 </div>
+											  </div>
+											  <div class="col-md-12">
+												 <div class="form-group">
+													<label class="control-label">Direccion del Servicio</label>
+													{{ post.address_invoice }}
+												 </div>
+											  </div>
+											  <div class="col-md-12">
+												 <div class="form-group">
+													<label class="control-label">Notas de la Solicitud</label>
+													{{ post.request_notes }}
+												 </div>
+											  </div>
+											  <div class="col-md-12">
+												 <iframe frameborder="0" style="width: 100%;height: 350px;" v-bind:src="urlMapSearchNewIframe"></iframe>
+											  </div>
+										   </div>
+									  </div>
+									  <div class="panel-footer">
+									  </div>
+								   </div>
+								   <div class="panel panel-default">
+									  <div class="panel-heading">PROPUESTAS ({{ post.quotations.length }})</div>
+									  <div class="panel-body">
+										  	<table class="table table-sm table-bordered">
+											  <thead>
+												 <tr>
+													<th scope="col">#</th>
+													<th scope="col">Estado</th>
+													<th scope="col">Creacion</th>
+													<th scope="col">Vigencia</th>
+													<th scope="col"></th>
+												 </tr>
+											  </thead>
+											  <tbody>
+												 <tr v-for="item in post.quotations">
+													<th scope="row">{{ $parent.zfill(item.id, 11) }}</th>
+													<td>{{ item.status.name }}</td>
+													<td>{{ item.create }}</td>
+													<td>{{ item.validity }}</td>
+													<td>
+													   <router-link class="btn btn-sm btn-info" v-bind:to="{ name: 'me-requests-add-page', params: { account_id: $route.params.account_id, request_id: $route.params.request_id, quotation_id: item.id, } }">
+														  <i class="fas fa-eye"></i>
+													   </router-link>
+													</td>
+												 </tr>
+											  </tbody>
+										   </table>
+									  </div>
+									  <div class="panel-footer">
+									  </div>
+								   </div>
+								</div>
+								<div class="col-md-4">
+								   <div class="panel panel-default">
+									  <div class="panel-heading">SERVICIOS ({{ post.services_requests.length }})</div>
+									  <div class="panel-body">
+										  <table class="table table-hover">
+											 <thead>
+												<tr>
+												   <th scope="col">#</th>
+												   <th scope="col">Nombre</th>
+												   <th scope="col">Repeticion</th>
+												</tr>
+											 </thead>
+											 <tbody>
+												<tr v-for="service in post.services_requests">
+												   <th scope="row"></th>
+												   <td>{{ service.service.name }}</td>
+												   <td>{{ service.repeat.name }}</td>
+												</tr>
+											 </tbody>
+										  </table>
+									  </div>
+									  <div class="panel-footer">
+									  </div>
+								   </div>
+								</div>
+					 </div>
+				</div>
+			</div>
+		</div>
    </div>
 </template>
 <template id="page-me-requests-add">
    <div>
-      <div class="container">
-         <div class="row">
-            <div class="col-md-12">
-               <component-menu-meaccount></component-menu-meaccount>
-            </div>
-            <div class="col-md-7">
-               <h4 class="card-title">
-                  <i class="glyphicon glyphicon-search text-gold"></i>
-                  <b>INFORMACION BASICA</b>
-                  <hr>
-               </h4>
-               <div class="row">
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label class="control-label">Contacto de la Solicitud</label>
-                        <select class="form-control custom-select" v-model="post.contact" name="contact">
-                           <option value="0">Elije una opcion...</option>
-                           <option v-bind:value="item.contact.id" v-for="item in list_contacts">{{ item.contact.first_name }}</option>
-                        </select>
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Departamento</label>
-                        <select class="form-control" @change="departmentChangeToCity" v-model="post.address_invoice_department" name="address_invoice_department">
-                           <option value="0">Elije una opcion...</option>
-                           <option v-bind:value="item.id" v-for="item in list_departments">{{ item.name }}</option>
-                        </select>
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label class="control-label">Ciudad</label>
-                        <select class="form-control" v-model="post.address_invoice_city" name="address_invoice_city" @change="address_search">
-                           <option value="0">Elije una opcion...</option>
-                           <option v-for="item in list_citys" v-bind:value="item.id">{{ item.name }}</option>
-                        </select>
-                     </div>
-                  </div>
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label class="control-label">Direccion del Servicio</label>
-                        <input class="form-control" type="text" v-model="post.address_invoice" name="address_invoice" @change="address_search" />
-                     </div>
-                  </div>
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label class="control-label">Direccion Normalizada</label>
-                        <input class="form-control" type="text" v-model="post.address_invoice_geo" name="address_invoice_geo" readonly="" />
-                     </div>
-                  </div>
-                  <div class="col-md-12">
-                     <div class="form-group">
-                        <label class="control-label">Notas de la Solicitud</label>
-                        <textarea class="form-control" v-model="post.request_notes" name="request_notes" rows="8"></textarea>
-                     </div>
-                  </div>
-                  <div class="col-md-12">
-                     <iframe frameborder="0" style="width: 100%;height: 350px;" v-bind:src="urlMapSearchNewIframe"></iframe>
-                  </div>
-               </div>
-            </div>
-            <div class="col-md-5">
-               <h4 class="card-title">
-                  <i class="glyphicon glyphicon-lock text-gold"></i>
-                  <b>SERVICIOS EN LA SOLICITUD</b>
-                  <hr>
-               </h4>
-               <label class="control-label">SERVICIO</label>
-               <div class="row">
-                  <div class="col-md-10">
-                     <select class="form-control custom-select" v-model="post_add_services.id" name="post_add_services.id">
-                        <option value="0">Elije una opcion...</option>
-                        <option v-bind:value="item.id" v-for="item in list_services">{{ item.name }}</option>
-                     </select>
-                  </div>
-                  <div class="col-md-2">
-                     <div class="input-group-append">
-                        <button @click="addServiceRequest" class="btn btn-outline-secondary" type="button"><i class="fa fa-plus"></i></button>
-                     </div>
-                  </div>
-                  <hr>
-               </div>
-               <div class="row">
-                  <div class="col-md-12">
-                     <table class="table table-bordered">
-                        <tr>
-                           <td></td>
-                           <td>Servicio</td>
-                           <td>Frecuencia</td>
-                        </tr>
-                        <tr v-if="post.list_services.length > 0" v-for="(item, i) in post.list_services">
-                           <td>
-                              <button class="btn btn-sm btn-secondary" @click="removeServiceRequest(i)">
-                              <i class="fa fa-times"></i>
-                              </button>
-                           </td>
-                           <td>{{ item.name }} </td>
-                           <td>
-                              <div class="form-group">
-                                 <select class="form-control custom-select" v-model="item.repeat" name="repeat">
-                                    <option value="0">Elije una opcion...</option>
-                                    <option v-bind:value="item.id" v-for="item in repeats_services">{{ item.name }}</option>
-                                 </select>
-                              </div>
-                           </td>
-                        </tr>
-                     </table>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-lg-12">
-                     <p>
-                        Toda la información, incluyendo precios, servicios, características, opciones, planos y disponibilidad están sujetos a cambio sin previo aviso. 
-                     </p>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-lg-12">
-                     <div class="pull-right">
-                        <button class="btn btn-success" id="btnSubmit" @click="createRequest">
-                        <i class="fa fa-paper-plane"></i> 
-                        Enviar Solicitud
-                        </button>
-                        <!-- <a class="btn btn-warning btn-lg" href="#" id="btnToTop"><i class="fa fa-arrow-up"></i> Top</a> -->
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<div class="row">
+						<div class="col-md-12">
+						   <component-menu-meaccount></component-menu-meaccount>
+						</div>
+						<div class="col-md-7">
+						   <h4 class="card-title">
+							  <i class="glyphicon glyphicon-search text-gold"></i>
+							  <b>INFORMACION BASICA</b>
+							  <hr>
+						   </h4>
+						   <div class="row">
+							  <div class="col-md-12">
+								 <div class="form-group">
+									<label class="control-label">Contacto de la Solicitud</label>
+									<select class="form-control custom-select" v-model="post.contact" name="contact">
+									   <option value="0">Elije una opcion...</option>
+									   <option v-bind:value="item.contact.id" v-for="item in list_contacts">{{ item.contact.first_name }}</option>
+									</select>
+								 </div>
+							  </div>
+							  <div class="col-md-6">
+								 <div class="form-group">
+									<label class="control-label">Departamento</label>
+									<select class="form-control" @change="departmentChangeToCity" v-model="post.address_invoice_department" name="address_invoice_department">
+									   <option value="0">Elije una opcion...</option>
+									   <option v-bind:value="item.id" v-for="item in list_departments">{{ item.name }}</option>
+									</select>
+								 </div>
+							  </div>
+							  <div class="col-md-6">
+								 <div class="form-group">
+									<label class="control-label">Ciudad</label>
+									<select class="form-control" v-model="post.address_invoice_city" name="address_invoice_city" @change="address_search">
+									   <option value="0">Elije una opcion...</option>
+									   <option v-for="item in list_citys" v-bind:value="item.id">{{ item.name }}</option>
+									</select>
+								 </div>
+							  </div>
+							  <div class="col-md-12">
+								 <div class="form-group">
+									<label class="control-label">Direccion del Servicio</label>
+									<input class="form-control" type="text" v-model="post.address_invoice" name="address_invoice" @change="address_search" />
+								 </div>
+							  </div>
+							  <div class="col-md-12">
+								 <div class="form-group">
+									<label class="control-label">Direccion Normalizada</label>
+									<input class="form-control" type="text" v-model="post.address_invoice_geo" name="address_invoice_geo" readonly="" />
+								 </div>
+							  </div>
+							  <div class="col-md-12">
+								 <div class="form-group">
+									<label class="control-label">Notas de la Solicitud</label>
+									<textarea class="form-control" v-model="post.request_notes" name="request_notes" rows="8"></textarea>
+								 </div>
+							  </div>
+							  <div class="col-md-12">
+								 <iframe frameborder="0" style="width: 100%;height: 350px;" v-bind:src="urlMapSearchNewIframe"></iframe>
+							  </div>
+						   </div>
+						</div>
+						<div class="col-md-5">
+						   <h4 class="card-title">
+							  <i class="glyphicon glyphicon-lock text-gold"></i>
+							  <b>SERVICIOS EN LA SOLICITUD</b>
+							  <hr>
+						   </h4>
+						   <label class="control-label">SERVICIO</label>
+						   <div class="row">
+							  <div class="col-md-10">
+								 <select class="form-control custom-select" v-model="post_add_services.id" name="post_add_services.id">
+									<option value="0">Elije una opcion...</option>
+									<option v-bind:value="item.id" v-for="item in list_services">{{ item.name }}</option>
+								 </select>
+							  </div>
+							  <div class="col-md-2">
+								 <div class="input-group-append">
+									<button @click="addServiceRequest" class="btn btn-outline-secondary" type="button"><i class="fa fa-plus"></i></button>
+								 </div>
+							  </div>
+							  <hr>
+						   </div>
+						   <div class="row">
+							  <div class="col-md-12">
+								 <table class="table table-bordered">
+									<tr>
+									   <td></td>
+									   <td>Servicio</td>
+									   <td>Frecuencia</td>
+									</tr>
+									<tr v-if="post.list_services.length > 0" v-for="(item, i) in post.list_services">
+									   <td>
+										  <button class="btn btn-sm btn-secondary" @click="removeServiceRequest(i)">
+										  <i class="fa fa-times"></i>
+										  </button>
+									   </td>
+									   <td>{{ item.name }} </td>
+									   <td>
+										  <div class="form-group">
+											 <select class="form-control custom-select" v-model="item.repeat" name="repeat">
+												<option value="0">Elije una opcion...</option>
+												<option v-bind:value="item.id" v-for="item in repeats_services">{{ item.name }}</option>
+											 </select>
+										  </div>
+									   </td>
+									</tr>
+								 </table>
+							  </div>
+						   </div>
+						   <div class="row">
+							  <div class="col-lg-12">
+								 <p>
+									Toda la información, incluyendo precios, servicios, características, opciones, planos y disponibilidad están sujetos a cambio sin previo aviso. 
+								 </p>
+							  </div>
+						   </div>
+						   <div class="row">
+							  <div class="col-lg-12">
+								 <div class="pull-right">
+									<button class="btn btn-success" id="btnSubmit" @click="createRequest">
+									<i class="fa fa-paper-plane"></i> 
+									Enviar Solicitud
+									</button>
+									<!-- <a class="btn btn-warning btn-lg" href="#" id="btnToTop"><i class="fa fa-arrow-up"></i> Top</a> -->
+								 </div>
+							  </div>
+						   </div>
+						</div>
+					 </div>
+				</div>
+			</div>
+		</div>
    </div>
+</template>
+<template id="page-me-accounts-list">
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<br>
+				   <div class="panel panel-default">
+					  <div class="panel-heading">Listado rápido - cuentas</div>
+					  <div class="panel-body">
+						<table class="table table-responsive">
+							<tr>
+								<th>ID</th>
+								<th>Tipo de Identificacion</th>
+								<th># de Identificacion</th>
+								<th>Nombre</th>
+								<th>Representante</th>
+								<th>Contacto</th>
+							</tr>
+							<tr v-for="post in posts">
+								<td>{{ $parent.zfill(post.id, 11) }}</td>
+								<td>{{ post.name }}</td>
+								<td>{{ post.identification_type.name }}</td>
+								<td>{{ post.identification_number }}</td>
+								<td>
+									{{ post.represent_legal.first_name }} 
+									{{ post.represent_legal.second_name }} 
+									{{ post.represent_legal.surname }} 
+									{{ post.represent_legal.second_surname }} 
+								</td>
+								<td>
+									{{ post.contact.first_name }} 
+									{{ post.contact.second_name }} 
+									{{ post.contact.surname }} 
+									{{ post.contact.second_surname }} 
+								</td>
+								<td>
+								   <router-link class="btn btn-sm btn-info" v-bind:to="{ name: 'me-account-view-page', params: { account_id: post.id } }">
+									  Ver
+								   </router-link>
+								</td>
+							</tr>
+						</table>
+					  </div>
+					  <div class="panel-footer">
+					  {{ accounts }}
+					  </div>
+				   </div>
+				</div>
+			 </div>
+		</div>
+	</div>
 </template>
 <template id="page-me-auditors-list">
-   <div>
-      <div class="container">
-         <div class="row">
-            <div class="col-md-12">
-				<br>
-               <div class="panel panel-default">
-                  <div class="panel-heading">Starfox221's Bio</div>
-                  <div class="panel-body"> A long description about me.</div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<br>
+				   <div class="panel panel-default">
+					  <div class="panel-heading">Listado rápido - auditores</div>
+					  <div class="panel-body">
+						<table class="table table-responsive">
+							<tr>
+								<th>ID</th>
+								<th>Nombre Completo</th>
+								<th>Cuenta</th>
+							</tr>
+							<tr v-for="post in posts">
+								<td>{{ $parent.zfill(post.id, 11) }}</td>
+								<td>{{ post.contact.first_name }} {{ post.contact.second_name }} {{ post.contact.surname }} {{ post.contact.second_surname }}</td>
+								<td>{{ post.client.name }}</td>
+							</tr>
+						</table>
+					  </div>
+					  <div class="panel-footer">
+					  {{ auditors }}
+					  </div>
+				   </div>
+				</div>
+			 </div>
+		</div>
+	</div>
 </template>
+<template id="page-me-contracts-list">
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<br>
+				   <div class="panel panel-default">
+					  <div class="panel-heading">Listado rápido - auditores</div>
+					  <div class="panel-body">
+						<table class="table table-responsive">
+							<tr>
+								<th>ID</th>
+								<th>Solicitud</th>
+								<th>Cotización</th>
+								<th>F. Creacion</th>
+								<th>Última Mod.</th>
+								<th>Estado</th>
+							</tr>
+							<tr v-for="post in posts">
+								<td>{{ $parent.zfill(post.id, 11) }}</td>
+								<td>{{ $parent.zfill(post.request, 11) }}</td>
+								<td>{{ $parent.zfill(post.quotation, 11) }}</td>
+								<td>{{ post.create }}</td>
+								<td>{{ post.update }}</td>
+								<td>{{ post.status.name }}</td>
+							</tr>
+						</table>
+					  </div>
+					  <div class="panel-footer">
+					  {{ contracts }}
+					  </div>
+				   </div>
+				</div>
+			 </div>
+		</div>
+	</div>
+</template>
+<template id="page-me-contacts-list">
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<br>
+				   <div class="panel panel-default">
+					  <div class="panel-heading">Listado rápido - contactos</div>
+					  <div class="panel-body">
+						<table class="table table-responsive">
+							<tr>
+								<th>ID</th>
+								<th>Nombre Completo</th>
+								<th>Telefono</th>
+								<th>Movil</th>
+								<th>Correo Electronico</th>
+							</tr>
+							<tr v-for="post in posts">
+								<td>{{ $parent.zfill(post.id, 11) }}</td>
+								<td>
+									{{ post.first_name }} 
+									{{ post.second_name }} 
+									{{ post.surname }} 
+									{{ post.second_surname }} 
+								</td>
+								<td>{{ post.phone }}</td>
+								<td>{{ post.phone_mobile }}</td>
+								<td>{{ post.mail }}</td>
+							</tr>
+						</table>
+					  </div>
+					  <div class="panel-footer">
+					  {{ contacts }}
+					  </div>
+				   </div>
+				</div>
+			 </div>
+		</div>
+	</div>
+</template>
+<template id="page-me-invoices-list">
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<br>
+				   <div class="panel panel-default">
+					  <div class="panel-heading">Listado rápido - facturas</div>
+					  <div class="panel-body">
+						<table class="table table-responsive">
+							<tr>
+								<th>ID</th>
+								<th>Fecha</th>
+								<th>Vigencia</th>
+								<th>Estado</th>
+								<th>Total</th>
+							</tr>
+							<tr v-for="post in posts">
+								<td>{{ $parent.zfill(post.id, 11) }}</td>
+								<td>{{ post.create }}</td>
+								<td>{{ post.validity }}</td>
+								<td>{{ post.status.name }}</td>
+								<td>$ {{ $parent.formatMoney(post.total) }} COP</td>
+							</tr>
+						</table>
+					  </div>
+					  <div class="panel-footer">
+					  {{ invoices }}
+					  </div>
+				   </div>
+				</div>
+			 </div>
+		</div>
+	</div>
+</template>
+<template id="page-me-quotations-list">
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<br>
+				   <div class="panel panel-default">
+					  <div class="panel-heading">Listado rápido - Propuestas</div>
+					  <div class="panel-body">
+						<table class="table table-responsive">
+							<tr>
+								<th>ID</th>
+								<th>Solicitud</th>
+								<th>Estado</th>
+								<th>Fecha</th>
+								<th>Última Mod.</th>
+								<th>Vigencia</th>
+							</tr>
+							<tr v-for="post in posts">
+								<td>{{ $parent.zfill(post.id, 11) }}</td>
+								<td>{{ $parent.zfill(post.request, 11) }}</td>
+								<td>{{ post.status.name }}</td>
+								<td>{{ post.create }}</td>
+								<td>{{ post.update }}</td>
+								<td>{{ post.validity }}</td>
+							</tr>
+						</table>
+					  </div>
+					  <div class="panel-footer">
+					  {{ quotations }}
+					  </div>
+				   </div>
+				</div>
+			 </div>
+		</div>
+	</div>
+</template>
+<template id="page-me-redicateds-list">
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<br>
+				   <div class="panel panel-default">
+					  <div class="panel-heading">Listado rápido - Radicados</div>
+					  <div class="panel-body">
+						<table class="table table-responsive">
+							<tr>
+								<th>ID</th>
+								<th>Consecutivo</th>
+								<th>Nombre</th>
+								<th>F. Inicio</th>
+								<th>F. Fin</th>
+							</tr>
+							<tr v-for="post in posts">
+								<td>{{ $parent.zfill(post.id, 11) }}</td>
+								<td>{{ post.consecutive }}</td>
+								<td>{{ post.name }}</td>
+								<td>{{ post.date_start }}</td>
+								<td>{{ post.date_end }}</td>
+							</tr>
+						</table>
+					  </div>
+					  <div class="panel-footer">
+					  {{ redicateds }}
+					  </div>
+				   </div>
+				</div>
+			 </div>
+		</div>
+	</div>
+</template>
+<template id="page-me-requests-list">
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<br>
+				   <div class="panel panel-default">
+					  <div class="panel-heading">Listado rápido - Solicitudes</div>
+					  <div class="panel-body">
+						<table class="table table-responsive">
+							<tr>
+								<th>ID</th>
+								<th>Contacto</th>
+								<th>Direccion</th>
+								<th></th>
+							</tr>
+							<tr v-for="post in posts">
+								<td>{{ $parent.zfill(post.id, 11) }}</td>
+								<td>
+									{{ post.contact.first_name }}
+									{{ post.contact.second_name }}
+									{{ post.contact.surname }}
+									{{ post.contact.second_surname }}
+								</td>
+								<td>
+									{{ post.address_invoice }}, {{ post.address_invoice_city.name }}, {{ post.address_invoice_department.name }}
+								</td>
+								<td>
+								   <router-link class="btn btn-sm btn-info" v-bind:to="{ name: 'me-requests-view-page', params: { account_id: post.client, request_id: post.id } }">
+									  Ver
+								   </router-link>
+								</td>
+							</tr>
+						</table>
+					  </div>
+					  <div class="panel-footer">
+					  {{ requests }}
+					  </div>
+				   </div>
+				</div>
+			 </div>
+		</div>
+	</div>
+</template>
+<template id="page-me-users-list">
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<br>
+				   <div class="panel panel-default">
+					  <div class="panel-heading">Listado rápido - Usuarios</div>
+					  <div class="panel-body">
+						<table class="table table-responsive">
+							<tr>
+								<th>ID</th>
+								<th>Usuario</th>
+								<th>Perfil</th>
+							</tr>
+							<tr v-for="post in posts">
+								<td>{{ $parent.zfill(post.id, 11) }}</td>
+								<td>
+									{{ post.user.username }}
+								</td>
+								<td>
+									{{ post.permissions.name }}
+								</td>
+							</tr>
+						</table>
+					  </div>
+					  <div class="panel-footer">
+					  {{ users }}
+					  </div>
+				   </div>
+				</div>
+			 </div>
+		</div>
+	</div>
+</template>
+<template id="page-me-users-pending-list">
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<br>
+				   <div class="panel panel-default">
+					  <div class="panel-heading">Listado rápido - Usuarios por aprobacion</div>
+					  <div class="panel-body">
+						<table class="table table-responsive">
+							<tr>
+								<th>ID</th>
+								<th>Nombre completo</th>
+								<th>Telefono</th>
+								<th>Movil</th>
+								<th>Correo Electronico</th>
+								<th>Perfil</th>
+							</tr>
+							<tr v-for="post in posts">
+								<td>{{ $parent.zfill(post.id, 11) }}</td>
+								<td>{{ post.names }} {{ post.surname }} {{ post.second_surname }}</td>
+								<td>{{ post.phone }}</td>
+								<td>{{ post.mobile }}</td>
+								<td>{{ post.mail }}</td>
+								<td>{{ post.permissions.name }}</td>
+							</tr>
+						</table>
+					  </div>
+					  <div class="panel-footer">
+					  {{ users_pending }}
+					  </div>
+				   </div>
+				</div>
+			 </div>
+		</div>
+	</div>
+</template>
+
+
+
+
 <!-- // Estilos CSS -->
 <style scope="page-me-accounts">
    center>img{

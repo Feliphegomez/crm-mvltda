@@ -90,18 +90,6 @@ var PageMeHome = Vue.extend({
     template: '#page-me-home',
     data: function() {
         return {
-			busineses: [],
-			auditors: [],
-			contracts: [],
-			contacts: [],
-			invoices: [],
-			quotations: [],
-			redicateds: [],
-			requests: [],
-			services_requests: [],
-			users: [],
-			users_pending: [],
-			users_pending: [],
         };
     },
     created: function() {
@@ -119,44 +107,7 @@ var PageMeHome = Vue.extend({
 		find: function(){
 			var self = this;
 			
-			FG.api('GET','/users_clients', {
-				filter: [
-					'user,eq,' + self.$root.$data.authResponse.userID,
-				],
-				join: [
-					'clients,auditors_clients',
-					'clients,contracts_clients',
-					'clients,crew_clients',
-					'clients,invoices_clients',
-					'clients,quotations',
-					'clients,redicated_clients',
-					'clients,requests',
-					'clients,services_requests',
-					'clients,users_clients',
-					'clients,users_clients_pending',
-				]
-			}, function(r){
-				console.log(r);
-				
-				r.forEach(function(elem){
-					console.log(elem);
-					console.log(elem.client.contracts_clients.length);
-					
-					
-					 if(self.busineses.indexOf(elem.client.id) < 0){ self.busineses.push(elem.client.id); };
-					
-					if(elem.client.auditors_clients.length > 0){ elem.client.auditors_clients.forEach(function(auditor){ if(self.auditors.indexOf(auditor.id) < 0){ self.auditors.push(auditor.id); }; }); };
-					if(elem.client.contracts_clients.length > 0){ elem.client.contracts_clients.forEach(function(contract){ if(self.contracts.indexOf(contract.id) < 0){ self.contracts.push(contract.id); }; }); };
-					if(elem.client.crew_clients.length > 0){ elem.client.crew_clients.forEach(function(contact){ if(self.contacts.indexOf(contact.id) < 0){ self.contacts.push(contact.id); }; }); };
-					if(elem.client.invoices_clients.length > 0){ elem.client.invoices_clients.forEach(function(invoice){ if(self.invoices.indexOf(invoice.id) < 0){ self.invoices.push(invoice.id); }; }); };
-					if(elem.client.quotations.length > 0){ elem.client.quotations.forEach(function(quotation){ if(self.quotations.indexOf(quotation.id) < 0){ self.quotations.push(quotation.id); }; }); };
-					if(elem.client.redicated_clients.length > 0){ elem.client.redicated_clients.forEach(function(redicated){ if(self.redicateds.indexOf(redicated.id) < 0){ self.redicateds.push(redicated.id); }; }); };
-					if(elem.client.requests.length > 0){ elem.client.requests.forEach(function(request){ if(self.requests.indexOf(request.id) < 0){ self.requests.push(request.id); }; }); };
-					if(elem.client.services_requests.length > 0){ elem.client.services_requests.forEach(function(service){ if(self.services_requests.indexOf(service.id) < 0){ self.services_requests.push(service.id); }; }); };
-					if(elem.client.users_clients.length > 0){ elem.client.users_clients.forEach(function(user){ if(self.users.indexOf(user.id) < 0){ self.users.push(user.id); }; }); };
-					if(elem.client.users_clients_pending.length > 0){ elem.client.users_clients_pending.forEach(function(user_pending){ if(self.users_pending.indexOf(user_pending.id) < 0){ self.users_pending.push(user_pending.id); }; }); };
-				});
-			});
+			
 			
 			
 		}
@@ -940,9 +891,8 @@ var PageMeAuditorsList = Vue.extend({
 	template: '#page-me-auditors-list',
 	data: function () {
 		return {
-			post: {
-			},
-			posts: []
+			auditors: [],
+			posts: [],
 		}
 	},
 	create: function () {
@@ -957,11 +907,542 @@ var PageMeAuditorsList = Vue.extend({
 		find: function(){
 			var self = this;
 			
-			//$(function(){ $(".date").datepicker({ autoclose: true, todayHighlight: true }); });
+			FG.api('GET','/users_clients', {
+				filter: [
+					'user,eq,' + self.$root.$data.authResponse.userID,
+				],
+				join: [
+					'clients,auditors_clients',
+				]
+			}, function(r){
+				console.log(r);
+				
+				r.forEach(function(elem){
+					console.log(elem);
+					
+					if(elem.client.auditors_clients.length > 0){
+						 elem.client.auditors_clients.forEach(function(auditor){
+							 if(self.auditors.indexOf(auditor.id) < 0){
+								 self.auditors.push(auditor.id);
+							 };
+						 });
+					};
+					
+				});
+				
+				FG.api('GET','/auditors_clients/' + self.auditors.join(','), {
+					join: [
+						'contacts',
+						'clients'
+					],
+					filter: [
+						// 'user,eq,' + self.$root.$data.authResponse.userID,
+					],
+				}, function(r2){
+					console.log(r2);
+					self.posts = r2;
+				});
+			});
 		},
 	}
 });
 
+var PageMeAccountsList = Vue.extend({
+	template: '#page-me-accounts-list',
+	data: function () {
+		return {
+			accounts: [],
+			posts: [],
+		}
+	},
+	create: function () {
+		var self = this;
+
+	},
+	mounted: function () {
+		var self = this;
+		self.find();
+	},
+	methods: {
+		find: function(){
+			var self = this;
+			
+			FG.api('GET','/users_clients', {
+				filter: [
+					'user,eq,' + self.$root.$data.authResponse.userID,
+				],
+				join: [
+					'clients',
+					'clients,types_identifications',
+					'clients,contacts',
+				]
+			}, function(r){
+				r.forEach(function(elem){ if(elem.client.id > 0){
+					console.log(elem.client);
+					 self.accounts.push(elem.client.id);
+					 self.posts.push(elem.client);
+				}; });
+				
+			});
+		},
+	}
+});
+
+var PageMeContractsList = Vue.extend({
+	template: '#page-me-contracts-list',
+	data: function () {
+		return {
+			contracts: [],
+			posts: [],
+		}
+	},
+	create: function () {
+		var self = this;
+
+	},
+	mounted: function () {
+		var self = this;
+		self.find();
+	},
+	methods: {
+		find: function(){
+			var self = this;
+			
+			
+			
+			FG.api('GET','/users_clients', {
+				filter: [
+					'user,eq,' + self.$root.$data.authResponse.userID,
+				],
+				join: [
+					'clients',
+					'clients,contracts_clients',
+					'clients,contracts_clients,status_contracts_clients',
+					// 'clients,contracts_clients,requests',
+					// 'clients,contracts_clients,quotations',
+				]
+			}, function(r){
+				r.forEach(function(elem){
+					if(elem.client.contracts_clients.length > 0){
+						elem.client.contracts_clients.forEach(function(contract){
+							if(self.contracts.indexOf(contract.id) < 0){
+								self.contracts.push(contract.id);
+								self.posts.push(contract);
+							};
+						});
+					};
+				});
+				
+			});
+		},
+	}
+});
+
+var PageMeContactsList = Vue.extend({
+	template: '#page-me-contacts-list',
+	data: function () {
+		return {
+			contacts: [],
+			posts: [],
+		}
+	},
+	create: function () {
+		var self = this;
+
+	},
+	mounted: function () {
+		var self = this;
+		self.find();
+	},
+	methods: {
+		find: function(){
+			var self = this;
+			
+			
+			
+			FG.api('GET','/users_clients', {
+				filter: [
+					'user,eq,' + self.$root.$data.authResponse.userID,
+				],
+				join: [
+					'clients',
+					'clients,crew_clients',
+				]
+			}, function(r){
+				
+				r.forEach(function(elem){
+					if(elem.client.crew_clients.length > 0){
+						elem.client.crew_clients.forEach(function(contact){
+							if(self.contacts.indexOf(contact.id) < 0){
+								self.contacts.push(contact.contact);
+							};
+						});
+					};
+				});
+				
+				FG.api('GET','/contacts/' + self.contacts.join(','), {
+					join: [
+						//'types_identifications',
+					],
+					filter: [
+						// 'user,eq,' + self.$root.$data.authResponse.userID,
+					],
+				}, function(r2){
+					console.log(r2);
+					self.posts = r2;
+				});
+			});
+		},
+	}
+});
+
+var PageMeInvoicesList = Vue.extend({
+	template: '#page-me-invoices-list',
+	data: function () {
+		return {
+			invoices: [],
+			posts: [],
+		}
+	},
+	create: function () {
+		var self = this;
+
+	},
+	mounted: function () {
+		var self = this;
+		self.find();
+	},
+	methods: {
+		find: function(){
+			var self = this;
+			
+			
+			
+			FG.api('GET','/users_clients', {
+				filter: [
+					'user,eq,' + self.$root.$data.authResponse.userID,
+				],
+				join: [
+					'clients',
+					'clients,invoices_clients',
+					'clients,invoices_clients,status_invoices',
+				]
+			}, function(r){
+				
+				r.forEach(function(elem){
+					if(elem.client.invoices_clients.length > 0){ elem.client.invoices_clients.forEach(function(invoice){
+						if(self.invoices.indexOf(invoice.id) < 0){
+							self.posts.push(invoice);
+							self.invoices.push(invoice.id);
+						};
+					}); };
+				});
+				
+			});
+		},
+	}
+});
+	
+var PageMeQuotationsList = Vue.extend({
+	template: '#page-me-quotations-list',
+	data: function () {
+		return {
+			quotations: [],
+			posts: [],
+		}
+	},
+	create: function () {
+		var self = this;
+
+	},
+	mounted: function () {
+		var self = this;
+		self.find();
+	},
+	methods: {
+		find: function(){
+			var self = this;
+			
+			
+			
+			FG.api('GET','/users_clients', {
+				filter: [
+					'user,eq,' + self.$root.$data.authResponse.userID,
+				],
+				join: [
+					'clients',
+					'clients,quotations',
+					'clients,quotations,status_quotations',
+				]
+			}, function(r){
+				
+				r.forEach(function(elem){
+					if(elem.client.quotations.length > 0){ elem.client.quotations.forEach(function(quotation){
+						if(self.quotations.indexOf(quotation.id) < 0){
+							self.posts.push(quotation);
+							self.quotations.push(quotation.id);
+						};
+					}); };
+				});
+				
+			});
+		},
+	}
+});
+	
+var PageMeRedicatedsList = Vue.extend({
+	template: '#page-me-redicateds-list',
+	data: function () {
+		return {
+			redicateds: [],
+			posts: [],
+		}
+	},
+	create: function () {
+		var self = this;
+
+	},
+	mounted: function () {
+		var self = this;
+		self.find();
+	},
+	methods: {
+		find: function(){
+			var self = this;
+			
+			
+			
+			FG.api('GET','/users_clients', {
+				filter: [
+					'user,eq,' + self.$root.$data.authResponse.userID,
+				],
+				join: [
+					'clients',
+					'clients,redicated_clients',
+				]
+			}, function(r){
+				
+				r.forEach(function(elem){
+					if(elem.client.redicated_clients.length > 0){ elem.client.redicated_clients.forEach(function(redicated){
+						if(self.redicateds.indexOf(redicated.id) < 0){
+							self.posts.push(redicated);
+							self.redicateds.push(redicated.id);
+						};
+					}); };
+				});
+				
+			});
+		},
+	}
+});
+
+var PageMeRequestsList = Vue.extend({
+	template: '#page-me-requests-list',
+	data: function () {
+		return {
+			requests: [],
+			posts: [],
+		}
+	},
+	create: function () {
+		var self = this;
+
+	},
+	mounted: function () {
+		var self = this;
+		self.find();
+	},
+	methods: {
+		find: function(){
+			var self = this;
+			
+			
+			
+			FG.api('GET','/users_clients', {
+				filter: [
+					'user,eq,' + self.$root.$data.authResponse.userID,
+				],
+				join: [
+					'clients',
+					'clients,requests',
+					'clients,requests,contacts',
+					'clients,requests,geo_departments',
+					'clients,requests,geo_citys',
+				]
+			}, function(r){
+				
+				r.forEach(function(elem){
+					if(elem.client.requests.length > 0){ elem.client.requests.forEach(function(request){
+						if(self.requests.indexOf(request.id) < 0){
+							self.posts.push(request);
+							self.requests.push(request.id);
+						};
+					}); };
+				});
+				
+			});
+		},
+	}
+});
+
+var PageMeUsersList = Vue.extend({
+	template: '#page-me-users-list',
+	data: function () {
+		return {
+			users: [],
+			posts: [],
+		}
+	},
+	create: function () {
+		var self = this;
+
+	},
+	mounted: function () {
+		var self = this;
+		self.find();
+	},
+	methods: {
+		find: function(){
+			var self = this;
+			
+			
+			
+			FG.api('GET','/users_clients', {
+				filter: [
+					'user,eq,' + self.$root.$data.authResponse.userID,
+				],
+				join: [
+					'clients',
+					'clients,users_clients',
+					'clients,users_clients,users',
+					'clients,users_clients,permissions',
+				]
+			}, function(r){
+				
+				r.forEach(function(elem){
+					if(elem.client.users_clients.length > 0){ elem.client.users_clients.forEach(function(user){
+						if(self.users.indexOf(user.id) < 0){
+							self.posts.push(user);
+							self.users.push(user.id);
+						};
+					}); };
+				});
+				
+			});
+		},
+	}
+});
+	
+var PageMeUsersPendingList = Vue.extend({
+	template: '#page-me-users-pending-list',
+	data: function () {
+		return {
+			users_pending: [],
+			posts: [],
+		}
+	},
+	create: function () {
+		var self = this;
+
+	},
+	mounted: function () {
+		var self = this;
+		self.find();
+	},
+	methods: {
+		find: function(){
+			var self = this;
+			
+			
+			
+			FG.api('GET','/users_clients', {
+				filter: [
+					'user,eq,' + self.$root.$data.authResponse.userID,
+				],
+				join: [
+					'clients',
+					'clients,users_clients_pending',
+					'clients,users_clients_pending,permissions',
+				]
+			}, function(r){
+				
+				r.forEach(function(elem){
+					if(elem.client.users_clients_pending.length > 0){ elem.client.users_clients_pending.forEach(function(user_pending){
+						if(self.users_pending.indexOf(user_pending.id) < 0){
+							self.posts.push(user_pending);
+							self.users_pending.push(user_pending.id);
+						};
+					}); };
+				});
+				
+			});
+		},
+	}
+});
+
+var Sidebar_meAccount_Component = Vue.component('component-sidebar-meaccount', {
+	template: '#component-sidebar-meaccount',
+	props: [
+		''
+	],
+	data: function () {
+		return {
+			Me: {
+				id: this.$root.$data.authResponse.userID
+			},
+			busineses: [],
+			auditors: [],
+			contracts: [],
+			contacts: [],
+			invoices: [],
+			quotations: [],
+			redicateds: [],
+			requests: [],
+			users: [],
+			users_pending: [],
+		};
+	},
+	mounted: function () {
+		var self = this;
+		self.find();
+	},
+	methods: {
+		find: function(){
+			var self = this;
+			FG.api('GET','/users_clients', {
+				filter: [
+					'user,eq,' + self.$root.$data.authResponse.userID,
+				],
+				join: [
+					'clients,auditors_clients',
+					'clients,contracts_clients',
+					'clients,crew_clients',
+					'clients,invoices_clients',
+					'clients,quotations',
+					'clients,redicated_clients',
+					'clients,requests',
+					'clients,services_requests',
+					'clients,users_clients',
+					'clients,users_clients_pending',
+				]
+			}, function(r){
+				
+				r.forEach(function(elem){
+					if(self.busineses.indexOf(elem.client.id) < 0){ self.busineses.push(elem.client.id); };
+					if(elem.client.auditors_clients.length > 0){ elem.client.auditors_clients.forEach(function(auditor){ if(self.auditors.indexOf(auditor.id) < 0){ self.auditors.push(auditor.id); }; }); };
+					if(elem.client.contracts_clients.length > 0){ elem.client.contracts_clients.forEach(function(contract){ if(self.contracts.indexOf(contract.id) < 0){ self.contracts.push(contract.id); }; }); };
+					if(elem.client.crew_clients.length > 0){ elem.client.crew_clients.forEach(function(contact){ if(self.contacts.indexOf(contact.id) < 0){ self.contacts.push(contact.id); }; }); };
+					if(elem.client.invoices_clients.length > 0){ elem.client.invoices_clients.forEach(function(invoice){ if(self.invoices.indexOf(invoice.id) < 0){ self.invoices.push(invoice.id); }; }); };
+					if(elem.client.quotations.length > 0){ elem.client.quotations.forEach(function(quotation){ if(self.quotations.indexOf(quotation.id) < 0){ self.quotations.push(quotation.id); }; }); };
+					if(elem.client.redicated_clients.length > 0){ elem.client.redicated_clients.forEach(function(redicated){ if(self.redicateds.indexOf(redicated.id) < 0){ self.redicateds.push(redicated.id); }; }); };
+					if(elem.client.requests.length > 0){ elem.client.requests.forEach(function(request){ if(self.requests.indexOf(request.id) < 0){ self.requests.push(request.id); }; }); };
+					if(elem.client.users_clients.length > 0){ elem.client.users_clients.forEach(function(user){ if(self.users.indexOf(user.id) < 0){ self.users.push(user.id); }; }); };
+					if(elem.client.users_clients_pending.length > 0){ elem.client.users_clients_pending.forEach(function(user_pending){ if(self.users_pending.indexOf(user_pending.id) < 0){ self.users_pending.push(user_pending.id); }; }); };
+				});
+			});
+		}
+	}
+});
 
 var Menu_meAccount_Component = Vue.component('component-menu-meaccount', {
 	template: '#component-menu-meaccount',
@@ -1002,20 +1483,20 @@ var banner_page = Vue.component('banner-page', {
 	created: function(){
 		console.log('created Vue.component banner_page');
 		var self = this;
-		console.log(self.$root.status);
-		console.log(self.status);
+		// console.log(self.$root.status);
+		// console.log(self.status);
 	},
 	mounted: function(){
 		console.log('mounted Vue.component banner_page');
 		var self = this;
 		self.$root.menuScripts();
-		console.log(self.$root.status);
-		console.log(self.status);
+		// console.log(self.$root.status);
+		// console.log(self.status);
 	},
 	methods: {
 	}
 });	
-	
+
 var router = new VueRouter({
     routes: [
 		{ path: '/', component: PageHome, name: 'home-page' },
@@ -1031,7 +1512,16 @@ var router = new VueRouter({
 		{ path: '/me/account/:account_id/requests', component: PageMeRequets, name: 'me-requests-page' },
 		{ path: '/me/account/:account_id/requests/add', component: PageMeRequetsAdd, name: 'me-requests-add-page' },
 		{ path: '/me/account/:account_id/requests/:request_id', component: PageMeRequetsView, name: 'me-requests-view-page' },
-		{ path: '/me/account/list/auditors', component: PageMeAuditorsList, name: 'me-auditors-list-page' },
+		{ path: '/me/account/accounts/list', component: PageMeAccountsList, name: 'me-accounts-list-page' },
+		{ path: '/me/account/auditors/list', component: PageMeAuditorsList, name: 'me-auditors-list-page' },
+		{ path: '/me/account/contracts/list', component: PageMeContractsList, name: 'me-contracts-list-page' },
+		{ path: '/me/account/contacts/list', component: PageMeContactsList, name: 'me-contacts-list-page' },
+		{ path: '/me/account/invoices/list', component: PageMeInvoicesList, name: 'me-invoices-list-page' },
+		{ path: '/me/account/quotations/list', component: PageMeQuotationsList, name: 'me-quotations-list-page' },
+		{ path: '/me/account/redicateds/list', component: PageMeRedicatedsList, name: 'me-redicateds-list-page' },
+		{ path: '/me/account/requests/list', component: PageMeRequestsList, name: 'me-requests-list-page' },
+		{ path: '/me/account/users/list', component: PageMeUsersList, name: 'me-users-list-page' },
+		{ path: '/me/account/users-pending/list', component: PageMeUsersPendingList, name: 'me-users-pending-list-page' },
     ]
 });	
 
@@ -1054,6 +1544,7 @@ var app = new Vue({
 	},
 	router: router,
 	components: {
+		'component-sidebar-meaccount': Sidebar_meAccount_Component,
 		'component-menu-meaccount': Menu_meAccount_Component,
 		'banner-page': banner_page
 	},

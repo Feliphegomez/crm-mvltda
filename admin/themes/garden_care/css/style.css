@@ -3190,3 +3190,8 @@ section.footer-w3 ul.tweet-agile li p.tweet-p2 {
 	}
 }
 /*--//responsive--*/
+
+
+.cursor-pointer {
+	cursor: pointer;
+}
