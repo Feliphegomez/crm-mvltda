@@ -619,9 +619,29 @@ var PageMeRequetsView = Vue.extend({
 	template: '#page-me-requests-view',
 	data: function () {
 		return {
-			urlMapSearchNewIframe: '/preload.html',
 			post: {
 				id: this.$route.params.request_id,
+				client: this.$route.params.account_id,
+				contact: {
+					"id": 0,
+					"identification_type": 0,
+					"identification_number": "",
+					"first_name": "",
+					"second_name": "",
+					"surname": "",
+					"second_surname": "",
+					"phone": "",
+					"phone_mobile": "",
+					"mail": "",
+					"department": 0,
+					"city": 0,
+					"address": "",
+					"geo_address": ""
+				},
+				request_notes: '',
+				addresses: [],
+			
+				/*
 				client: this.$route.params.account_id,
 				"contact": {
 					"id": 0,
@@ -654,7 +674,11 @@ var PageMeRequetsView = Vue.extend({
 				"request_notes": "",
 				"services_requests": [],
 				"quotations": [],
+				*/
 			},
+			geo_search: {
+				urlMapSearchNewIframe: ''
+			}
 		};
 	},
 	create: function () {
@@ -663,28 +687,21 @@ var PageMeRequetsView = Vue.extend({
 	mounted: function () {
 		var self = this;
 		console.log('Creando Requests Single');
-
 		self.find();
 	},
 	methods: {
 		find: function(){
 			var self = this;
-
 			FG.api('GET', '/requests/' + self.post.id, {
 				filter: [
 					'client,eq,' + this.$route.params.account_id,
 				],
 				join: [
-					'geo_departments',
-					'geo_citys',
 					'contacts',
-					'services_requests,services',
-					'services_requests,repeats_services',
-					'quotations',
-					'quotations,status_quotations',
 				],
 			}, function (r) {
 				self.post = r;
+				self.post.addresses = JSON.parse(r.addresses);
 
 				var searchData = {
 					'q': self.post.address_invoice,
@@ -707,7 +724,7 @@ var PageMeRequetsView = Vue.extend({
 							var url = 'https://www.openstreetmap.org/export/embed.html?bbox=' + cord2 + ',' + cord2 + '&marker=' + cord1;
 
 							self.geo_search.urlMapSearchNewIframe = url;
-							$("#preload").hide();
+							
 						}
 					else
 						{
@@ -783,7 +800,7 @@ var PageMeRequetsAdd = Vue.extend({
 					var services_address = [];
 					
 					self.form_add_address.services.forEach(function(elem,key){
-						if(elem != 'undefined' && elem != undefined && elem != false && elem.repeat != 'undefined' && elem.repeat != undefined) {
+						if(elem != 'undefined' && elem != undefined && elem != false && elem.repeat != 'undefined' && elem.repeat != undefined && elem.repeat.id != undefined) {
 							services_address.push(elem);
 						};
 					});
@@ -834,6 +851,7 @@ var PageMeRequetsAdd = Vue.extend({
 					sendTemp.client = Number(formValues.client);
 					sendTemp.contact = Number(formValues.contact);
 					sendTemp.addresses = JSON.stringify(formValues.addresses);
+					sendTemp.request_notes = formValues.request_notes;
 					
 					FG.api('POST', '/requests', sendTemp, function (response) {
 						console.log(response);
@@ -1844,6 +1862,7 @@ var PageMeRequestsList = Vue.extend({
 				r.forEach(function(elem){
 					if(elem.client.requests.length > 0){ elem.client.requests.forEach(function(request){
 						if(self.requests.indexOf(request.id) < 0){
+							request.addresses = JSON.parse(request.addresses);
 							self.posts.push(request);
 							self.requests.push(request.id);
 						};

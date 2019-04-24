@@ -1470,55 +1470,188 @@
 						<div class="col-md-12">
 						   <component-menu-meaccount></component-menu-meaccount>
 						</div>
-								<div class="col-md-8">
+						<b-col sm="12">
+							<div style="margin-left:auto; margin-right:auto; width:95%;"><br/>
+								<div class="col-md-12">
+									<div class="panel panel-default">
+										<div class="panel-heading">
+											<h3 class="panel-title">Solicitud #: {{ post.client }}{{ $parent.zfill(post.id, 11) }}</h3>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="row">
+										<div class="col-md-8">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h3 class="panel-title">Contacto</h3>
+												</div>
+												<table class="table table-bordered">
+													<tr>
+														<td class="col-xs-3">Nombres</td>
+														<td>
+															{{ post.contact.first_name }} {{ post.contact.second_name }} 
+														</td>
+														<td class="col-xs-3">Apellidos</td>
+														<td>
+															{{ post.contact.surname }} {{ post.contact.second_surname }} 
+														</td>
+													</tr>
+													 <tr>
+														<td class="col-xs-3">Telefono Fijo</td>
+														<td>{{ post.contact.phone }}</td>
+														<td class="col-xs-3">Telefono Movil</td>
+														<td>{{ post.contact.phone_mobile }}</td>
+													</tr>
+													 <tr>
+														<td class="col-xs-3">Correo Electronico</td>
+														<td>{{ post.contact.mail }}</td>
+													</tr>
+												</table>
+											</div>
+										</div>
+										<div class="col-md-4">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h3 class="panel-title">Notas / Observaciones</h3>
+												</div>
+												<div class="panel-body">
+													<p>{{ post.request_notes }}</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div> 
+								<div class="col-md-12">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="panel panel-default">
+								 			  <div class="panel-heading">
+												<h3 class="panel-title">Direcciones y Servicios</h3>
+											  </div>
+													  
+												<ul class="list-unstyled text-left multilevels">
+													<li v-for="address in post.addresses">
+														<ul>
+															<li><b>{{ address.address }}</b>
+															</li>
+															<li v-for="service in address.services">
+																<ul>
+																	<li>• {{ service.name }}</li>
+																	<li>
+																		<ul>
+																			<li><span>{{ service.repeat.name }}</span></li>
+																		</ul>
+																	</li>
+																</ul>
+															</li>
+														</ul>
+													</li>
+												</ul>
+												
+											  <table class="table table-bordered">
+												<tr>
+													<td class="col-xs-3">Name of Traveller(s)</td>
+													<td><input class="form-control"></input></td>
+												</tr>
+												 <tr>
+													<td class="col-xs-3">Department</td>
+													<td><input class="form-control"></input></td>
+												</tr>
+												 <tr>
+													<td class="col-xs-3">Job No / Q Number</td>
+													<td><input class="form-control"></input></td>
+												</tr>
+												 <tr>
+													<td class="col-xs-3">Description of Trip</td>
+													<td><textarea class="form-control"></textarea></td>
+												</tr>
+											  </table>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="panel panel-default">
+								 			  <div class="panel-heading">
+												<h3 class="panel-title">Pre-Approval</h3>
+											  </div>
+											  <table class="table table-bordered">
+												<tr>
+													<td class="col-xs-3">Name of Traveller(s)</td>
+													<td><input class="form-control"></input></td>
+												</tr>
+												 <tr>
+													<td class="col-xs-3">Department</td>
+													<td><input class="form-control"></input></td>
+												</tr>
+												 <tr>
+													<td class="col-xs-3">Job No / Q Number</td>
+													<td><input class="form-control"></input></td>
+												</tr>
+												 <tr>
+													<td class="col-xs-3">Description of Trip</td>
+													<td><textarea class="form-control"></textarea></td>
+												</tr>
+											  </table>
+											</div>
+										</div>
+									</div>
+							<div class="row">
+							  <div class="col-md-6">
+								<div class="panel panel-default">
+							  <div class="panel-heading">
+								<h3 class="panel-title">Car Hire</h3>
+							  </div>
+							  <table class="table table-bordered">
+								<tr>
+									<td class="col-xs-3">Company (if known)</td>
+									<td><input class="form-control"></input></td>
+											 <td class="col-xs-3">Car Type (if known)</td>
+									<td><input class="form-control"></input></td>
+								</tr>
+								 <tr>
+									<td class="col-xs-3">City/Town</td>
+									<td><input class="form-control"></input></td>
+											 <td class="col-xs-3">Country</td>
+									<td><input class="form-control"></input></td>
+								</tr>
+								 <tr>
+									<td class="col-xs-3">Drop Off Location</td>
+									<td><input class="form-control"></input></td>
+									<td class="col-xs-3">Date and Time</td>
+									<td><input class="form-control"></input></td>
+								</tr>
+								 <tr>
+									<td class="col-xs-3">Collection Location</td>
+									<td><input class="form-control"></input></td>
+									<td class="col-xs-3">Date and Time</td>
+									<td><input class="form-control"></input></td>
+								</tr>
+								   <tr>
+									<td class="col-xs-3">Estimated Costs</td>
+									<td colspan="3"><textarea class="form-control"></textarea></td>
 									
-								   <div class="panel panel-default">
-									  <div class="panel-heading">INFORMACION BASICA</div>
-									  <div class="panel-body">
-										   <div class="row">
-											  <div class="col-md-12">
-												 <div class="form-group">
-													<label class="control-label">Contacto de la Solicitud</label>
-													{{ post.contact.first_name }} {{ post.contact.second_name }} {{ post.contact.surname }} {{ post.contact.second_surname }} 
-												 </div>
-											  </div>
-											  <div class="col-md-12">
-												 <hr>
-												 <h4>Direccion de Facturacion</h4>
-												 <hr>
-											  </div>
-											  <div class="col-md-6">
-												 <div class="form-group">
-													<label class="control-label">Departamento</label>
-													{{ post.address_invoice_department.name }}
-												 </div>
-											  </div>
-											  <div class="col-md-6">
-												 <div class="form-group">
-													<label class="control-label">Ciudad</label>
-													{{ post.address_invoice_city.name }}
-												 </div>
-											  </div>
-											  <div class="col-md-12">
-												 <div class="form-group">
-													<label class="control-label">Direccion del Servicio</label>
-													{{ post.address_invoice }}
-												 </div>
-											  </div>
-											  <div class="col-md-12">
-												 <div class="form-group">
-													<label class="control-label">Notas de la Solicitud</label>
-													{{ post.request_notes }}
-												 </div>
-											  </div>
-											  <div class="col-md-12">
-												 <iframe frameborder="0" style="width: 100%;height: 350px;" v-bind:src="urlMapSearchNewIframe"></iframe>
-											  </div>
-										   </div>
-									  </div>
-									  <div class="panel-footer">
-									  </div>
-								   </div>
+								</tr>
+							  </table>
+							</div>
+							</div>
+							<div class="col-md-6"><button type="submit" class="btn btn-success btn-lg">Submit Travel & Accommodation Request</button></div>
+								</div>
+							</div>
+							</div>
+						</b-col>
+						<b-col sm="12">
+							<div class="col-sm-12">
+								<b-card class="mt-3">
+								  <pre class="m-0">{{ post }}</pre>
+								</b-card>
+							</div>
+						</b-col>
+							<!-- //
+								<div class="col-md-8">
 								   <div class="panel panel-default">
 									  <div class="panel-heading">PROPUESTAS ({{ post.quotations.length }})</div>
 									  <div class="panel-body">
@@ -1576,6 +1709,7 @@
 									  </div>
 								   </div>
 								</div>
+								-->
 					 </div>
 				</div>
 			</div>
@@ -1594,13 +1728,6 @@
 					<b-row>
 						<b-col sm="12">
 						   <component-menu-meaccount></component-menu-meaccount>
-						</b-col>
-						<b-col sm="12">
-							<div class="col-sm-12">
-								<b-card class="mt-3">
-								  <pre class="m-0">{{ form }}</pre>
-								</b-card>
-							</div>
 						</b-col>
 						<b-col sm="7">
 							<b-form @submit="onSubmit" @reset="onReset" v-if="show">
@@ -2700,7 +2827,24 @@
 										{{ row.item.contact.second_surname }} 
 									</template>
 									<template slot="addresses" slot-scope="row">
-										{{ row.item.addresses }} 
+										<ul class="list-unstyled text-left multilevels">
+											<li v-for="address in row.item.addresses">
+												<ul>
+													<li><b>{{ address.address }}</b>
+													</li>
+													<li v-for="service in address.services">
+														<ul>
+															<li>• {{ service.name }}</li>
+															<li>
+																<ul>
+																	<li><span>{{ service.repeat.name }}</span></li>
+																</ul>
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+										</ul>
 									</template>
 									
 									<template slot="actions" slot-scope="row">										
