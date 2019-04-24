@@ -1,69 +1,102 @@
 <div class="body-page" id="app">
-   <banner-page></banner-page>
-   <router-view></router-view>
+	<banner-page></banner-page>
+	<div class="container">
+		<!-- // 
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2">
+				<br>
+				<b-alert show dismissible> Tu estado Actual: {{ status }}! </b-alert>
+			</div>
+		</div>
+		-->
+		<div class="row">
+			<div class="col-sm-12">
+				<router-view></router-view>
+			</div>
+		</div>
+	</div>
 </div>
 <template id="component-sidebar-meaccount">
 	<div>
-		<hr>
 		<div class="custom-collapse">
-		  <button class="collapse-toggle visible-xs-no btn btn-sm btn-primary " type="button" data-toggle="collapse" data-parent="custom-collapse" data-target="#side-menu-collapse">
-			  <span class="fa fa-list"></span>
-			  <span class="icon-bar"></span>
-			  <span class="icon-bar"></span>
-			  <span class="icon-bar"></span>
-		  </button> 
-		  <button class="collapse-toggle visible-xsno- btn btn-sm btn-primary " type="button" data-toggle="collapse" data-parent="custom-collapse" data-target="#side-menu-collapse-2">
-			  <span class="fa fa-plus"></span>
-			  <span class="icon-bar"></span>
-			  <span class="icon-bar"></span>
-			  <span class="icon-bar"></span>
-		  </button> 
-		  <ul class="list-group collapse" id="side-menu-collapse">
-			<router-link v-bind:to="{ name: 'me-home-page' }" tag="li" class="list-group-item dropdown-toggle text-muted cursor-pointer">
-				<i class="fa fa-dashboard fa-1x"></i> Inicio
-			</router-link>
-			<router-link v-bind:to="{ name: 'me-accounts-page' }" tag="li" class="list-group-item dropdown-toggle text-muted cursor-pointer">
-				<i class="fa fa-dashboard fa-1x"></i> Mis Cuentas
-			</router-link>
-		  </ul>
-		  <ul class="list-group collapse" id="side-menu-collapse-2">
-			<li class="list-group-item dropdown-toggle">Conteo <i class="fa fa-dashboard fa-1x"></i></li>
-			<router-link tag="li" v-bind:to="{ name: 'me-accounts-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
-				<span class="pull-left"><strong class="">Cuentas</strong></span> {{ busineses.length }}
-			</router-link>
-			<router-link tag="li" v-bind:to="{ name: 'me-auditors-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
-				<span class="pull-left"><strong class="">Auditores</strong></span> {{ auditors.length }}
-			</router-link>
-			<router-link tag="li" v-bind:to="{ name: 'me-contracts-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
-				<span class="pull-left"><strong class="">Contratos</strong></span> {{ contracts.length }}
-			</router-link>
-			<router-link tag="li" v-bind:to="{ name: 'me-contacts-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
-				<span class="pull-left"><strong class="">Contactos</strong></span> {{ contacts.length }}
-			</router-link>
-			<router-link tag="li" v-bind:to="{ name: 'me-invoices-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
-				<span class="pull-left"><strong class="">Facturas</strong></span> {{ invoices.length }}
-			</router-link>
-			<router-link tag="li" v-bind:to="{ name: 'me-quotations-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
-				<span class="pull-left"><strong class="">Propuestas</strong></span> {{ quotations.length }}
-			</router-link>
-			<router-link tag="li" v-bind:to="{ name: 'me-redicateds-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
-				<span class="pull-left"><strong class="">Radicados</strong></span> {{ redicateds.length }}
-			</router-link>
-			<router-link tag="li" v-bind:to="{ name: 'me-requests-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
-				<span class="pull-left"><strong class="">Solicitudes</strong></span> {{ requests.length }}
-			</router-link>
-			<router-link tag="li" v-bind:to="{ name: 'me-users-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
-				<span class="pull-left"><strong class="">Usuarios</strong></span> {{ users.length }}
-			</router-link>
-			<router-link tag="li" v-bind:to="{ name: 'me-users-pending-list-page' }" class="list-group-item dropdown-toggle text-right cursor-pointer">
-				<span class="pull-left"><strong class="">Usuarios Pdte de Aprobacion</strong></span> {{ users_pending.length }}
-			</router-link>
-		  </ul>
+			<button class="collapse-toggle visible-xs-no btn btn-sm btn-primary " type="button" data-toggle="collapse" data-parent="custom-collapse" data-target="#side-menu-collapse">
+				<span class="fa fa-list"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button> 
+			<button class="collapse-toggle visible-xsno- btn btn-sm btn-primary " type="button" data-toggle="collapse" data-parent="custom-collapse" data-target="#side-menu-collapse-2">
+				<span class="fa fa-plus"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button> 
+			<hr>
+			<ul class="list-group collapse" id="side-menu-collapse">
+				<router-link v-bind:to="{ name: 'me-home-page' }" tag="li" class="list-group-item dropdown-toggle text-muted cursor-pointer">
+					<i class="fa fa-dashboard fa-1x"></i> Inicio
+				</router-link>
+				<router-link v-bind:to="{ name: 'me-accounts-page' }" tag="li" class="list-group-item dropdown-toggle text-muted cursor-pointer">
+					<i class="fa fa-dashboard fa-1x"></i> Mis Cuentas
+				</router-link>
+			</ul>
+			<b-list-group class="list-group collapse" id="side-menu-collapse-2">
+				<b-list-group-item>
+					<i class="fa fa-dashboard fa-1x"></i> 
+					Conteo 
+				</b-list-group-item>
+				<b-list-group-item v-bind:to="{ name: 'me-accounts-list-page' }" class="cursor-pointer">
+					Cuentas 
+					<b-badge>{{ busineses.length }}</b-badge>
+				</b-list-group-item>
+				
+				<b-list-group-item v-bind:to="{ name: 'me-auditors-list-page' }">
+					Auditores 
+					<b-badge>{{ auditors.length }}</b-badge>
+				</b-list-group-item>
+				
+				<b-list-group-item v-bind:to="{ name: 'me-contracts-list-page' }">
+					Contratos 
+					<b-badge>{{ contracts.length }}</b-badge>
+				</b-list-group-item>
+				<b-list-group-item v-bind:to="{ name: 'me-contacts-list-page' }">
+					Contactos 
+					<b-badge>{{ contacts.length }}</b-badge>
+				</b-list-group-item>
+				<b-list-group-item v-bind:to="{ name: 'me-invoices-list-page' }">
+					Facturas 
+					<b-badge>{{ invoices.length }}</b-badge>
+				</b-list-group-item>
+				<b-list-group-item v-bind:to="{ name: 'me-quotations-list-page' }">
+					Propuestas 
+					<b-badge>{{ quotations.length }}</b-badge>
+				</b-list-group-item>
+				<b-list-group-item v-bind:to="{ name: 'me-redicateds-list-page' }">
+					Radicados 
+					<b-badge>{{ redicateds.length }}</b-badge>
+				</b-list-group-item>
+				<b-list-group-item v-bind:to="{ name: 'me-requests-list-page' }">
+					Solicitudes 
+					<b-badge>{{ requests.length }}</b-badge>
+				</b-list-group-item>
+				<b-list-group-item v-bind:to="{ name: 'me-users-list-page' }">
+					Usuarios 
+					<b-badge>{{ users.length }}</b-badge>
+				</b-list-group-item>
+				<b-list-group-item v-bind:to="{ name: 'me-users-pending-list-page' }">
+					Usuarios Pdte de Aprobacion 
+					<b-badge>{{ users_pending.length }}</b-badge>
+				</b-list-group-item>
+				<!-- //
+				<b-list-group-item href="http://apple.com">
+					iPhone
+					<b-badge>5</b-badge>
+				</b-list-group-item>
+				<b-list-group-item>OnePlus 3T</b-list-group-item>
+				-->
+			</b-list-group>
 		</div>
-		
 		<hr>
-		<div class="hr"></div>
-		
 		   <!-- //
 		   <ul class="list-group">
 				<li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
@@ -99,10 +132,13 @@
    <div>
       <nav class="menu-meaccount">
          <ul>
+			<!-- //
             <router-link tag="li" v-bind:to="{ name: 'me-accounts-page' }">
                <i class="fa fa-reply-all fa-lg"></i>
                Mis Cuentas
             </router-link>
+			-->
+			
             <router-link tag="li" v-bind:to="{ name: 'me-account-view-page', params: { account_id: post.id } }">
                <i class="fa fa-home fa-lg"></i>
                General
@@ -333,8 +369,8 @@
    </div>
 </template>
 <template id="page-home">
-   <div>
-      <!-- // 
+	<div>
+		<!-- // 
          <div class="about-w3l" id="about">
          	<div class="container">
          		<h2 class="title-w3l">Servicios <span>Forestales</span></h2>
@@ -869,7 +905,7 @@
 							   <div class="pricing-table-holder">
 								  <center>
 									 <!-- <img src="http://www.placehold.it/100X100" class="img-responsive img-circle" alt=""> -->
-									 <h3>{{ item.client.name }}</h3>
+									 <h3>{{ item.client.names }}</h3>
 									 <p class="caption">
 										{{ item.client.type.name }}
 									 </p>
@@ -939,7 +975,7 @@
 						   <div class="panel panel-info">
 							  <div class="panel-heading">
 								 <h3 class=" text-center">
-									<b>{{ post.name }}</b>
+									<b>{{ post.names }}</b>
 									<router-link class="p-2 btn btn-sm btn-info btn-circle" v-bind:to="{ name: 'me-account-edit-page', params: { account_id: $route.params.account_id } }" type="button">
 									   <i class="fa fa-edit"></i>
 									   <!-- // Modificar Datos -->
@@ -1062,7 +1098,7 @@
 							<div class="col-sm-12 col-md-12 col-lg-12">
 							   <div class="form-group">
 								  <label for="">Nombre Completo del Cliente / Empresa</label>
-								  <input type="text" class="form-control" required v-model="post.name" />
+								  <input type="text" class="form-control" required v-model="post.names" />
 							   </div>
 							</div>
 						 </div>
@@ -1409,7 +1445,7 @@
 									<td>{{ item.address_invoice }}</td>
 									<td>
 									   <router-link class="btn btn-sm btn-info" v-bind:to="{ name: 'me-requests-view-page', params: { account_id: $route.params.account_id, request_id: item.id } }">
-										  Ver
+										  <i class="fa fa-eye"></i>
 									   </router-link>
 									</td>
 								 </tr>
@@ -1546,148 +1582,283 @@
 		</div>
    </div>
 </template>
+
 <template id="page-me-requests-add">
    <div>
 		<div class="container">
 			<div class="row">
-				<div class="col-sm-3">
+				<b-col sm="3">
 					<component-sidebar-meaccount></component-sidebar-meaccount>
-				</div>
-				<div class="col-sm-9">
-					<div class="row">
-						<div class="col-md-12">
+				</b-col>
+				<b-col sm="9">
+					<b-row>
+						<b-col sm="12">
 						   <component-menu-meaccount></component-menu-meaccount>
-						</div>
-						<div class="col-md-7">
-						   <h4 class="card-title">
-							  <i class="glyphicon glyphicon-search text-gold"></i>
-							  <b>INFORMACION BASICA</b>
-							  <hr>
-						   </h4>
-						   <div class="row">
-							  <div class="col-md-12">
-								 <div class="form-group">
-									<label class="control-label">Contacto de la Solicitud</label>
-									<select class="form-control custom-select" v-model="post.contact" name="contact">
-									   <option value="0">Elije una opcion...</option>
-									   <option v-bind:value="item.contact.id" v-for="item in list_contacts">{{ item.contact.first_name }}</option>
-									</select>
-								 </div>
-							  </div>
-							  <div class="col-md-6">
-								 <div class="form-group">
-									<label class="control-label">Departamento</label>
-									<select class="form-control" @change="departmentChangeToCity" v-model="post.address_invoice_department" name="address_invoice_department">
-									   <option value="0">Elije una opcion...</option>
-									   <option v-bind:value="item.id" v-for="item in list_departments">{{ item.name }}</option>
-									</select>
-								 </div>
-							  </div>
-							  <div class="col-md-6">
-								 <div class="form-group">
-									<label class="control-label">Ciudad</label>
-									<select class="form-control" v-model="post.address_invoice_city" name="address_invoice_city" @change="address_search">
-									   <option value="0">Elije una opcion...</option>
-									   <option v-for="item in list_citys" v-bind:value="item.id">{{ item.name }}</option>
-									</select>
-								 </div>
-							  </div>
-							  <div class="col-md-12">
-								 <div class="form-group">
-									<label class="control-label">Direccion del Servicio</label>
-									<input class="form-control" type="text" v-model="post.address_invoice" name="address_invoice" @change="address_search" />
-								 </div>
-							  </div>
-							  <div class="col-md-12">
-								 <div class="form-group">
-									<label class="control-label">Direccion Normalizada</label>
-									<input class="form-control" type="text" v-model="post.address_invoice_geo" name="address_invoice_geo" readonly="" />
-								 </div>
-							  </div>
-							  <div class="col-md-12">
-								 <div class="form-group">
-									<label class="control-label">Notas de la Solicitud</label>
-									<textarea class="form-control" v-model="post.request_notes" name="request_notes" rows="8"></textarea>
-								 </div>
-							  </div>
-							  <div class="col-md-12">
-								 <iframe frameborder="0" style="width: 100%;height: 350px;" v-bind:src="urlMapSearchNewIframe"></iframe>
-							  </div>
-						   </div>
-						</div>
-						<div class="col-md-5">
-						   <h4 class="card-title">
-							  <i class="glyphicon glyphicon-lock text-gold"></i>
-							  <b>SERVICIOS EN LA SOLICITUD</b>
-							  <hr>
-						   </h4>
-						   <label class="control-label">SERVICIO</label>
-						   <div class="row">
-							  <div class="col-md-10">
-								 <select class="form-control custom-select" v-model="post_add_services.id" name="post_add_services.id">
-									<option value="0">Elije una opcion...</option>
-									<option v-bind:value="item.id" v-for="item in list_services">{{ item.name }}</option>
-								 </select>
-							  </div>
-							  <div class="col-md-2">
-								 <div class="input-group-append">
-									<button @click="addServiceRequest" class="btn btn-outline-secondary" type="button"><i class="fa fa-plus"></i></button>
-								 </div>
-							  </div>
-							  <hr>
-						   </div>
-						   <div class="row">
-							  <div class="col-md-12">
-								 <table class="table table-bordered">
-									<tr>
-									   <td></td>
-									   <td>Servicio</td>
-									   <td>Frecuencia</td>
-									</tr>
-									<tr v-if="post.list_services.length > 0" v-for="(item, i) in post.list_services">
-									   <td>
-										  <button class="btn btn-sm btn-secondary" @click="removeServiceRequest(i)">
-										  <i class="fa fa-times"></i>
-										  </button>
-									   </td>
-									   <td>{{ item.name }} </td>
-									   <td>
-										  <div class="form-group">
-											 <select class="form-control custom-select" v-model="item.repeat" name="repeat">
-												<option value="0">Elije una opcion...</option>
-												<option v-bind:value="item.id" v-for="item in repeats_services">{{ item.name }}</option>
-											 </select>
-										  </div>
-									   </td>
-									</tr>
-								 </table>
-							  </div>
-						   </div>
-						   <div class="row">
-							  <div class="col-lg-12">
-								 <p>
-									Toda la información, incluyendo precios, servicios, características, opciones, planos y disponibilidad están sujetos a cambio sin previo aviso. 
-								 </p>
-							  </div>
-						   </div>
-						   <div class="row">
-							  <div class="col-lg-12">
-								 <div class="pull-right">
-									<button class="btn btn-success" id="btnSubmit" @click="createRequest">
-									<i class="fa fa-paper-plane"></i> 
-									Enviar Solicitud
-									</button>
-									<!-- <a class="btn btn-warning btn-lg" href="#" id="btnToTop"><i class="fa fa-arrow-up"></i> Top</a> -->
-								 </div>
-							  </div>
-						   </div>
-						</div>
-					 </div>
-				</div>
+						</b-col>
+						<b-col sm="12">
+							<div class="col-sm-12">
+								<b-card class="mt-3">
+								  <pre class="m-0">{{ form }}</pre>
+								</b-card>
+							</div>
+						</b-col>
+						<b-col sm="7">
+							<b-form @submit="onSubmit" @reset="onReset" v-if="show">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="card-title">
+											<i class="glyphicon glyphicon-search text-gold"></i>
+											<b>INFORMACION BASICA</b>
+										</h4>
+									</div>
+									<div class="panel-body">
+										<b-row>
+											<b-col sm="12">
+												<b-form-group id="input-group-3" label="Contacto de la Solicitud" label-for="input-3">
+													<select class="form-control custom-select" v-model="form.contact" name="contact">
+													<option value="0">Elije una opcion...</option>
+													<option v-bind:value="item.contact.id" v-for="item in list_contacts">
+														{{ item.contact.first_name }} 
+														{{ item.contact.second_name }} 
+														{{ item.contact.surname }} 
+														{{ item.contact.second_surname }} 
+													</option>
+													</select>
+												</b-form-group>
+												
+												<b-form-group 
+												id="input-group-3" 
+												label="Notas de la Solicitud" 
+												label-for="input-3" 
+												description=".">
+													<b-form-textarea
+													  id="textarea"
+													  v-model="form.request_notes"
+													  placeholder="Ingrese aquí las notas adicionales, observaciones, etc.."
+													  rows="3"
+													  max-rows="6" 
+													></b-form-textarea>
+												</b-form-group>
+												
+											</b-col>
+										</b-row>
+									</div>
+									<div class="panel-footer ">
+										<div class="row">
+											<div class="col-sm-12">
+												<div class="pull-right">
+													<b-button type="submit" variant="primary"><i class="fa fa-paper-plane"></i>  Enviar Solicitud </b-button>
+													<b-button type="reset" variant="danger">Reset</b-button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</b-form>
+						</b-col>
+						<b-col sm="5">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="card-title">
+										<i class="glyphicon glyphicon-search text-gold"></i>
+										<b>SERVICIOS A SOLICITAR</b>
+									</h4>
+								</div>
+								<div class="panel-body">
+									<ul class="list-unstyled multilevels">
+										<li v-for="address in form.addresses">
+											<ul>
+												<li><b>{{ address.address }}</b>
+												</li>
+												<li v-for="service in address.services">
+													<ul>
+														<li>• {{ service.name }}</li>
+														<li>
+															<ul>
+																<li><span>{{ service.repeat.name }}</span></li>
+															</ul>
+														</li>
+													</ul>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</div>
+								<div class="panel-footer">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<p>Toda la información, incluyendo precios, servicios, características, opciones, planos y disponibilidad están sujetos a cambio sin previo aviso. </p>
+								</div>
+							</div>
+						</b-col>
+						<b-col sm="12">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="card-title">
+										<i class="glyphicon glyphicon-lock text-gold"></i>
+										<b>AGREGAR DIRECCIONES DETALLES</b>
+									</h4>
+								</div>
+								<div class="panel-body">
+									<b-row>
+										<b-col sm="6">
+											<div class="row">
+												<div class="col-md-12">
+													<p>¿Que servicios deseas para la direccion que estan ingresando?</p>											
+													<table class="table table-bordered">
+														<tr>
+														   <th></th>
+														   <th>Servicio</th>
+														   <th>Frecuencia</th>
+														   <th></th>
+														</tr>
+														<tr v-if="list_services.length > 0" v-for="(item, i) in list_services" >
+															<td>
+																<b-form-checkbox v-bind:value="item" v-model="form_add_address.services[item.id]" name="check-button" switch>
+																</b-form-checkbox>
+															</td>
+															<td>{{ item.name }} </td>
+															<td>
+																<div class="form-group" v-if="form_add_address.services[item.id]">
+																	<select class="form-control custom-select" v-model="form_add_address.services[item.id].repeat">
+																		<option v-bind:value="false">Elije una opcion...</option>
+																		<option v-bind:value="item2" v-for="item2 in repeats_services">{{ item2.name }}</option>
+																	</select>
+																</div>
+															</td>
+															<td>
+																<div class="form-group" v-if="form_add_address.services[item.id] && form_add_address.services[item.id].repeat != false && form_add_address.services[item.id].repeat != undefined && form_add_address.services[item.id].repeat.id != undefined">
+																	<i class="fa fa-check"></i>
+																</div>
+																<div class="form-group" v-else=""><i class="fa fa-ban"></i></div>
+															</td>
+														</tr>
+													</table>
+												</div>
+											</div>
+										</b-col>
+										<b-col sm="6">
+											<div class="row">
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label class="control-label">Departamento</label>
+														<select class="form-control" @change="departmentChangeToCity" v-model="form_add_address.department">
+															<option v-bind:value="{ id: 0, code: '', name: '' }">Elije una opcion...</option>
+															<option v-bind:value="item" v-for="item in list_departments">{{ item.name }}</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label class="control-label">Ciudad</label>
+														<select class="form-control" v-model="form_add_address.city" @change="address_search">
+														<option v-bind:value="{ id: 0, name: '' }">Elije una opcion...</option>
+														<option v-for="item in list_citys" v-bind:value="item">{{ item.name }}</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-sm-12">
+													<div class="form-group">
+														<label class="control-label">Direccion del Servicio</label>
+														<input class="form-control" type="text" v-model="geo_search.search" @change="address_search" />
+														<p>{{ geo_search.textResult }}</p>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12" style="border-radius: 15% !important;overflow: overlay;">
+												<iframe frameborder="0" style="height: 350px;width:100%;margin:0;padding:0;" v-bind:src="geo_search.urlMapSearchNewIframe"></iframe>
+											</div>
+											<div class="col-md-12">
+												<br>
+												 <div class="pull-right">
+													<button type="button" class="btn btn-warning btn-lg" @click="addAddress" id="btnToTop"><i class="fa fa-plus"></i> Agregar esta Direccion</button>
+												 </div>
+											</div>
+										</b-col>
+									</b-row>
+								</div>
+								<div class="panel-footer">
+								</div>
+							</div>
+						</b-col>
+					 </b-row>
+				</b-col>
 			</div>
 		</div>
    </div>
 </template>
+<style scope="page-me-requests-add">
+	.list-unstyled.multilevels li {
+		font-weight:bold;
+	}
+	.list-unstyled.multilevels ul {
+		padding-left:1.4rem;
+		list-style:none;
+	}
+	.list-unstyled.multilevels ul li {
+		font-weight:normal;
+	}
+/*
+@media print
+         {   
+            body {-webkit-print-color-adjust: exact;}
+            
+            .no-print, .no-print *
+            {
+               display: none !important;
+            }
+
+            .no-print-required, .no-print-required *
+            {
+               display: none !important;
+            }
+         }
+
+
+         body {font-size:12px; }
+
+         table td {max-height: 15px;}
+
+         select, input {background-color:#D6E6F4;border:0;}
+         .element-white {background-color:#fff;border:0;}
+         #foto {cursor: pointer;}
+         .titulo {background-color:#1F4A7D;font-family:'Open Sans Condensed';font-weight:700;}
+         textarea
+         {
+             border: 1px solid #c3c3c3;             
+             resize: none;             
+             overflow-x: hiden;
+             height: 25px;
+         }
+         
+         
+         select{
+              border: 0 !important;  /*Removes border*/
+              -webkit-appearance: none;
+              -moz-appearance: none;
+              appearance: none;
+              text-overflow:'';
+              text-indent: 0.01px; /* Removes default arrow from firefox*/
+              font-style: italic;
+          }
+          select::-ms-expand {
+              display: none;
+          }
+          .select-wrapper
+          {
+              padding-left:0px;
+              overflow:hidden;              
+          }
+          
+          h6::first-letter {margin-top: 0; }
+          h4::first-letter {margin-top: 0; }
+
+          h6{ font-size: 14px; }
+		  */
+</style>
+
 <template id="page-me-accounts-list">
 	<div>
 		<div class="container">
@@ -1697,52 +1868,98 @@
 				</div>
 				<div class="col-sm-9">
 					<br>
-				   <div class="panel panel-default">
-					  <div class="panel-heading">Listado rápido - cuentas</div>
-					  <div class="panel-body">
-						<table class="table table-responsive">
-							<tr>
-								<th>ID</th>
-								<th>Tipo de Identificacion</th>
-								<th># de Identificacion</th>
-								<th>Nombre</th>
-								<th>Representante</th>
-								<th>Contacto</th>
-							</tr>
-							<tr v-for="post in posts">
-								<td>{{ $parent.zfill(post.id, 11) }}</td>
-								<td>{{ post.name }}</td>
-								<td>{{ post.identification_type.name }}</td>
-								<td>{{ post.identification_number }}</td>
-								<td>
-									{{ post.represent_legal.first_name }} 
-									{{ post.represent_legal.second_name }} 
-									{{ post.represent_legal.surname }} 
-									{{ post.represent_legal.second_surname }} 
-								</td>
-								<td>
-									{{ post.contact.first_name }} 
-									{{ post.contact.second_name }} 
-									{{ post.contact.surname }} 
-									{{ post.contact.second_surname }} 
-								</td>
-								<td>
-								   <router-link class="btn btn-sm btn-info" v-bind:to="{ name: 'me-account-view-page', params: { account_id: post.id } }">
-									  Ver
-								   </router-link>
-								</td>
-							</tr>
-						</table>
-					  </div>
-					  <div class="panel-footer">
-					  {{ accounts }}
-					  </div>
-				   </div>
+					<div class="panel panel-default">
+						<div class="panel-heading"></div>
+						<div class="panel-body">
+							<b-row>
+								<b-col sm="3">
+									<b-form-group >
+										<b-input-group>
+											<b-form-input class="form-control" v-model="filter" placeholder="Busqueda rápida."></b-form-input>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="1">
+									<b-button class="btn btn-secondary" :disabled="!filter" @click="filter = ''">
+										<i class="fa fa-trash"></i>
+									</b-button>
+								</b-col>
+								<b-col sm="3">
+									<b-form-group>
+										<b-input-group>
+											<b-form-select v-model="sortBy" :options="sortOptions" class="form-control">
+												<option slot="first" :value="null">-- none --</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDesc" :disabled="!sortBy" slot="append" class="form-control">
+												<option :value="false">Asc</option> <option :value="true">Desc</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDirection" slot="append" class="form-control">
+											  <option value="asc">Asc</option> <option value="desc">Desc</option>
+											  <option value="last">Last</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+							</b-row>
+							
+							<b-container fluid class="table table-responsive">
+								<b-table show-empty 
+								stacked="sm" 
+								:items="posts" 
+								:fields="fields" 
+								:current-page="currentPage" 
+								:per-page="perPage" 
+								:filter="filter" 
+								:sort-by.sync="sortBy" 
+								:sort-desc.sync="sortDesc" 
+								:sort-direction="sortDirection" 
+								@filtered="onFiltered">
+									<template slot="represent_legal" slot-scope="row">
+										{{ row.value.first_name }} {{ row.value.second_name }} {{ row.value.surname }} {{ row.value.second_surname }} 
+									</template>
+									<template slot="contact" slot-scope="row">
+										{{ row.value.first_name }} {{ row.value.second_name }} {{ row.value.surname }} {{ row.value.second_surname }} 
+									</template>
+									<template slot="actions" slot-scope="row">
+									   <router-link class="btn btn-sm btn-info" v-bind:to="{ name: 'me-account-view-page', params: { account_id: row.item.id } }">
+										  <i class="fa fa-eye"></i>
+									   </router-link>
+									</template>
+								</b-table>
+							</b-container>
+						</div>
+						<div class="panel-footer">
+							<b-row>
+								<b-col sm="10">
+									<b-pagination 
+									v-model="currentPage" 
+									:total-rows="totalRows" 
+									:per-page="perPage" ></b-pagination>
+								</b-col>
+								<b-col sm="2">
+									<br><b-form-select v-model="perPage" :options="pageOptions" class="form-control"></b-form-select>
+								</b-col>
+							</b-row>
+						</div>
+					</div>
 				</div>
-			 </div>
+			</div>
 		</div>
 	</div>
 </template>
+
 <template id="page-me-auditors-list">
 	<div>
 		<div class="container">
@@ -1752,26 +1969,101 @@
 				</div>
 				<div class="col-sm-9">
 					<br>
-				   <div class="panel panel-default">
-					  <div class="panel-heading">Listado rápido - auditores</div>
-					  <div class="panel-body">
-						<table class="table table-responsive">
-							<tr>
-								<th>ID</th>
-								<th>Nombre Completo</th>
-								<th>Cuenta</th>
-							</tr>
-							<tr v-for="post in posts">
-								<td>{{ $parent.zfill(post.id, 11) }}</td>
-								<td>{{ post.contact.first_name }} {{ post.contact.second_name }} {{ post.contact.surname }} {{ post.contact.second_surname }}</td>
-								<td>{{ post.client.name }}</td>
-							</tr>
-						</table>
-					  </div>
-					  <div class="panel-footer">
-					  {{ auditors }}
-					  </div>
-				   </div>
+					<div class="panel panel-default">
+						<div class="panel-heading"></div>
+						<div class="panel-body">
+							<b-row>
+								<b-col sm="3">
+									<b-form-group >
+										<b-input-group>
+											<b-form-input class="form-control" v-model="filter" placeholder="Busqueda rápida."></b-form-input>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="1">
+									<b-button class="btn btn-secondary" :disabled="!filter" @click="filter = ''">
+										<i class="fa fa-trash"></i>
+									</b-button>
+								</b-col>
+								<b-col sm="3">
+									<b-form-group>
+										<b-input-group>
+											<b-form-select v-model="sortBy" :options="sortOptions" class="form-control">
+												<option slot="first" :value="null">-- none --</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDesc" :disabled="!sortBy" slot="append" class="form-control">
+												<option :value="false">Asc</option> <option :value="true">Desc</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDirection" slot="append" class="form-control">
+											  <option value="asc">Asc</option> <option value="desc">Desc</option>
+											  <option value="last">Last</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+							</b-row>
+							
+							<b-container fluid class="table table-responsive">
+								<b-table show-empty 
+								stacked="sm" 
+								:items="posts" 
+								:fields="fields" 
+								:current-page="currentPage" 
+								:per-page="perPage" 
+								:filter="filter" 
+								:sort-by.sync="sortBy" 
+								:sort-desc.sync="sortDesc" 
+								:sort-direction="sortDirection" 
+								@filtered="onFiltered">
+								
+									<template slot="account_id" slot-scope="row">
+										<!-- // {{ $parent.zfill(row.item.client.id, 11) }} -->
+										{{ row.item.client.names }}
+									</template>
+									<template slot="names" slot-scope="row">
+										{{ row.item.contact.first_name }} 
+										{{ row.item.contact.second_name }} 
+										{{ row.item.contact.surname }} 
+										{{ row.item.contact.second_surname }} 
+									</template>
+									<template slot="phone" slot-scope="row">
+										{{ row.item.contact.phone }} 
+									</template>
+									<template slot="phone_mobile" slot-scope="row">
+										{{ row.item.contact.phone_mobile }} 
+									</template>
+									<template slot="mail" slot-scope="row">
+										{{ row.item.contact.mail }} 
+									</template>
+								</b-table>
+							</b-container>
+						</div>
+						<div class="panel-footer">
+							<b-row>
+								<b-col sm="10">
+									<b-pagination 
+									v-model="currentPage" 
+									:total-rows="totalRows" 
+									:per-page="perPage" ></b-pagination>
+								</b-col>
+								<b-col sm="2">
+									<br><b-form-select v-model="perPage" :options="pageOptions" class="form-control"></b-form-select>
+								</b-col>
+							</b-row>
+						</div>
+					</div>
 				</div>
 			 </div>
 		</div>
@@ -1786,32 +2078,104 @@
 				</div>
 				<div class="col-sm-9">
 					<br>
-				   <div class="panel panel-default">
-					  <div class="panel-heading">Listado rápido - auditores</div>
-					  <div class="panel-body">
-						<table class="table table-responsive">
-							<tr>
-								<th>ID</th>
-								<th>Solicitud</th>
-								<th>Cotización</th>
-								<th>F. Creacion</th>
-								<th>Última Mod.</th>
-								<th>Estado</th>
-							</tr>
-							<tr v-for="post in posts">
-								<td>{{ $parent.zfill(post.id, 11) }}</td>
-								<td>{{ $parent.zfill(post.request, 11) }}</td>
-								<td>{{ $parent.zfill(post.quotation, 11) }}</td>
-								<td>{{ post.create }}</td>
-								<td>{{ post.update }}</td>
-								<td>{{ post.status.name }}</td>
-							</tr>
-						</table>
-					  </div>
-					  <div class="panel-footer">
-					  {{ contracts }}
-					  </div>
-				   </div>
+					<div class="panel panel-default">
+						<div class="panel-heading"></div>
+						<div class="panel-body">
+							<b-row>
+								<b-col sm="3">
+									<b-form-group >
+										<b-input-group>
+											<b-form-input class="form-control" v-model="filter" placeholder="Busqueda rápida."></b-form-input>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="1">
+									<b-button class="btn btn-secondary" :disabled="!filter" @click="filter = ''">
+										<i class="fa fa-trash"></i>
+									</b-button>
+								</b-col>
+								<b-col sm="3">
+									<b-form-group>
+										<b-input-group>
+											<b-form-select v-model="sortBy" :options="sortOptions" class="form-control">
+												<option slot="first" :value="null">-- none --</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDesc" :disabled="!sortBy" slot="append" class="form-control">
+												<option :value="false">Asc</option> <option :value="true">Desc</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDirection" slot="append" class="form-control">
+											  <option value="asc">Asc</option> <option value="desc">Desc</option>
+											  <option value="last">Last</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+							</b-row>
+							
+							<b-container fluid class="table table-responsive">
+								<b-table show-empty 
+								stacked="sm" 
+								:items="posts" 
+								:fields="fields" 
+								:current-page="currentPage" 
+								:per-page="perPage" 
+								:filter="filter" 
+								:sort-by.sync="sortBy" 
+								:sort-desc.sync="sortDesc" 
+								:sort-direction="sortDirection" 
+								@filtered="onFiltered">
+								
+									<template slot="id" slot-scope="row">
+										{{ $parent.zfill(row.item.id, 11) }}
+									</template>
+									<template slot="request" slot-scope="row">
+										{{ $parent.zfill(row.item.request, 11) }}
+									</template>
+									<template slot="quotation" slot-scope="row">
+										{{ $parent.zfill(row.item.quotation, 11) }}
+									</template>
+									<template slot="status" slot-scope="row">
+										{{ row.item.status.name }}
+									</template>
+									<template slot="actions" slot-scope="row">
+										
+									</template>
+									<!--
+									<template slot="mail" slot-scope="row">
+										{{ row.item.contact.mail }} 
+									</template>
+									-->
+								</b-table>
+							</b-container>
+						</div>
+						<div class="panel-footer">
+							<b-row>
+								<b-col sm="10">
+									<b-pagination 
+									v-model="currentPage" 
+									:total-rows="totalRows" 
+									:per-page="perPage" ></b-pagination>
+								</b-col>
+								<b-col sm="2">
+									<br><b-form-select v-model="perPage" :options="pageOptions" class="form-control"></b-form-select>
+								</b-col>
+							</b-row>
+						</div>
+					</div>
+					
+					
 				</div>
 			 </div>
 		</div>
@@ -1826,35 +2190,99 @@
 				</div>
 				<div class="col-sm-9">
 					<br>
-				   <div class="panel panel-default">
-					  <div class="panel-heading">Listado rápido - contactos</div>
-					  <div class="panel-body">
-						<table class="table table-responsive">
-							<tr>
-								<th>ID</th>
-								<th>Nombre Completo</th>
-								<th>Telefono</th>
-								<th>Movil</th>
-								<th>Correo Electronico</th>
-							</tr>
-							<tr v-for="post in posts">
-								<td>{{ $parent.zfill(post.id, 11) }}</td>
-								<td>
-									{{ post.first_name }} 
-									{{ post.second_name }} 
-									{{ post.surname }} 
-									{{ post.second_surname }} 
-								</td>
-								<td>{{ post.phone }}</td>
-								<td>{{ post.phone_mobile }}</td>
-								<td>{{ post.mail }}</td>
-							</tr>
-						</table>
-					  </div>
-					  <div class="panel-footer">
-					  {{ contacts }}
-					  </div>
-				   </div>
+					<div class="panel panel-default">
+						<div class="panel-heading"></div>
+						<div class="panel-body">
+							<b-row>
+								<b-col sm="3">
+									<b-form-group >
+										<b-input-group>
+											<b-form-input class="form-control" v-model="filter" placeholder="Busqueda rápida."></b-form-input>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="1">
+									<b-button class="btn btn-secondary" :disabled="!filter" @click="filter = ''">
+										<i class="fa fa-trash"></i>
+									</b-button>
+								</b-col>
+								<b-col sm="3">
+									<b-form-group>
+										<b-input-group>
+											<b-form-select v-model="sortBy" :options="sortOptions" class="form-control">
+												<option slot="first" :value="null">-- none --</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDesc" :disabled="!sortBy" slot="append" class="form-control">
+												<option :value="false">Asc</option> <option :value="true">Desc</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDirection" slot="append" class="form-control">
+											  <option value="asc">Asc</option> <option value="desc">Desc</option>
+											  <option value="last">Last</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+							</b-row>
+							
+							<b-container fluid class="table table-responsive">
+								<b-table show-empty 
+								stacked="sm" 
+								:items="posts" 
+								:fields="fields" 
+								:current-page="currentPage" 
+								:per-page="perPage" 
+								:filter="filter" 
+								:sort-by.sync="sortBy" 
+								:sort-desc.sync="sortDesc" 
+								:sort-direction="sortDirection" 
+								@filtered="onFiltered">
+								
+									<!--
+									<template slot="id" slot-scope="row">
+										{{ $parent.zfill(row.item.id, 11) }}
+									</template>
+									<template slot="request" slot-scope="row">
+										{{ $parent.zfill(row.item.request, 11) }}
+									</template>
+									<template slot="quotation" slot-scope="row">
+										{{ $parent.zfill(row.item.quotation, 11) }}
+									</template>
+									<template slot="status" slot-scope="row">
+										{{ row.item.status.name }}
+									</template>
+									<template slot="actions" slot-scope="row">
+										
+									</template>
+									-->
+								</b-table>
+							</b-container>
+						</div>
+						<div class="panel-footer">
+							<b-row>
+								<b-col sm="10">
+									<b-pagination 
+									v-model="currentPage" 
+									:total-rows="totalRows" 
+									:per-page="perPage" ></b-pagination>
+								</b-col>
+								<b-col sm="2">
+									<br><b-form-select v-model="perPage" :options="pageOptions" class="form-control"></b-form-select>
+								</b-col>
+							</b-row>
+						</div>
+					</div>
 				</div>
 			 </div>
 		</div>
@@ -1869,30 +2297,103 @@
 				</div>
 				<div class="col-sm-9">
 					<br>
-				   <div class="panel panel-default">
-					  <div class="panel-heading">Listado rápido - facturas</div>
-					  <div class="panel-body">
-						<table class="table table-responsive">
-							<tr>
-								<th>ID</th>
-								<th>Fecha</th>
-								<th>Vigencia</th>
-								<th>Estado</th>
-								<th>Total</th>
-							</tr>
-							<tr v-for="post in posts">
-								<td>{{ $parent.zfill(post.id, 11) }}</td>
-								<td>{{ post.create }}</td>
-								<td>{{ post.validity }}</td>
-								<td>{{ post.status.name }}</td>
-								<td>$ {{ $parent.formatMoney(post.total) }} COP</td>
-							</tr>
-						</table>
-					  </div>
-					  <div class="panel-footer">
-					  {{ invoices }}
-					  </div>
-				   </div>
+					<div class="panel panel-default">
+						<div class="panel-heading"></div>
+						<div class="panel-body">
+							<b-row>
+								<b-col sm="3">
+									<b-form-group >
+										<b-input-group>
+											<b-form-input class="form-control" v-model="filter" placeholder="Busqueda rápida."></b-form-input>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="1">
+									<b-button class="btn btn-secondary" :disabled="!filter" @click="filter = ''">
+										<i class="fa fa-trash"></i>
+									</b-button>
+								</b-col>
+								<b-col sm="3">
+									<b-form-group>
+										<b-input-group>
+											<b-form-select v-model="sortBy" :options="sortOptions" class="form-control">
+												<option slot="first" :value="null">-- none --</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDesc" :disabled="!sortBy" slot="append" class="form-control">
+												<option :value="false">Asc</option> <option :value="true">Desc</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDirection" slot="append" class="form-control">
+											  <option value="asc">Asc</option> <option value="desc">Desc</option>
+											  <option value="last">Last</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+							</b-row>
+							
+							<b-container fluid class="table table-responsive">
+								<b-table show-empty 
+								stacked="sm" 
+								:items="posts" 
+								:fields="fields" 
+								:current-page="currentPage" 
+								:per-page="perPage" 
+								:filter="filter" 
+								:sort-by.sync="sortBy" 
+								:sort-desc.sync="sortDesc" 
+								:sort-direction="sortDirection" 
+								@filtered="onFiltered">
+								
+									<template slot="status_name" slot-scope="row">
+										{{ row.item.status.name }}
+									</template>
+								
+									<template slot="total" slot-scope="row">
+										$ {{ $parent.formatMoney(row.item.total) }} COP
+									</template>
+									<!--
+									<template slot="id" slot-scope="row">
+										{{ $parent.zfill(row.item.id, 11) }}
+									</template>
+									<template slot="request" slot-scope="row">
+										{{ $parent.zfill(row.item.request, 11) }}
+									</template>
+									<template slot="quotation" slot-scope="row">
+										{{ $parent.zfill(row.item.quotation, 11) }}
+									</template>
+									<template slot="actions" slot-scope="row">
+										
+									</template>
+									-->
+								</b-table>
+							</b-container>
+						</div>
+						<div class="panel-footer">
+							<b-row>
+								<b-col sm="10">
+									<b-pagination 
+									v-model="currentPage" 
+									:total-rows="totalRows" 
+									:per-page="perPage" ></b-pagination>
+								</b-col>
+								<b-col sm="2">
+									<br><b-form-select v-model="perPage" :options="pageOptions" class="form-control"></b-form-select>
+								</b-col>
+							</b-row>
+						</div>
+					</div>
 				</div>
 			 </div>
 		</div>
@@ -1907,32 +2408,98 @@
 				</div>
 				<div class="col-sm-9">
 					<br>
-				   <div class="panel panel-default">
-					  <div class="panel-heading">Listado rápido - Propuestas</div>
-					  <div class="panel-body">
-						<table class="table table-responsive">
-							<tr>
-								<th>ID</th>
-								<th>Solicitud</th>
-								<th>Estado</th>
-								<th>Fecha</th>
-								<th>Última Mod.</th>
-								<th>Vigencia</th>
-							</tr>
-							<tr v-for="post in posts">
-								<td>{{ $parent.zfill(post.id, 11) }}</td>
-								<td>{{ $parent.zfill(post.request, 11) }}</td>
-								<td>{{ post.status.name }}</td>
-								<td>{{ post.create }}</td>
-								<td>{{ post.update }}</td>
-								<td>{{ post.validity }}</td>
-							</tr>
-						</table>
-					  </div>
-					  <div class="panel-footer">
-					  {{ quotations }}
-					  </div>
-				   </div>
+					<div class="panel panel-default">
+						<div class="panel-heading"></div>
+						<div class="panel-body">
+							<b-row>
+								<b-col sm="3">
+									<b-form-group >
+										<b-input-group>
+											<b-form-input class="form-control" v-model="filter" placeholder="Busqueda rápida."></b-form-input>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="1">
+									<b-button class="btn btn-secondary" :disabled="!filter" @click="filter = ''">
+										<i class="fa fa-trash"></i>
+									</b-button>
+								</b-col>
+								<b-col sm="3">
+									<b-form-group>
+										<b-input-group>
+											<b-form-select v-model="sortBy" :options="sortOptions" class="form-control">
+												<option slot="first" :value="null">-- none --</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDesc" :disabled="!sortBy" slot="append" class="form-control">
+												<option :value="false">Asc</option> <option :value="true">Desc</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDirection" slot="append" class="form-control">
+											  <option value="asc">Asc</option> <option value="desc">Desc</option>
+											  <option value="last">Last</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+							</b-row>
+							
+							<b-container fluid class="table table-responsive">
+								<b-table show-empty 
+								stacked="sm" 
+								:items="posts" 
+								:fields="fields" 
+								:current-page="currentPage" 
+								:per-page="perPage" 
+								:filter="filter" 
+								:sort-by.sync="sortBy" 
+								:sort-desc.sync="sortDesc" 
+								:sort-direction="sortDirection" 
+								@filtered="onFiltered">
+									<template slot="id" slot-scope="row">
+										{{ $parent.zfill(row.item.id, 11) }}
+									</template>
+									<template slot="request" slot-scope="row">
+										{{ $parent.zfill(row.item.request, 11) }}
+									</template>
+								
+									<template slot="validity" slot-scope="row">
+										{{ row.item.validity }} Días
+									</template>
+								
+									<template slot="total" slot-scope="row">
+										$ {{ $parent.formatMoney(row.item.total) }} COP
+									</template>
+									<template slot="actions" slot-scope="row">
+										
+									</template>
+								</b-table>
+							</b-container>
+						</div>
+						<div class="panel-footer">
+							<b-row>
+								<b-col sm="10">
+									<b-pagination 
+									v-model="currentPage" 
+									:total-rows="totalRows" 
+									:per-page="perPage" ></b-pagination>
+								</b-col>
+								<b-col sm="2">
+									<br><b-form-select v-model="perPage" :options="pageOptions" class="form-control"></b-form-select>
+								</b-col>
+							</b-row>
+						</div>
+					</div>
 				</div>
 			 </div>
 		</div>
@@ -1947,30 +2514,110 @@
 				</div>
 				<div class="col-sm-9">
 					<br>
-				   <div class="panel panel-default">
-					  <div class="panel-heading">Listado rápido - Radicados</div>
-					  <div class="panel-body">
-						<table class="table table-responsive">
-							<tr>
-								<th>ID</th>
-								<th>Consecutivo</th>
-								<th>Nombre</th>
-								<th>F. Inicio</th>
-								<th>F. Fin</th>
-							</tr>
-							<tr v-for="post in posts">
-								<td>{{ $parent.zfill(post.id, 11) }}</td>
-								<td>{{ post.consecutive }}</td>
-								<td>{{ post.name }}</td>
-								<td>{{ post.date_start }}</td>
-								<td>{{ post.date_end }}</td>
-							</tr>
-						</table>
-					  </div>
-					  <div class="panel-footer">
-					  {{ redicateds }}
-					  </div>
-				   </div>
+					<div class="panel panel-default">
+						<div class="panel-heading"></div>
+						<div class="panel-body">
+							<b-row>
+								<b-col sm="3">
+									<b-form-group >
+										<b-input-group>
+											<b-form-input class="form-control" v-model="filter" placeholder="Busqueda rápida."></b-form-input>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="1">
+									<b-button class="btn btn-secondary" :disabled="!filter" @click="filter = ''">
+										<i class="fa fa-trash"></i>
+									</b-button>
+								</b-col>
+								<b-col sm="3">
+									<b-form-group>
+										<b-input-group>
+											<b-form-select v-model="sortBy" :options="sortOptions" class="form-control">
+												<option slot="first" :value="null">-- none --</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDesc" :disabled="!sortBy" slot="append" class="form-control">
+												<option :value="false">Asc</option> <option :value="true">Desc</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDirection" slot="append" class="form-control">
+											  <option value="asc">Asc</option> <option value="desc">Desc</option>
+											  <option value="last">Last</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+							</b-row>
+							
+							<b-container fluid class="table table-responsive">
+								<b-table show-empty 
+								stacked="sm" 
+								:items="posts" 
+								:fields="fields" 
+								:current-page="currentPage" 
+								:per-page="perPage" 
+								:filter="filter" 
+								:sort-by.sync="sortBy" 
+								:sort-desc.sync="sortDesc" 
+								:sort-direction="sortDirection" 
+								@filtered="onFiltered">
+									<template slot="id" slot-scope="row">
+										{{ $parent.zfill(row.item.id, 11) }}
+									</template>
+									
+									<template slot="row-details" slot-scope="row">
+										<table class="table table-responsive">
+											<tr>
+												<th>Objecto</th>
+												<td>{{ row.item.object }}</td>
+											</tr>
+											<tr>
+												<th>Descripcion Detallada</th>
+												<td>{{ row.item.description_service }}</td>
+											</tr>
+											<tr>
+												<th>Notas Adiccionales / Observaciones</th>
+												<td>{{ row.item.additional_notes }}</td>
+											</tr>
+										</table>
+										
+									</template>
+									
+									<template slot="actions" slot-scope="row">
+										<b-button size="sm" @click="row.toggleDetails">
+										  {{ row.detailsShowing ? 'Ocultar' : 'Ver' }} Detalles
+										</b-button>
+									</template>
+								</b-table>
+							</b-container>
+						</div>
+						<div class="panel-footer">
+							<b-row>
+								<b-col sm="10">
+									<b-pagination 
+									v-model="currentPage" 
+									:total-rows="totalRows" 
+									:per-page="perPage" ></b-pagination>
+								</b-col>
+								<b-col sm="2">
+									<br><b-form-select v-model="perPage" :options="pageOptions" class="form-control"></b-form-select>
+								</b-col>
+							</b-row>
+						</div>
+					</div>
+					
+					
 				</div>
 			 </div>
 		</div>
@@ -1985,39 +2632,101 @@
 				</div>
 				<div class="col-sm-9">
 					<br>
-				   <div class="panel panel-default">
-					  <div class="panel-heading">Listado rápido - Solicitudes</div>
-					  <div class="panel-body">
-						<table class="table table-responsive">
-							<tr>
-								<th>ID</th>
-								<th>Contacto</th>
-								<th>Direccion</th>
-								<th></th>
-							</tr>
-							<tr v-for="post in posts">
-								<td>{{ $parent.zfill(post.id, 11) }}</td>
-								<td>
-									{{ post.contact.first_name }}
-									{{ post.contact.second_name }}
-									{{ post.contact.surname }}
-									{{ post.contact.second_surname }}
-								</td>
-								<td>
-									{{ post.address_invoice }}, {{ post.address_invoice_city.name }}, {{ post.address_invoice_department.name }}
-								</td>
-								<td>
-								   <router-link class="btn btn-sm btn-info" v-bind:to="{ name: 'me-requests-view-page', params: { account_id: post.client, request_id: post.id } }">
-									  Ver
-								   </router-link>
-								</td>
-							</tr>
-						</table>
-					  </div>
-					  <div class="panel-footer">
-					  {{ requests }}
-					  </div>
-				   </div>
+					<div class="panel panel-default">
+						<div class="panel-heading"></div>
+						<div class="panel-body">
+							<b-row>
+								<b-col sm="3">
+									<b-form-group >
+										<b-input-group>
+											<b-form-input class="form-control" v-model="filter" placeholder="Busqueda rápida."></b-form-input>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="1">
+									<b-button class="btn btn-secondary" :disabled="!filter" @click="filter = ''">
+										<i class="fa fa-trash"></i>
+									</b-button>
+								</b-col>
+								<b-col sm="3">
+									<b-form-group>
+										<b-input-group>
+											<b-form-select v-model="sortBy" :options="sortOptions" class="form-control">
+												<option slot="first" :value="null">-- none --</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDesc" :disabled="!sortBy" slot="append" class="form-control">
+												<option :value="false">Asc</option> <option :value="true">Desc</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDirection" slot="append" class="form-control">
+											  <option value="asc">Asc</option> <option value="desc">Desc</option>
+											  <option value="last">Last</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+							</b-row>
+							
+							<b-container fluid class="table table-responsive">
+								<b-table show-empty 
+								stacked="sm" 
+								:items="posts" 
+								:fields="fields" 
+								:current-page="currentPage" 
+								:per-page="perPage" 
+								:filter="filter" 
+								:sort-by.sync="sortBy" 
+								:sort-desc.sync="sortDesc" 
+								:sort-direction="sortDirection" 
+								@filtered="onFiltered">
+									<template slot="id" slot-scope="row">
+										{{ $parent.zfill(row.item.id, 11) }}
+									</template>
+									<template slot="contact" slot-scope="row">
+										{{ row.item.contact.first_name }} 
+										{{ row.item.contact.second_name }} 
+										{{ row.item.contact.surname }} 
+										{{ row.item.contact.second_surname }} 
+									</template>
+									<template slot="addresses" slot-scope="row">
+										{{ row.item.addresses }} 
+									</template>
+									
+									<template slot="actions" slot-scope="row">										
+									   <router-link class="btn btn-sm btn-info" v-bind:to="{ name: 'me-requests-view-page', params: { account_id: row.item.client, request_id: row.item.id } }">
+										  <i class="fa fa-eye"></i>
+									   </router-link>
+									</template>
+								</b-table>
+							</b-container>
+						</div>
+						<div class="panel-footer">
+							<b-row>
+								<b-col sm="10">
+									<b-pagination 
+									v-model="currentPage" 
+									:total-rows="totalRows" 
+									:per-page="perPage" ></b-pagination>
+								</b-col>
+								<b-col sm="2">
+									<br><b-form-select v-model="perPage" :options="pageOptions" class="form-control"></b-form-select>
+								</b-col>
+							</b-row>
+						</div>
+					</div>
+					
+					
 				</div>
 			 </div>
 		</div>
@@ -2084,7 +2793,7 @@
 							</tr>
 							<tr v-for="post in posts">
 								<td>{{ $parent.zfill(post.id, 11) }}</td>
-								<td>{{ post.names }} {{ post.surname }} {{ post.second_surname }}</td>
+								<td>{{ post.name }} {{ post.surname }} {{ post.second_surname }}</td>
 								<td>{{ post.phone }}</td>
 								<td>{{ post.mobile }}</td>
 								<td>{{ post.mail }}</td>

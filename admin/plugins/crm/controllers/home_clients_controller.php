@@ -1,4 +1,14 @@
 ﻿<script>
+$(function () {
+	var nua = navigator.userAgent;
+	var isAndroid = (nua.indexOf('Mozilla/5.0') > -1 && nua.indexOf('Android ') > -1 && nua.indexOf('AppleWebKit') > -1 && nua.indexOf('Chrome') === -1);
+	if (isAndroid){
+		
+	}
+});
+
+Vue.use(bootstrapVue);
+
 var PageHome = Vue.extend({
     template: '#page-home',
     data: function() {
@@ -224,7 +234,7 @@ var PageMeAccountView = Vue.extend({
 					name: '',
 				},
 				identification_number: '',
-				name: '',
+				names: '',
 				contact: {
 					id: 0,
 					identification_type: 0,
@@ -344,7 +354,7 @@ var PageMeAccountUpdate = Vue.extend({
 				type: 0,
 				identification_type: 0,
 				identification_number: '',
-				name: '',
+				names: '',
 				contact: 0,
 				represent_legal: 0,
 				address_principal: '',
@@ -696,7 +706,7 @@ var PageMeRequetsView = Vue.extend({
 
 							var url = 'https://www.openstreetmap.org/export/embed.html?bbox=' + cord2 + ',' + cord2 + '&marker=' + cord1;
 
-							self.urlMapSearchNewIframe = url;
+							self.geo_search.urlMapSearchNewIframe = url;
 							$("#preload").hide();
 						}
 					else
@@ -716,30 +726,47 @@ var PageMeRequetsAdd = Vue.extend({
 	template: '#page-me-requests-add',
 	data: function () {
 		return {
-			post_add_services: {
-				id: 0,
-			},
-			post: {
-				client: this.$route.params.account_id,
-				address_invoice: '',
-				address_invoice_geo: '',
-				request_notes: '',
-				contact: 0,
-				address_invoice_department: 0,
-				address_invoice_city: 0,
-				list_services: [],
-			},
 			list_departments: [],
 			list_citys: [],
 			list_contacts: [],
 			list_services: [],
 			repeats_services: [],
-			urlMapSearchNewIframe: 'https://www.openstreetmap.org/export/embed.html?bbox=-4.2316872,16.0571269,-82.1243666,-66.8511907&marker=2.8894434,-73.783892',
+			
+			geo_search: {
+				search: '',
+				result: false,
+				iconResult: '',
+				textResult: '',
+				urlMapSearchNewIframe: 'https://www.openstreetmap.org/export/embed.html?bbox=-4.2316872,16.0571269,-82.1243666,-66.8511907&marker=2.8894434,-73.783892'
+			},
+			
+			form_add_address: {
+				"address": '',
+				"address_geo": '',
+				"department": {
+					"id": 0,
+					"code": "",
+					"name": ""
+				},
+				"city": {
+					"id": 0,
+					"name": ""
+				},
+				"lon": '',
+				"lat": '',
+				"services": [],
+			},
+			form: {
+			  client: this.$route.params.account_id,
+			  contact: 0,
+			  request_notes: '',
+			  addresses: []
+			},
+			show: true
 		}
 	},
 	create: function () {
 		var self = this;
-
 	},
 	mounted: function () {
 		var self = this;
@@ -748,6 +775,95 @@ var PageMeRequetsAdd = Vue.extend({
 		self.find();
 	},
 	methods: {
+		addAddress: function(evt){
+			var self = this;
+			
+			if(self.geo_search.result == true && self.form_add_address.address != '')
+				{
+					var services_address = [];
+					
+					self.form_add_address.services.forEach(function(elem,key){
+						if(elem != 'undefined' && elem != undefined && elem != false && elem.repeat != 'undefined' && elem.repeat != undefined) {
+							services_address.push(elem);
+						};
+					});
+					
+					if(services_address.length > 0)
+						{							
+							temp = self.form_add_address;
+							temp.services = services_address;
+							self.form.addresses.push(temp);
+							alert('Se agrego correctamente la direccion, continua agregando más.');
+							
+							self.form_add_address = {
+								"address": '',
+								"address_geo": '',
+								"department": {
+									"id": 0,
+									"code": "",
+									"name": ""
+								},
+								"city": {
+									"id": 0,
+									"name": ""
+								},
+								"lon": '',
+								"lat": '',
+								"services": [],
+							};
+							self.geo_search = {
+								search: '',
+								result: false,
+								iconResult: '',
+								textResult: '',
+								urlMapSearchNewIframe: 'https://www.openstreetmap.org/export/embed.html?bbox=-4.2316872,16.0571269,-82.1243666,-66.8511907&marker=2.8894434,-73.783892'
+							};
+						}
+					else { alert('No has seleccionado servicios.'); };
+				}
+			else { alert('La direccion no es valida o esta incompleta.'); };
+		},
+		onSubmit(evt) {
+			var self = this;
+			evt.preventDefault()
+			// alert(JSON.stringify(this.form))
+			var formValues = this.form;
+			if(Number(formValues.client) > 0 && formValues.contact > 0 && formValues.addresses.length > 0)
+				{
+					var sendTemp = {};
+					sendTemp.client = Number(formValues.client);
+					sendTemp.contact = Number(formValues.contact);
+					sendTemp.addresses = JSON.stringify(formValues.addresses);
+					
+					FG.api('POST', '/requests', sendTemp, function (response) {
+						console.log(response);
+						var request_id = response;
+						
+						router.push({
+							name: 'me-requests-view-page',
+							params: {
+								account_id: formValues.client,
+								request_id: response
+							}
+						});
+					});
+				}
+			else 
+				{
+					alert('Completa la solicitud antes de enviarla. :)');
+				}
+		},
+		onReset(evt) {
+			evt.preventDefault()
+			this.form.contact = 0;
+			this.form.request_notes = '';
+			this.form.addresses = [];
+			// Trick to reset/clear native browser form validation state
+			this.show = false
+			this.$nextTick(() => {
+			  this.show = true
+			})
+		},
 		createRequest: function(){
 			var self = this;
 			console.log('generando solicitud..');
@@ -797,9 +913,9 @@ var PageMeRequetsAdd = Vue.extend({
 				alert("Campos incompletos");
 			}
 		},
-		departmentChangeToCity: function(e){
+		departmentChangeToCity: function(){
 			var self = this;
-			FG.api('GET', '/geo_citys/', { order: [ 'name,asc', ], filter: [ 'department,eq,' + e.target.value, ], }, function (r) { self.list_citys = r; });
+			FG.api('GET', '/geo_citys/', { order: [ 'name,asc', ], filter: [ 'department,eq,' + self.form_add_address.department.id, ], }, function (r) { self.list_citys = r; });
 		},
 		find: function(){
 			var self = this;
@@ -810,7 +926,7 @@ var PageMeRequetsAdd = Vue.extend({
 
 			FG.api('GET', '/geo_departments/', { order: [ 'name,asc', ], }, function (r) { self.list_departments = r; });
 
-			FG.api('GET', '/crew_clients/', { order: [ 'id,asc', ], join: [ 'contacts', ], filter: [ 'client,asc' + self.post.id, ], }, function (r) { self.list_contacts = r; });
+			FG.api('GET', '/crew_clients/', { order: [ 'id,asc', ], join: [ 'contacts', ], filter: [ 'client,asc' + self.$route.params.account_id, ], }, function (r) { self.list_contacts = r; });
 
 			FG.api('GET', '/services/', { order: [ 'name,asc', ], }, function (r) { self.list_services = r; });
 
@@ -823,8 +939,8 @@ var PageMeRequetsAdd = Vue.extend({
 
 			FG.api('GET', '/geo_citys', {
 				'filter': [
-					'id,eq,' + self.post.address_invoice_city,
-					'department,eq,' + self.post.address_invoice_department,
+					'id,eq,' + self.form_add_address.city.id,
+					'department,eq,' + self.form_add_address.department.id,
 				],
 				'join': [
 					'geo_departments',
@@ -833,8 +949,12 @@ var PageMeRequetsAdd = Vue.extend({
 				if(r2.length > 0)
 				{
 					var temp = r2[0];
-					var searchData = {
-							'q': self.post.address_invoice,
+					temp.name = temp.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+					temp.department.name = temp.department.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+					
+					aPiMap.get('/search', { 
+						params: {
+							'q': self.geo_search.search.normalize('NFD').replace(/[\u0300-\u036f]/g, "") + ', ' + temp.name + ', ' + temp.department.name,
 							'city': temp.name,
 							'county': temp.department.name,
 							'format': 'jsonv2',
@@ -842,35 +962,52 @@ var PageMeRequetsAdd = Vue.extend({
 							'country': 'co',
 							'polygon': 1,
 							'limit': 1,
-						};
-					aPiMap.get('/search', { params: searchData })
+						} 
+					})
 					.then(function (r) {
-						console.log(r);
+						//console.log(r);
 						if(r.data[0] != undefined)
 							{
 								var temp = r.data[0];
 								var coord = { lon: temp.lon, lat: temp.lat };
 								var cord1 = coord.lat + ',' + coord.lon;
 								var cord2 = coord.lon + ',' + coord.lat;
-
-								self.post.address_invoice_geo = cord1;
+								
+								self.form_add_address.lat = coord.lat;
+								self.form_add_address.lon = coord.lon;
+								self.form_add_address.address_geo = cord1;
 
 								var url = 'https://www.openstreetmap.org/export/embed.html?bbox=' + cord2 + ',' + cord2 + '&marker=' + cord1;
-								self.urlMapSearchNewIframe = url;
+								self.geo_search.urlMapSearchNewIframe = url;
+								self.form_add_address.address = temp.display_name;
+								self.geo_search.textResult = temp.display_name;
+								self.geo_search.iconResult = temp.icon;
+								self.geo_search.result = true;
 							}
 						else
 							{
-								alert('La direccion no fue encontrada');
+								self.geo_search.result = false;
+								self.geo_search.textResult = 'La direccion no fue encontrada';
+								self.form_add_address.address = '';
+								self.geo_search.iconResult = '';
 							}
 					})
 					.catch(function (er) {
 						console.log(er);
 						//$.notify(error.response.data.code + error.response.data.message, "error");
+						
+						self.geo_search.result = false;
+						self.geo_search.textResult = 'La direccion no fue encontrada, ocurrio un error.';
+						self.form_add_address.address = '';
+						self.geo_search.iconResult = '';
 					});
 				}
 				else
 				{
-					alert('La direccion no fue encontrada');
+					self.geo_search.result = false;
+					self.geo_search.textResult = 'La direccion no fue encontrada';
+					self.form_add_address.address = '';
+					self.geo_search.iconResult = '';
 				}
 			});
 
@@ -893,7 +1030,61 @@ var PageMeAuditorsList = Vue.extend({
 		return {
 			auditors: [],
 			posts: [],
+			fields: [
+				{
+					key: 'account_id',
+					label: 'Cuenta',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{
+					key: 'id',
+					label: 'ID',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{
+					key: 'names',
+					label: 'Nombre',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{
+					key: 'phone',
+					label: 'Telefono Fijo',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{
+					key: 'phone_mobile',
+					label: 'Telefono Móvil',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{
+					key: 'mail',
+					label: 'Correo Electronico',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{ key: 'actions', label: 'Actions' }
+			],			
+			totalRows: 1,
+			currentPage: 1,
+			perPage: 10,
+			pageOptions: [5, 10, 15],
+			sortBy: null,
+			sortDesc: false,
+			sortDirection: 'asc',
+			filter: null,
 		}
+	},
+    computed: {
+		sortOptions() {
+			return this.fields.filter(f => f.sortable).map(f => {
+				return { text: f.label, value: f.key }
+			});
+      }
 	},
 	create: function () {
 		var self = this;
@@ -904,6 +1095,10 @@ var PageMeAuditorsList = Vue.extend({
 		self.find();
 	},
 	methods: {
+		onFiltered(filteredItems) {
+			this.totalRows = filteredItems.length;
+			this.currentPage = 1;
+		},
 		find: function(){
 			var self = this;
 			
@@ -918,7 +1113,6 @@ var PageMeAuditorsList = Vue.extend({
 				console.log(r);
 				
 				r.forEach(function(elem){
-					console.log(elem);
 					
 					if(elem.client.auditors_clients.length > 0){
 						 elem.client.auditors_clients.forEach(function(auditor){
@@ -941,6 +1135,7 @@ var PageMeAuditorsList = Vue.extend({
 				}, function(r2){
 					console.log(r2);
 					self.posts = r2;
+					self.totalRows = self.posts.length;
 				});
 			});
 		},
@@ -953,7 +1148,57 @@ var PageMeAccountsList = Vue.extend({
 		return {
 			accounts: [],
 			posts: [],
+			fields: [
+				{
+					key: 'id',
+					label: 'ID',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{
+					key: 'names',
+					label: 'Nombre'
+				},
+				{
+					key: 'identification_type.name',
+					label: 'Tipo de Identifiacion',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'identification_number',
+					label: '# de Identifiacion',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'represent_legal',
+					label: 'Nombre (R. Legal)',
+					sortable: false
+				},
+				{
+					key: 'contact',
+					label: 'Nombre (Contacto)',
+					sortable: false
+				},
+				{ key: 'actions', label: 'Actions' }
+			],			
+			totalRows: 1,
+			currentPage: 1,
+			perPage: 10,
+			pageOptions: [5, 10, 15],
+			sortBy: null,
+			sortDesc: false,
+			sortDirection: 'asc',
+			filter: null,
 		}
+	},
+    computed: {
+		sortOptions() {
+			return this.fields.filter(f => f.sortable).map(f => {
+				return { text: f.label, value: f.key }
+			});
+      }
 	},
 	create: function () {
 		var self = this;
@@ -964,25 +1209,21 @@ var PageMeAccountsList = Vue.extend({
 		self.find();
 	},
 	methods: {
+		onFiltered(filteredItems) {
+			this.totalRows = filteredItems.length;
+			this.currentPage = 1;
+		},
 		find: function(){
-			var self = this;
-			
+			var self = this;			
 			FG.api('GET','/users_clients', {
-				filter: [
-					'user,eq,' + self.$root.$data.authResponse.userID,
-				],
-				join: [
-					'clients',
-					'clients,types_identifications',
-					'clients,contacts',
-				]
+				filter: [ 'user,eq,' + self.$root.$data.authResponse.userID, ],
+				join: [ 'clients', 'clients,types_identifications', 'clients,contacts', ]
 			}, function(r){
 				r.forEach(function(elem){ if(elem.client.id > 0){
-					console.log(elem.client);
-					 self.accounts.push(elem.client.id);
-					 self.posts.push(elem.client);
+					self.accounts.push(elem.client.id);
+					self.posts.push(elem.client);
 				}; });
-				
+				self.totalRows = self.posts.length;
 			});
 		},
 	}
@@ -994,7 +1235,59 @@ var PageMeContractsList = Vue.extend({
 		return {
 			contracts: [],
 			posts: [],
+			fields: [
+				{
+					key: 'id',
+					label: 'ID',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{
+					key: 'request',
+					label: '# Solicitud',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'quotation',
+					label: '# Cotización',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'created',
+					label: 'F. Creacion',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'updated',
+					label: 'Última Mod.',
+					sortable: false
+				},
+				{
+					key: 'status',
+					label: 'Estado',
+					sortable: false
+				},
+				{ key: 'actions', label: 'Actions' }
+			],			
+			totalRows: 1,
+			currentPage: 1,
+			perPage: 10,
+			pageOptions: [5, 10, 15],
+			sortBy: null,
+			sortDesc: false,
+			sortDirection: 'asc',
+			filter: null,
 		}
+	},
+    computed: {
+		sortOptions() {
+			return this.fields.filter(f => f.sortable).map(f => {
+				return { text: f.label, value: f.key }
+			});
+      }
 	},
 	create: function () {
 		var self = this;
@@ -1005,10 +1298,12 @@ var PageMeContractsList = Vue.extend({
 		self.find();
 	},
 	methods: {
+		onFiltered(filteredItems) {
+			this.totalRows = filteredItems.length;
+			this.currentPage = 1;
+		},
 		find: function(){
 			var self = this;
-			
-			
 			
 			FG.api('GET','/users_clients', {
 				filter: [
@@ -1032,7 +1327,7 @@ var PageMeContractsList = Vue.extend({
 						});
 					};
 				});
-				
+				self.totalRows = self.posts.length;
 			});
 		},
 	}
@@ -1044,7 +1339,73 @@ var PageMeContactsList = Vue.extend({
 		return {
 			contacts: [],
 			posts: [],
+			fields: [
+				{
+					key: 'id',
+					label: 'ID',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{
+					key: 'first_name',
+					label: 'Primer Nombre',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'second_name',
+					label: 'Segundo Nombre',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'surname',
+					label: 'Primer Apellido',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'second_surname',
+					label: 'Segundo Apellido',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'phone',
+					label: 'Telefono Fijo',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'phone_mobile',
+					label: 'Telefono Móvil',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'mail',
+					label: 'Correo Electronico',
+					sortable: true,
+					class: 'text-center'
+				},
+				{ key: 'actions', label: 'Actions' }
+			],			
+			totalRows: 1,
+			currentPage: 1,
+			perPage: 10,
+			pageOptions: [5, 10, 15],
+			sortBy: null,
+			sortDesc: false,
+			sortDirection: 'asc',
+			filter: null,
 		}
+	},
+    computed: {
+		sortOptions() {
+			return this.fields.filter(f => f.sortable).map(f => {
+				return { text: f.label, value: f.key }
+			});
+      }
 	},
 	create: function () {
 		var self = this;
@@ -1055,6 +1416,10 @@ var PageMeContactsList = Vue.extend({
 		self.find();
 	},
 	methods: {
+		onFiltered(filteredItems) {
+			this.totalRows = filteredItems.length;
+			this.currentPage = 1;
+		},
 		find: function(){
 			var self = this;
 			
@@ -1102,7 +1467,55 @@ var PageMeInvoicesList = Vue.extend({
 		return {
 			invoices: [],
 			posts: [],
+			fields: [
+				{
+					key: 'id',
+					label: 'ID',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{
+					key: 'created',
+					label: 'Fecha',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'validity',
+					label: 'F. Vencimiento',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'status_name',
+					label: 'Estado',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'total',
+					label: 'Total',
+					sortable: true,
+					class: 'text-center'
+				},
+				{ key: 'actions', label: 'Actions' }
+			],			
+			totalRows: 1,
+			currentPage: 1,
+			perPage: 10,
+			pageOptions: [5, 10, 15],
+			sortBy: null,
+			sortDesc: false,
+			sortDirection: 'asc',
+			filter: null,
 		}
+	},
+	computed: {
+		sortOptions() {
+			return this.fields.filter(f => f.sortable).map(f => {
+				return { text: f.label, value: f.key }
+			});
+	  }
 	},
 	create: function () {
 		var self = this;
@@ -1113,6 +1526,10 @@ var PageMeInvoicesList = Vue.extend({
 		self.find();
 	},
 	methods: {
+		onFiltered(filteredItems) {
+			this.totalRows = filteredItems.length;
+			this.currentPage = 1;
+		},
 		find: function(){
 			var self = this;
 			
@@ -1149,7 +1566,61 @@ var PageMeQuotationsList = Vue.extend({
 		return {
 			quotations: [],
 			posts: [],
+			fields: [
+				{
+					key: 'id',
+					label: 'ID',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{
+					key: 'request',
+					label: 'Solicitud',
+					sortable: true, 
+					sortDirection: 'asc'
+				},
+				{
+					key: 'status.name',
+					label: 'Estado',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'created',
+					label: 'Fecha',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'updated',
+					label: 'Última Mod.',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{
+					key: 'validity',
+					label: 'Vigencia',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{ key: 'actions', label: 'Actions' }
+			],			
+			totalRows: 1,
+			currentPage: 1,
+			perPage: 10,
+			pageOptions: [5, 10, 15],
+			sortBy: null,
+			sortDesc: false,
+			sortDirection: 'asc',
+			filter: null,
 		}
+	},
+    computed: {
+		sortOptions() {
+			return this.fields.filter(f => f.sortable).map(f => {
+				return { text: f.label, value: f.key }
+			});
+      }
 	},
 	create: function () {
 		var self = this;
@@ -1160,6 +1631,10 @@ var PageMeQuotationsList = Vue.extend({
 		self.find();
 	},
 	methods: {
+		onFiltered(filteredItems) {
+			this.totalRows = filteredItems.length;
+			this.currentPage = 1;
+		},
 		find: function(){
 			var self = this;
 			
@@ -1196,7 +1671,55 @@ var PageMeRedicatedsList = Vue.extend({
 		return {
 			redicateds: [],
 			posts: [],
+			fields: [
+				{
+					key: 'id',
+					label: 'ID',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{
+					key: 'consecutive',
+					label: 'Consecutivo',
+					sortable: true, 
+					sortDirection: 'asc'
+				},
+				{
+					key: 'name',
+					label: 'Nombre',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'date_start',
+					label: 'F. Inicio',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{
+					key: 'date_end',
+					label: 'F. Fin',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{ key: 'actions', label: 'Actions' }
+			],			
+			totalRows: 1,
+			currentPage: 1,
+			perPage: 10,
+			pageOptions: [5, 10, 15],
+			sortBy: null,
+			sortDesc: false,
+			sortDirection: 'asc',
+			filter: null,
 		}
+	},
+    computed: {
+		sortOptions() {
+			return this.fields.filter(f => f.sortable).map(f => {
+				return { text: f.label, value: f.key }
+			});
+      }
 	},
 	create: function () {
 		var self = this;
@@ -1207,6 +1730,10 @@ var PageMeRedicatedsList = Vue.extend({
 		self.find();
 	},
 	methods: {
+		onFiltered(filteredItems) {
+			this.totalRows = filteredItems.length;
+			this.currentPage = 1;
+		},
 		find: function(){
 			var self = this;
 			
@@ -1242,7 +1769,46 @@ var PageMeRequestsList = Vue.extend({
 		return {
 			requests: [],
 			posts: [],
+			fields: [
+				{
+					key: 'id',
+					label: 'ID',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{
+					key: 'contact',
+					label: 'Contacto'
+				},
+				{
+					key: 'addresses',
+					label: 'Direcciónes y Servicios',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'contact',
+					label: 'Nombre (Contacto)',
+					sortable: false
+				},
+				{ key: 'actions', label: 'Actions' }
+			],			
+			totalRows: 1,
+			currentPage: 1,
+			perPage: 10,
+			pageOptions: [5, 10, 15],
+			sortBy: null,
+			sortDesc: false,
+			sortDirection: 'asc',
+			filter: null,
 		}
+	},
+    computed: {
+		sortOptions() {
+			return this.fields.filter(f => f.sortable).map(f => {
+				return { text: f.label, value: f.key }
+			});
+      }
 	},
 	create: function () {
 		var self = this;
@@ -1253,6 +1819,10 @@ var PageMeRequestsList = Vue.extend({
 		self.find();
 	},
 	methods: {
+		onFiltered(filteredItems) {
+			this.totalRows = filteredItems.length;
+			this.currentPage = 1;
+		},
 		find: function(){
 			var self = this;
 			
@@ -1687,9 +2257,8 @@ var app = new Vue({
 });
 
 var RunPage = function(){
-	app.$mount('#app');;
+	app.$mount('#app');
 };
-
 
 const MyPlugin = {
 	install: function (Vue, options) {
