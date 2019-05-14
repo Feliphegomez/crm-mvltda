@@ -1,14 +1,6 @@
 <div class="body-page" id="app">
 	<banner-page></banner-page>
 	<div class="container">
-		<!-- // 
-		<div class="row">
-			<div class="col-sm-8 col-sm-offset-2">
-				<br>
-				<b-alert show dismissible> Tu estado Actual: {{ status }}! </b-alert>
-			</div>
-		</div>
-		-->
 		<div class="row">
 			<div class="col-sm-12">
 				<router-view></router-view>
@@ -32,14 +24,16 @@
 				<span class="icon-bar"></span>
 			</button> 
 			<hr>
-			<ul class="list-group collapse" id="side-menu-collapse">
-				<router-link v-bind:to="{ name: 'me-home-page' }" tag="li" class="list-group-item dropdown-toggle text-muted cursor-pointer">
-					<i class="fa fa-dashboard fa-1x"></i> Inicio
-				</router-link>
-				<router-link v-bind:to="{ name: 'me-accounts-page' }" tag="li" class="list-group-item dropdown-toggle text-muted cursor-pointer">
-					<i class="fa fa-dashboard fa-1x"></i> Mis Cuentas
-				</router-link>
-			</ul>
+			<div id="trigger-overlay">
+				<ul class="list-group collapse" id="side-menu-collapse">
+					<router-link v-bind:to="{ name: 'me-home-page' }" tag="li" class="list-group-item dropdown-toggle text-muted cursor-pointer">
+						<i class="fa fa-dashboard fa-1x"></i> Inicio
+					</router-link>
+					<router-link v-bind:to="{ name: 'me-accounts-page' }" tag="li" class="list-group-item dropdown-toggle text-muted cursor-pointer">
+						<i class="fa fa-dashboard fa-1x"></i> Mis Cuentas
+					</router-link>
+				</ul>
+			</div>
 			<b-list-group class="list-group collapse" id="side-menu-collapse-2">
 				<b-list-group-item>
 					<i class="fa fa-dashboard fa-1x"></i> 
@@ -47,6 +41,10 @@
 				</b-list-group-item>
 				<b-list-group-item v-bind:to="{ name: 'me-accounts-list-page' }" class="cursor-pointer">
 					Cuentas 
+					<b-badge>{{ busineses.length }}</b-badge>
+				</b-list-group-item>
+				<b-list-group-item v-bind:to="{ name: 'me-addresses-list-page' }" class="cursor-pointer">
+					Direcciones 
 					<b-badge>{{ busineses.length }}</b-badge>
 				</b-list-group-item>
 				
@@ -131,21 +129,14 @@
 <template id="component-menu-meaccount">
    <div>
       <nav class="menu-meaccount">
-         <ul>
-			<!-- //
-            <router-link tag="li" v-bind:to="{ name: 'me-accounts-page' }">
-               <i class="fa fa-reply-all fa-lg"></i>
-               Mis Cuentas
-            </router-link>
-			-->
-			
+         <ul>			
             <router-link tag="li" v-bind:to="{ name: 'me-account-view-page', params: { account_id: post.id } }">
                <i class="fa fa-home fa-lg"></i>
                General
             </router-link>
             <router-link tag="li" v-bind:to="{ name: 'me-contacts-page', params: { account_id: post.id } }">
                <i class="fa fa-users fa-lg"></i>
-               Mis Contactos
+               Contactos
                <ul class="drop-menu menu-1">
                   <router-link tag="li" v-bind:to="{ name: 'me-contacts-add-page', params: { account_id: post.id } }">
                      <i class="fa fa-plus fa-lg"></i>
@@ -155,7 +146,7 @@
             </router-link>
             <router-link tag="li" v-bind:to="{ name: 'me-requests-page', params: { account_id: post.id } }">
                <i class="fa fa-paper-plane fa-lg"></i>
-               Mis Solicitudes
+               Solicitudes
                <ul class="drop-menu menu-1">
                   <router-link tag="li" v-bind:to="{ name: 'me-requests-add-page', params: { account_id: post.id } }">
                      <i class="fa fa-plus fa-lg"></i>
@@ -166,22 +157,6 @@
          </ul>
       </nav>
       <!-- //
-         <div class="btn-group">
-         	<router-link tag="button" type="button" class="p-2 btn btn-info btn-circle" style="width: 100%;" v-bind:to="{ name: 'Business-Requests-List' }">
-         		<i class="fa fa-file-contract fa-lg"></i>
-         		Solicitudes
-         	</router-link>
-         	<button type="button" class="p-2 btn btn-info btn-circle dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         		<span class="sr-only">Toggle Dropdown</span>
-         	</button>
-         	<div class="dropdown-menu btn-circle">
-         		<router-link tag="a" class="dropdown-item" v-bind:to="{ name: 'Business-Requests-Add' }">
-         			<i class="fa fa-plus fa-lg"></i>
-         			Nueva Solicitud
-         		</router-link>
-         	</div>
-         </div>
-         
          <router-link class="p-2 btn btn-info btn-circle" v-bind:to="{ name: 'Business-Contracts-List' }">
          	<i class="fa fa-gavel fa-lg"></i>
          	Contratos
@@ -191,7 +166,6 @@
          	<i class="fa fa-file-invoice fa-lg"></i>
          	Facturas
          </router-link>
-         
          -->
       <hr>
    </div>
@@ -980,6 +954,10 @@
 									   <i class="fa fa-edit"></i>
 									   <!-- // Modificar Datos -->
 									</router-link>
+									<router-link class="p-2 btn btn-sm btn-info btn-circle" v-bind:to="{ name: 'me-account-edit-page', params: { account_id: $route.params.account_id } }" type="button">
+									   <i class="fa fa-flag-checkered"></i>
+									   <!-- // Solicitar Interventoria Datos -->
+									</router-link>
 								 </h3>
 								 <br>
 								 <table class="table table-responsive">
@@ -1435,14 +1413,35 @@
 							  <thead>
 								 <tr>
 									<th scope="col">#</th>
-									<th scope="col">Direccion</th>
+									<th scope="col">Direcciones y Servicios</th>
+									<th scope="col">Estado</th>
 									<th scope="col"></th>
 								 </tr>
 							  </thead>
 							  <tbody>
 								 <tr v-for="item in posts">
 									<th scope="row">{{ $parent.zfill(item.id, 11) }}</th>
-									<td>{{ item.address_invoice }}</td>
+									<td>
+										<ul class="list-unstyled multilevels">
+											<li v-for="address in item.addresses">
+												<ul>
+													<li><b>{{ address.address }}</b>
+													</li>
+													<li v-for="service in address.services">
+														<ul>
+															<li>• {{ service.name }}</li>
+															<li>
+																<ul>
+																	<li><span>{{ service.repeat.name }}</span></li>
+																</ul>
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</td>
+									<td>{{ item.status.name }}</td>
 									<td>
 									   <router-link class="btn btn-sm btn-info" v-bind:to="{ name: 'me-requests-view-page', params: { account_id: $route.params.account_id, request_id: item.id } }">
 										  <i class="fa fa-eye"></i>
@@ -1467,21 +1466,29 @@
 				</div>
 				<div class="col-sm-9">
 					<div class="row">
-						<div class="col-md-12">
+						<div class="col-sm-12">
 						   <component-menu-meaccount></component-menu-meaccount>
 						</div>
 						<b-col sm="12">
-							<div style="margin-left:auto; margin-right:auto; width:95%;"><br/>
-								<div class="col-md-12">
-									<div class="panel panel-default">
-										<div class="panel-heading">
-											<h3 class="panel-title">Solicitud #: {{ post.client }}{{ $parent.zfill(post.id, 11) }}</h3>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-12">
+							<div style="margin-left:auto; margin-right:auto; width:95%;">
+								<div class="col-sm-12">
 									<div class="row">
-										<div class="col-md-8">
+										<div class="col-sm-5 col-sm-offset-6">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h3 class="panel-title"><b>Nro. Solicitud</b>: {{ post.client }}-{{ $parent.zfill(post.id, 11) }}</h3>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-5 col-sm-offset-6">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h3 class="panel-title"><b>Estado</b>: {{ post.status.name }}</h3>
+												</div>
+											</div>
+										</div>
+										
+										<div class="col-sm-8">
 											<div class="panel panel-default">
 												<div class="panel-heading">
 													<h3 class="panel-title">Contacto</h3>
@@ -1497,20 +1504,20 @@
 															{{ post.contact.surname }} {{ post.contact.second_surname }} 
 														</td>
 													</tr>
-													 <tr>
+													<tr>
 														<td class="col-xs-3">Telefono Fijo</td>
 														<td>{{ post.contact.phone }}</td>
 														<td class="col-xs-3">Telefono Movil</td>
 														<td>{{ post.contact.phone_mobile }}</td>
 													</tr>
-													 <tr>
+													<tr>
 														<td class="col-xs-3">Correo Electronico</td>
 														<td>{{ post.contact.mail }}</td>
 													</tr>
 												</table>
 											</div>
 										</div>
-										<div class="col-md-4">
+										<div class="col-sm-4">
 											<div class="panel panel-default">
 												<div class="panel-heading">
 													<h3 class="panel-title">Notas / Observaciones</h3>
@@ -1522,194 +1529,239 @@
 										</div>
 									</div>
 								</div> 
-								<div class="col-md-12">
+								<div class="col-sm-12">
 									<div class="row">
-										<div class="col-md-12">
+										<div class="col-sm-12">
 											<div class="panel panel-default">
-								 			  <div class="panel-heading">
-												<h3 class="panel-title">Direcciones y Servicios</h3>
-											  </div>
-													  
-												<ul class="list-unstyled text-left multilevels">
-													<li v-for="address in post.addresses">
-														<ul>
-															<li><b>{{ address.address }}</b>
-															</li>
-															<li v-for="service in address.services">
-																<ul>
-																	<li>• {{ service.name }}</li>
-																	<li>
-																		<ul>
-																			<li><span>{{ service.repeat.name }}</span></li>
-																		</ul>
-																	</li>
-																</ul>
-															</li>
-														</ul>
-													</li>
-												</ul>
-												
-											  <table class="table table-bordered">
-												<tr>
-													<td class="col-xs-3">Name of Traveller(s)</td>
-													<td><input class="form-control"></input></td>
-												</tr>
-												 <tr>
-													<td class="col-xs-3">Department</td>
-													<td><input class="form-control"></input></td>
-												</tr>
-												 <tr>
-													<td class="col-xs-3">Job No / Q Number</td>
-													<td><input class="form-control"></input></td>
-												</tr>
-												 <tr>
-													<td class="col-xs-3">Description of Trip</td>
-													<td><textarea class="form-control"></textarea></td>
-												</tr>
-											  </table>
+												<div class="panel-heading">
+													<h3 class="panel-title">Direcciones</h3>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-12" v-for="(address,i) in post.addresses">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h3 class="panel-title">{{ $parent.zfill((i+1), 2) }} - <b>{{ address.address }}</b></h3>
+												</div>
+												<table class="table table-bordered">
+													<tr v-for="(service, i) in address.services">
+														<td>{{ service.name }}</td>
+														<td>{{ service.repeat.name }}</td>
+													</tr>
+												</table>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div class="col-md-12">
+								<div class="col-sm-12">
 									<div class="row">
-										<div class="col-md-12">
+										<div class="col-sm-12">
 											<div class="panel panel-default">
-								 			  <div class="panel-heading">
-												<h3 class="panel-title">Pre-Approval</h3>
-											  </div>
-											  <table class="table table-bordered">
-												<tr>
-													<td class="col-xs-3">Name of Traveller(s)</td>
-													<td><input class="form-control"></input></td>
-												</tr>
-												 <tr>
-													<td class="col-xs-3">Department</td>
-													<td><input class="form-control"></input></td>
-												</tr>
-												 <tr>
-													<td class="col-xs-3">Job No / Q Number</td>
-													<td><input class="form-control"></input></td>
-												</tr>
-												 <tr>
-													<td class="col-xs-3">Description of Trip</td>
-													<td><textarea class="form-control"></textarea></td>
-												</tr>
-											  </table>
+												<div class="panel-heading">
+													<h3 class="panel-title">Propuestas</h3>
+												</div>
+												<div class="table-responsive">
+													<table class="table table-bordered" v-if="quotations.length == 0">
+														<tr>
+															<td>Estamos validando tu solicitud, pronto te enviaremos una propuesta por nosotros.</td>
+														</tr>
+													</table>
+													<table v-else="" class="table table-bordered">
+														<tr>
+															<td></td>
+															<td></td>
+															<td>Ver</td>
+															<td>ID</td>
+															<td>Estado</td>
+															<td>F. Creacion</td>
+															<td>Vigencia</td>
+															<td>¿No Te Gusta?</td>
+														</tr>
+														<tr v-if="quotations.length > 0" v-for="quotation in quotations">
+															<td>
+																<i v-if="quotation.accept != null" class="fa fa-check"></i>
+																<i v-else-if="quotation.accept === null && quotation.status.id === 0" class="fa fa-hourglass-half"></i>
+															</td>
+															<td>
+																<button v-if="quotation.accept === null" type="button" title="Aceptar Propuesta" class="btn btn-success btn-xs pull-right">
+																	<i class="fa fa-thumbs-up"></i>
+																</button>
+															</td>
+															<td>
+																<router-link v-bind:to="{ name: 'me-requests-quotations-view-page', params: { account_id: quotation.client, request_id: $route.params.request_id, quotation_id: quotation.id } }" tag="button" type="button" title="Ver Propuesta" class="btn btn-info btn-xs pull-right">
+																	<i class="fa fa-eye"></i>
+																</router-link>
+															</td>
+															<td class="text-center">{{ $parent.zfill(quotation.id, 11) }}</td>
+															<td>{{ quotation.status.name }}</td>
+															<td>{{ quotation.created }}</td>
+															<td>{{ quotation.validity }}</td>
+															<td>
+																<button v-if="quotation.accept === null" type="button" title="Solicitar Cambios" class="btn btn-warning btn-xs pull-right">
+																	<i class="fa fa-exchange"></i>
+																	Solicitar Cambios
+																</button>
+															</td>
+														</tr>
+														<tr v-else="">
+															<td colspan="8">Nuestro personal esta validando tu solicitud.</td>
+														</tr>
+													</table>
+												</div>
 											</div>
 										</div>
 									</div>
-							<div class="row">
-							  <div class="col-md-6">
-								<div class="panel panel-default">
-							  <div class="panel-heading">
-								<h3 class="panel-title">Car Hire</h3>
-							  </div>
-							  <table class="table table-bordered">
-								<tr>
-									<td class="col-xs-3">Company (if known)</td>
-									<td><input class="form-control"></input></td>
-											 <td class="col-xs-3">Car Type (if known)</td>
-									<td><input class="form-control"></input></td>
-								</tr>
-								 <tr>
-									<td class="col-xs-3">City/Town</td>
-									<td><input class="form-control"></input></td>
-											 <td class="col-xs-3">Country</td>
-									<td><input class="form-control"></input></td>
-								</tr>
-								 <tr>
-									<td class="col-xs-3">Drop Off Location</td>
-									<td><input class="form-control"></input></td>
-									<td class="col-xs-3">Date and Time</td>
-									<td><input class="form-control"></input></td>
-								</tr>
-								 <tr>
-									<td class="col-xs-3">Collection Location</td>
-									<td><input class="form-control"></input></td>
-									<td class="col-xs-3">Date and Time</td>
-									<td><input class="form-control"></input></td>
-								</tr>
-								   <tr>
-									<td class="col-xs-3">Estimated Costs</td>
-									<td colspan="3"><textarea class="form-control"></textarea></td>
-									
-								</tr>
-							  </table>
-							</div>
-							</div>
-							<div class="col-md-6"><button type="submit" class="btn btn-success btn-lg">Submit Travel & Accommodation Request</button></div>
 								</div>
-							</div>
+								<div class="col-sm-12">
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h3 class="panel-title">Actividad</h3>
+												</div>
+												<table class="table table-bordered">
+													<tr v-if="activity.length == 0">
+														<td colspan="8">Nuestro personal esta validando tu solicitud.</td>
+													</tr>
+													<tr v-else="" v-for="item in activity">
+														<td class="col-xs-3">{{ item.created }}</td>
+														<td>{{ item.comment }}</td>
+													</tr>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</b-col>
 						<b-col sm="12">
-							<div class="col-sm-12">
-								<b-card class="mt-3">
-								  <pre class="m-0">{{ post }}</pre>
-								</b-card>
-							</div>
+							<button type="button" class="btn btn-danger btn-md pull-right" title="Cancelar Solicitud">
+								<i class="fa fa-ban" aria-hidden="true"></i>
+							</button>
+							<button type="button" class="btn btn-warning btn-md pull-right" title="Suspender Solicitud">
+								<i class="fa fa-superpowers" aria-hidden="true"></i>
+							</button>
 						</b-col>
-							<!-- //
-								<div class="col-md-8">
-								   <div class="panel panel-default">
-									  <div class="panel-heading">PROPUESTAS ({{ post.quotations.length }})</div>
-									  <div class="panel-body">
-										  	<table class="table table-sm table-bordered">
-											  <thead>
-												 <tr>
-													<th scope="col">#</th>
-													<th scope="col">Estado</th>
-													<th scope="col">Creacion</th>
-													<th scope="col">Vigencia</th>
-													<th scope="col"></th>
-												 </tr>
-											  </thead>
-											  <tbody>
-												 <tr v-for="item in post.quotations">
-													<th scope="row">{{ $parent.zfill(item.id, 11) }}</th>
-													<td>{{ item.status.name }}</td>
-													<td>{{ item.create }}</td>
-													<td>{{ item.validity }}</td>
-													<td>
-													   <router-link class="btn btn-sm btn-info" v-bind:to="{ name: 'me-requests-add-page', params: { account_id: $route.params.account_id, request_id: $route.params.request_id, quotation_id: item.id, } }">
-														  <i class="fas fa-eye"></i>
-													   </router-link>
-													</td>
-												 </tr>
-											  </tbody>
-										   </table>
-									  </div>
-									  <div class="panel-footer">
-									  </div>
-								   </div>
-								</div>
-								<div class="col-md-4">
-								   <div class="panel panel-default">
-									  <div class="panel-heading">SERVICIOS ({{ post.services_requests.length }})</div>
-									  <div class="panel-body">
-										  <table class="table table-hover">
-											 <thead>
-												<tr>
-												   <th scope="col">#</th>
-												   <th scope="col">Nombre</th>
-												   <th scope="col">Repeticion</th>
-												</tr>
-											 </thead>
-											 <tbody>
-												<tr v-for="service in post.services_requests">
-												   <th scope="row"></th>
-												   <td>{{ service.service.name }}</td>
-												   <td>{{ service.repeat.name }}</td>
-												</tr>
-											 </tbody>
-										  </table>
-									  </div>
-									  <div class="panel-footer">
-									  </div>
-								   </div>
-								</div>
-								-->
+					 </div>
+				</div>
+			</div>
+		</div>
+   </div>
+</template>
+
+<template id="page-me-requests-quotations-view">
+   <div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<div class="row">
+						   <component-menu-meaccount></component-menu-meaccount>
+						</div>
+						<div class="col-sm-12">
+							<router-link v-bind:to="{ name: 'me-requests-view-page', params: { account_id: $route.params.account_id, request_id: $route.params.request_id } }" tag="button" type="button" title="Ver Propuesta" class="btn btn-secondary btn-md pull-left">
+								<i class="fa fa-chevron-left" aria-hidden="true"></i> 
+								Regresar
+							</router-link>
+							<button type="button" class="btn btn-danger btn-md pull-right">Cancelar</button> 
+							<button type="button" class="btn btn-warning btn-md pull-right">Solicitar Cambios</button> 
+							<button type="button" class="btn btn-success btn-md pull-right">Aprobar</button> 
+						</div>
+						<div class="col-sm-12">
+							<hr>
+						</div>
+						<div class="col-sm-12">
+							<div style="margin-left:auto; margin-right:auto; width:95%;">
+								<div class="col-sm-12">
+									<div class="row">
+										<div class="col-sm-4 col-sm-offset-1">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h3 class="panel-title text-left"><b>Nro. Solicitud</b></h3>
+												</div>
+												<div class="panel-body text-right">
+													{{ $parent.zfill(post.request, 11) }}
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-4">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h3 class="panel-title text-left"><b>Nro. Propuesta</b></h3>
+												</div>
+												<div class="panel-body text-right">
+													{{ post.request }}-{{ $parent.zfill(post.id, 11) }}
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-3">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h3 class="panel-title text-center"><b>Estado</b></h3>
+												</div>
+												<div class="panel-body text-center">
+													{{ post.status.name }}
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-4">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h3 class="panel-title"><b>F. Creacion</b></h3>
+												</div>
+												<div class="panel-body text-center">
+													{{ post.created }}
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-4">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h3 class="panel-title text-center"><b>Última Modificacion</b></h3>
+												</div>
+												<div class="panel-body text-center">
+													{{ post.updated }}
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-4">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h3 class="panel-title text-center"><b>Vigencia</b></h3>
+												</div>
+												<div class="panel-body text-center">
+													{{ post.validity }} Días
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-12">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h3 class="panel-title text-center"><b>Detalles</b></h3>
+												</div>
+											</div>
+										</div>
+										
+										<div class="col-sm-12" v-for="(address,i) in post.values">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h3 class="panel-title">{{ $parent.zfill((i+1), 2) }} - <b>{{ address.address }}</b></h3>
+												</div>
+												<table class="table table-bordered">
+													<tr v-for="(service, i) in address.services">
+														<td>{{ service.name }}</td>
+														<td>{{ service.repeat.name }}</td>
+														<td>$ {{ $parent.formatMoney(service.price) }} COP</td>
+													</tr>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div> 
+							</div>
+						</div>
 					 </div>
 				</div>
 			</div>
@@ -1985,6 +2037,117 @@
           h6{ font-size: 14px; }
 		  */
 </style>
+
+<template id="page-me-addresses-list">
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<component-sidebar-meaccount></component-sidebar-meaccount>
+				</div>
+				<div class="col-sm-9">
+					<br>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<b-row>
+								<b-col sm="3">
+									<button type="button" class="btn btn-success btn-md">
+										<i class="fa fa-plus"></i>
+										Nueva direccion
+									</button>
+								</b-col>
+							</b-row>
+						</div>
+						<div class="panel-body">
+							<b-row>
+								<b-col sm="3">
+									<b-form-group >
+										<b-input-group>
+											<b-form-input class="form-control" v-model="filter" placeholder="Busqueda rápida."></b-form-input>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="1">
+									<b-button class="btn btn-secondary" :disabled="!filter" @click="filter = ''">
+										<i class="fa fa-trash"></i>
+									</b-button>
+								</b-col>
+								<b-col sm="3">
+									<b-form-group>
+										<b-input-group>
+											<b-form-select v-model="sortBy" :options="sortOptions" class="form-control">
+												<option slot="first" :value="null">-- none --</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDesc" :disabled="!sortBy" slot="append" class="form-control">
+												<option :value="false">Asc</option> <option :value="true">Desc</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+								<b-col sm="2">
+									<b-form-group >
+										<b-input-group>
+											<b-form-select v-model="sortDirection" slot="append" class="form-control">
+											  <option value="asc">Asc</option> <option value="desc">Desc</option>
+											  <option value="last">Last</option>
+											</b-form-select>
+										</b-input-group>
+									</b-form-group>
+								</b-col>
+							</b-row>
+							
+							<b-container fluid class="table table-responsive">
+								<b-table show-empty 
+								stacked="sm" 
+								:items="posts" 
+								:fields="fields" 
+								:current-page="currentPage" 
+								:per-page="perPage" 
+								:filter="filter" 
+								:sort-by.sync="sortBy" 
+								:sort-desc.sync="sortDesc" 
+								:sort-direction="sortDirection" 
+								@filtered="onFiltered">
+									<template slot="represent_legal" slot-scope="row">
+										{{ row.value.first_name }} {{ row.value.second_name }} {{ row.value.surname }} {{ row.value.second_surname }} 
+									</template>
+									<template slot="contact" slot-scope="row">
+										{{ row.value.first_name }} {{ row.value.second_name }} {{ row.value.surname }} {{ row.value.second_surname }} 
+									</template>
+									<template slot="actions" slot-scope="row">
+									   <router-link class="btn btn-sm btn-info" v-bind:to="{ name: 'me-account-view-page', params: { account_id: row.item.id } }">
+										  <i class="fa fa-eye"></i>
+									   </router-link>
+									</template>
+								</b-table>
+							</b-container>
+						</div>
+						<div class="panel-footer">
+							<b-row>
+								<b-col sm="10">
+									<b-pagination 
+									v-model="currentPage" 
+									:total-rows="totalRows" 
+									:per-page="perPage" ></b-pagination>
+								</b-col>
+								<b-col sm="2">
+									<br><b-form-select v-model="perPage" :options="pageOptions" class="form-control"></b-form-select>
+								</b-col>
+							</b-row>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
+
 
 <template id="page-me-accounts-list">
 	<div>
@@ -3131,4 +3294,21 @@
    width: 70px;
    }
    }
-</style>
+</style><div class="body-page" id="app">
+	<banner-page></banner-page>
+	<div class="container">
+		<!-- // 
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2">
+				<br>
+				<b-alert show dismissible> Tu estado Actual: {{ status }}! </b-alert>
+			</div>
+		</div>
+		-->
+		<div class="row">
+			<div class="col-sm-12">
+				<router-view></router-view>
+			</div>
+		</div>
+	</div>
+</div>

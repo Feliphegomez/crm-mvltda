@@ -591,8 +591,6 @@ var PageMeRequets = Vue.extend({
 	mounted: function () {
 		var self = this;
 		console.log('Creando Requests List');
-
-
 		self.find();
 	},
 	methods: {
@@ -600,16 +598,18 @@ var PageMeRequets = Vue.extend({
 			var self = this;
 
 			FG.api('GET', '/requests/', {
-				params: {
-					filter: [
-						'client,eq,' + this.$route.params.account_id,
-					],
-					join: [
-						'requests',
-					],
-				}
+				filter: [
+					'client,eq,' + this.$route.params.account_id,
+				],
+				join: [
+					'status_requests',
+					'contacts',
+				],
 			}, function (r) {
-				self.posts = r;
+				r.forEach(function(request){
+					request.addresses = JSON.parse(request.addresses);
+					self.posts.push(request);
+				});
 			});
 		}
 	}
@@ -640,45 +640,16 @@ var PageMeRequetsView = Vue.extend({
 				},
 				request_notes: '',
 				addresses: [],
-			
-				/*
-				client: this.$route.params.account_id,
-				"contact": {
-					"id": 0,
-					"identification_type": 0,
-					"identification_number": "",
-					"first_name": "",
-					"second_name": "",
-					"surname": "",
-					"second_surname": "",
-					"phone": "",
-					"phone_mobile": "",
-					"mail": "",
-					"department": 0,
-					"city": 0,
-					"address": "",
-					"geo_address": ""
+				status: {
+					id: 0,
+					name: ''
 				},
-				"address_invoice": "",
-				"address_invoice_department": {
-					"id": 0,
-					"code": "",
-					"name": ""
-				},
-				"address_invoice_city": {
-					"id": 0,
-					"name": "",
-					"department": 0
-				},
-				"address_invoice_geo": "",
-				"request_notes": "",
-				"services_requests": [],
-				"quotations": [],
-				*/
 			},
 			geo_search: {
 				urlMapSearchNewIframe: ''
-			}
+			},
+			quotations: [],
+			activity: [],
 		};
 	},
 	create: function () {
@@ -698,42 +669,85 @@ var PageMeRequetsView = Vue.extend({
 				],
 				join: [
 					'contacts',
+					'status_requests',
 				],
 			}, function (r) {
 				self.post = r;
 				self.post.addresses = JSON.parse(r.addresses);
 
-				var searchData = {
-					'q': self.post.address_invoice,
-					'format': 'jsonv2',
-					'accept-language': 'es',
-					'country': 'co',
-					'polygon': 1,
-					'limit': 1,
-				};
-				aPiMap.get('/search', { params: searchData })
-				.then(function (r) {
-					console.log(r);
-					if(r.data.length > 0 && r.data[0].lon != undefined)
-						{
-							var temp = r.data[0];
-							var coord = { lon: temp.lon, lat: temp.lat };
-							var cord1 = coord.lat + ',' + coord.lon;
-							var cord2 = coord.lon + ',' + coord.lat;
-
-							var url = 'https://www.openstreetmap.org/export/embed.html?bbox=' + cord2 + ',' + cord2 + '&marker=' + cord1;
-
-							self.geo_search.urlMapSearchNewIframe = url;
-							
-						}
-					else
-						{
-							alert('La direccion no fue encontrada');
-						}
-				})
-				.catch(function (er) {
-					console.log(er);
+				FG.api('GET','/quotations', {
+					filter: [
+						'client,eq,' + self.$route.params.account_id,
+						'request,eq,' + self.$route.params.request_id,
+					],
+					join: [
+						'contacts',
+						'status_quotations',
+					]
+				}, function(r){
+					self.quotations = r;
 				});
+				
+				FG.api('GET','/requests_activity', {
+					filter: [
+						'request,eq,' + self.$route.params.request_id,
+					],
+					join: [
+					]
+				}, function(r){
+					r.forEach(function(act){
+						act.code = JSON.parse(act.code);
+						self.activity.push(act);
+					});
+				});
+			
+			});
+		},
+	}
+});
+
+var PageMeRequetsQuotationsView = Vue.extend({
+	template: '#page-me-requests-quotations-view',
+	data: function () {
+		return {
+			post: {
+				id: this.$route.params.quotation_id,
+				client: this.$route.params.account_id,
+				request: this.$route.params.request_id,
+				values: [],
+				status: {
+					"id": 0,
+					"name": "",
+				},
+				created: '',
+				updated: '',
+				validity: 0,
+				accept	: ''
+			},
+		};
+	},
+	create: function () {
+		var self = this;
+	},
+	mounted: function () {
+		var self = this;
+		console.log('Creando Requests Single');
+		self.find();
+	},
+	methods: {
+		find: function(){
+			var self = this;
+			FG.api('GET', '/quotations/' + self.post.id, {
+				filter: [
+					'client,eq,' + this.$route.params.account_id,
+					'request,eq,' + this.$route.params.request_id,
+				],
+				join: [
+					'status_quotations',
+				],
+			}, function (r) {
+				self.post = r;
+				self.post.values = JSON.parse(r.values);
 			});
 		},
 	}
@@ -1159,6 +1173,99 @@ var PageMeAuditorsList = Vue.extend({
 		},
 	}
 });
+
+var PageMeAddressesList = Vue.extend({
+	template: '#page-me-addresses-list',
+	data: function () {
+		return {
+			addresses: [],
+			posts: [],
+			fields: [
+				{
+					key: 'id',
+					label: 'ID',
+					sortable: true, 
+					sortDirection: 'desc'
+				},
+				{
+					key: 'address',
+					label: 'Direcciion',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'geo',
+					label: 'Ubicar',
+					class: 'text-center'
+				},
+				{
+					key: 'lat',
+					label: 'Latitud',
+					sortable: true,
+					class: 'text-center'
+				},
+				{
+					key: 'lon',
+					label: 'Longitud',
+					sortable: true,
+					class: 'text-center'
+				},
+				{ key: 'actions', label: 'Actions' }
+			],			
+			totalRows: 1,
+			currentPage: 1,
+			perPage: 10,
+			pageOptions: [5, 10, 15],
+			sortBy: null,
+			sortDesc: false,
+			sortDirection: 'asc',
+			filter: null,
+		}
+	},
+    computed: {
+		sortOptions() {
+			return this.fields.filter(f => f.sortable).map(f => {
+				return { text: f.label, value: f.key }
+			});
+      }
+	},
+	create: function () {
+		var self = this;
+
+	},
+	mounted: function () {
+		var self = this;
+		self.find();
+	},
+	methods: {
+		onFiltered(filteredItems) {
+			this.totalRows = filteredItems.length;
+			this.currentPage = 1;
+		},
+		find: function(){
+			var self = this;			
+			FG.api('GET','/users_clients', {
+				filter: [ 'user,eq,' + self.$root.$data.authResponse.userID, ],
+				join: [ 'clients', 'clients,clients_addresses', 'clients,clients_addresses,addresses' ]
+			}, function(r){
+				console.log(r);
+				r.forEach(function(elem){	
+					if(elem.client.clients_addresses.length > 0){
+						elem.client.clients_addresses.forEach(function(address){
+							if(self.addresses.indexOf(address.address.id) < 0){
+								self.addresses.push(address.address.id);
+								self.posts.push(address.address);
+							};
+						});
+					};
+				});
+				
+				self.totalRows = self.posts.length;
+			});
+		},
+	}
+});
+
 
 var PageMeAccountsList = Vue.extend({
 	template: '#page-me-accounts-list',
@@ -1785,7 +1892,7 @@ var PageMeRequestsList = Vue.extend({
 	template: '#page-me-requests-list',
 	data: function () {
 		return {
-			requests: [],
+			quotations: [],
 			posts: [],
 			fields: [
 				{
@@ -1808,6 +1915,11 @@ var PageMeRequestsList = Vue.extend({
 					key: 'contact',
 					label: 'Nombre (Contacto)',
 					sortable: false
+				},
+				{
+					key: 'status.name',
+					label: 'Estado',
+					sortable: true
 				},
 				{ key: 'actions', label: 'Actions' }
 			],			
@@ -1844,8 +1956,6 @@ var PageMeRequestsList = Vue.extend({
 		find: function(){
 			var self = this;
 			
-			
-			
 			FG.api('GET','/users_clients', {
 				filter: [
 					'user,eq,' + self.$root.$data.authResponse.userID,
@@ -1854,22 +1964,22 @@ var PageMeRequestsList = Vue.extend({
 					'clients',
 					'clients,requests',
 					'clients,requests,contacts',
-					'clients,requests,geo_departments',
-					'clients,requests,geo_citys',
+					'clients,requests,status_requests',
 				]
 			}, function(r){
-				
 				r.forEach(function(elem){
-					if(elem.client.requests.length > 0){ elem.client.requests.forEach(function(request){
-						if(self.requests.indexOf(request.id) < 0){
-							request.addresses = JSON.parse(request.addresses);
-							self.posts.push(request);
-							self.requests.push(request.id);
-						};
-					}); };
+					if(elem.client.requests.length > 0){
+						elem.client.requests.forEach(function(b){
+							if(Number(b.id) > 0){
+								b.addresses = JSON.parse(b.addresses);
+								self.posts.push(b);
+							}
+						});
+					};
 				});
-				
 			});
+			
+			
 		},
 	}
 });
@@ -2101,7 +2211,9 @@ var router = new VueRouter({
 		{ path: '/me/account/:account_id/requests', component: PageMeRequets, name: 'me-requests-page' },
 		{ path: '/me/account/:account_id/requests/add', component: PageMeRequetsAdd, name: 'me-requests-add-page' },
 		{ path: '/me/account/:account_id/requests/:request_id', component: PageMeRequetsView, name: 'me-requests-view-page' },
+		{ path: '/me/account/:account_id/requests/:request_id/quotations/:quotation_id', component: PageMeRequetsQuotationsView, name: 'me-requests-quotations-view-page' },
 		{ path: '/me/account/accounts/list', component: PageMeAccountsList, name: 'me-accounts-list-page' },
+		{ path: '/me/account/addresses/list', component: PageMeAddressesList, name: 'me-addresses-list-page' },
 		{ path: '/me/account/auditors/list', component: PageMeAuditorsList, name: 'me-auditors-list-page' },
 		{ path: '/me/account/contracts/list', component: PageMeContractsList, name: 'me-contracts-list-page' },
 		{ path: '/me/account/contacts/list', component: PageMeContactsList, name: 'me-contacts-list-page' },
