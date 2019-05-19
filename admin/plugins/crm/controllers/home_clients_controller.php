@@ -1266,6 +1266,408 @@ var PageMeAddressesList = Vue.extend({
 	}
 });
 
+var PageMeAddressesAdd = Vue.extend({
+	template: '#page-me-addresses-add',
+	data: function () {
+		return {
+			list_departments: [],
+			list_citys: [],
+			list_accounts: [],
+			repeats_services: [],
+			
+			geo_search: {
+				search: '',
+				street: '',
+				result: [],
+				iconResult: '',
+				textResult: '',
+			},
+			
+			form_add_address: {
+				"address": '',
+				"address_geo": '',
+				"department": {
+					"id": 0,
+					"code": "",
+					"name": ""
+				},
+				"city": {
+					"id": 0,
+					"name": ""
+				},
+				"lon": '',
+				"lat": '',
+				"category": '',
+				"type": '',
+				"importance": '',
+			},
+			form: {
+			  client: 0,
+			  addresses: []
+			},
+			show: true,
+			map: null,
+			currentMarker: null,
+			currentPolygon: null,
+			//vectors: null,
+			controls: null,
+			markers: null,
+			vectorLayer: null,
+			typeToggle: 'noneToggle',
+		}
+	},
+	create: function () {
+		var self = this;
+	},
+	mounted: function () {
+		var self = this;
+		console.log('Creando Requests Single');
+		self.loadLists();
+		self.find();
+		self.createMap();
+		//self.markerDemo();
+	},
+	methods: {
+		createMap: function(){
+			var self = this;
+			
+			self.map = new L.Map('map');                       
+				
+			L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+			maxZoom: 19
+			}).addTo(self.map);
+			self.map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
+
+			// Location to centre the map
+			var colombia = new L.LatLng(2.8894434,-73.783892); 
+			self.map.setView(colombia, 5);
+  
+			/*
+			self.currentMarker = new L.Marker(colombia);
+			self.map.addLayer(self.currentMarker);
+			*/
+		},
+		createMap2: function(){
+			var self = this;
+			
+			self.map = new OpenLayers.Map('map');
+			
+			var wms = new OpenLayers.Layer.WMS( "Mapa Global Principal",
+                    "http://vmap0.tiles.osgeo.org/wms/vmap0?", {
+						layers: 'basic'
+					});
+					
+                // allow testing of specific renderers via "?renderer=Canvas", etc
+                var renderer = OpenLayers.Util.getParameters(window.location.href).renderer;
+                renderer = (renderer) ? [renderer] : OpenLayers.Layer.Vector.prototype.renderers;
+
+                self.vectors = new OpenLayers.Layer.Vector("Vector Layer", {
+                    renderers: renderer
+                });
+				
+                self.map.addLayers([wms,self.vectors]);						   
+                							   
+                self.map.addControl(new OpenLayers.Control.LayerSwitcher());
+                self.map.addControl(new OpenLayers.Control.MousePosition());
+
+                self.controls = {
+                    point: new OpenLayers.Control.DrawFeature(self.vectors,
+                                OpenLayers.Handler.Point),
+                    line: new OpenLayers.Control.DrawFeature(self.vectors,
+                                OpenLayers.Handler.Path),
+                    polygon: new OpenLayers.Control.DrawFeature(self.vectors,
+                                OpenLayers.Handler.Polygon),
+                    drag: new OpenLayers.Control.DragFeature(self.vectors)
+                };
+
+                for(var key in self.controls) {
+                    self.map.addControl(self.controls[key]);
+                }
+
+                self.map.setCenter(new OpenLayers.LonLat(-73.783892,2.8894434), 5);
+                //document.getElementById('noneToggle').checked = true;
+				self.typeToggle = 'noneToggle';
+		},
+		markerDemo: function(){
+			var self = this;
+			// https://harrywood.co.uk/maps/examples/leaflet/3-polygons.view.html
+			 
+			// Location of the marker
+			var markerLocation = new L.LatLng(51.505, -0.09);
+			// New Center
+			self.map.setView(markerLocation, 13);
+			var marker = new L.Marker(markerLocation);
+			self.map.addLayer(marker);
+
+			// Add a circle...
+			var circleLocation = new L.LatLng(51.508, -0.11),
+			 circleOptions = {
+				 color: 'red', 
+				 fillColor: '#f03', 
+				 fillOpacity: 0.5
+			 };
+			 
+			var circle = new L.Circle(circleLocation, 500, circleOptions);
+			self.map.addLayer(circle);
+
+			// ...and a triangle
+			var p1 = new L.LatLng(51.509, -0.08),
+			 p2 = new L.LatLng(51.503, -0.06),
+			 p3 = new L.LatLng(51.51, -0.047),
+			 polygonPoints = [p1, p2, p3];
+
+			var polygon = new L.Polygon(polygonPoints);
+			self.map.addLayer(polygon);
+		},
+		toggleControl: function() {
+			var self = this;
+			for(key in self.controls) {
+				//var control = self.controls[key];
+				if(self.typeToggle == key) {
+					self.controls[key].activate();
+				} else {
+					self.controls[key].deactivate();
+				}
+			}
+		},
+		addAddress: function(evt){
+			var self = this;
+			
+			if(self.geo_search.result == true && self.form_add_address.address != '')
+				{			
+					temp = self.form_add_address;
+					self.form.addresses.push(temp);
+					alert('Se agrego correctamente la direccion, continua agregando más.');
+					
+					self.form_add_address = {
+						"address": '',
+						"address_geo": '',
+						"department": {
+							"id": 0,
+							"code": "",
+							"name": ""
+						},
+						"city": {
+							"id": 0,
+							"name": ""
+						},
+						"lon": '',
+						"lat": '',
+					};
+					self.geo_search = {
+						search: '',
+						result: false,
+						iconResult: '',
+						textResult: '',
+						urlMapSearchNewIframe: 'https://www.openstreetmap.org/export/embed.html?bbox=-4.2316872,16.0571269,-82.1243666,-66.8511907&marker=2.8894434,-73.783892'
+					};
+				}
+			else { alert('La direccion no es valida o esta incompleta.'); };
+		},
+		onSubmit(evt) {
+			var self = this;
+			evt.preventDefault()
+			// alert(JSON.stringify(this.form))
+			var formValues = this.form;
+			if(Number(formValues.client) > 0 && formValues.contact > 0 && formValues.addresses.length > 0)
+				{
+					var sendTemp = {};
+					sendTemp.client = Number(formValues.client);
+					sendTemp.contact = Number(formValues.contact);
+					sendTemp.addresses = JSON.stringify(formValues.addresses);
+					sendTemp.request_notes = formValues.request_notes;
+					
+					FG.api('POST', '/requests', sendTemp, function (response) {
+						console.log(response);
+						var request_id = response;
+						
+						router.push({
+							name: 'me-requests-view-page',
+							params: {
+								account_id: formValues.client,
+								request_id: response
+							}
+						});
+					});
+				}
+			else 
+				{
+					alert('Completa la solicitud antes de enviarla. :)');
+				}
+		},
+		onReset(evt) {
+			evt.preventDefault()
+			this.form.contact = 0;
+			this.form.request_notes = '';
+			this.form.addresses = [];
+			// Trick to reset/clear native browser form validation state
+			this.show = false
+			this.$nextTick(() => {
+			  this.show = true
+			})
+		},
+		createRequest: function(){
+			var self = this;
+			console.log('generando solicitud..');
+
+		},
+		departmentChangeToCity: function(){
+			var self = this;
+			FG.api('GET', '/geo_citys/', { order: [ 'name,asc', ], filter: [ 'department,eq,' + self.form_add_address.department.id, ], }, function (r) { self.list_citys = r; });
+		},
+		find: function(){
+			var self = this;
+			//$(function(){ $(".date").datepicker({ autoclose: true, todayHighlight: true }); });
+			
+		},
+		loadLists: function(){
+			var self = this;
+
+			FG.api('GET','/users_clients', {
+				filter: [ 'user,eq,' + self.$root.$data.authResponse.userID, ],
+				join: [ 'clients', 'clients,types_identifications', 'clients,contacts', ]
+			}, function(r){
+				r.forEach(function(elem){ if(elem.client.id > 0){
+					self.list_accounts.push(elem.client);
+				}; });
+			});
+			
+			FG.api('GET', '/geo_departments/', { order: [ 'name,asc', ], }, function (r) { self.list_departments = r; });
+
+			FG.api('GET', '/crew_clients/', { order: [ 'id,asc', ], join: [ 'contacts', ], filter: [ 'client,asc' + self.$route.params.account_id, ], }, function (r) { self.list_contacts = r; });
+
+			FG.api('GET', '/geo_citys/', { order: [ 'name,asc', ], }, function (r) { self.list_citys = r; });
+
+			FG.api('GET', '/repeats_services/', { order: [ 'name,asc', ], }, function (r) { self.repeats_services = r; });
+		},
+		addingAddress: function(place_id){
+			var self = this;
+			self.geo_search.result.forEach(function(elm){
+				if(elm.place_id === place_id){
+					console.log('Encontrado: ' + place_id);
+					console.log(elm);
+					
+					self.form.addresses.push({
+						place_id: elm.place_id,
+						display_name: elm.display_name,
+						lat: elm.lat,
+						lon: elm.lon,
+						place_rank: elm.place_rank,
+						completo: elm
+					});
+				}
+			});
+		},
+		delAddress: function(place_id){
+			var self = this;
+			// self.form.addresses.splice(place_id, self.form.addresses.length);
+			//delete self.form.addresses[place_id];
+			self.form.addresses.splice(place_id, 1);
+		},
+		address_search: function(){
+			var self = this;
+			self.geo_search.result = [];
+
+			FG.api('GET', '/geo_citys', {
+				'filter': [
+					'id,eq,' + self.form_add_address.city.id,
+					'department,eq,' + self.form_add_address.department.id,
+				],
+				'join': [
+					'geo_departments',
+				],
+			}, function (r2) {
+				if(r2.length > 0)
+				{
+					var temp = r2[0];
+					temp.name = temp.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+					temp.department.name = temp.department.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+					
+					aPiMap.get('/search', {
+						params: {
+							// 'q': self.geo_search.search.normalize('NFD').replace(/[\u0300-\u036f]/g, ""),
+							'q': self.geo_search.search.normalize('NFD').replace(/[\u0300-\u036f]/g, "") + ', ' + self.geo_search.street.normalize('NFD').replace(/[\u0300-\u036f]/g, "") + ', ' + temp.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "") + ', ' + temp.department.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "") + ', Colombia',
+							//'street': self.geo_search.street.normalize('NFD').replace(/[\u0300-\u036f]/g, ""),
+							//'city': temp.name.normalize('NFD').replace(/[\u0300-\u036f]/g, ""),
+							//'state': temp.department.name.normalize('NFD').replace(/[\u0300-\u036f]/g, ""),
+							//'country': 'colombia',
+							'format': 'jsonv2',
+							'accept-language': 'es',
+							'polygon': 1,
+							'limit': 25,
+							'addressdetails': 1,
+						} 
+					})
+					.then(function (r) {
+						if(r.data[0] != undefined)
+							{
+								var temp_address_search = r.data;
+								temp_address_search.forEach(function(elm){
+									self.geo_search.result.push(elm);
+								});
+							}
+						else
+							{
+								self.geo_search.result = false;
+								self.geo_search.textResult = 'La direccion no fue encontrada';
+								self.form_add_address.address = '';
+								self.geo_search.iconResult = '';
+							}
+					})
+					.catch(function (er) {
+						console.log(er);
+						//$.notify(error.response.data.code + error.response.data.message, "error");
+						
+						self.geo_search.result = false;
+						self.geo_search.textResult = 'La direccion no fue encontrada, ocurrio un error.';
+						self.form_add_address.address = '';
+						self.geo_search.iconResult = '';
+					});
+				}
+				else
+				{
+					self.geo_search.result = false;
+					self.geo_search.textResult = 'La direccion no fue encontrada';
+					self.form_add_address.address = '';
+					self.geo_search.iconResult = '';
+				}
+				
+			});
+
+		},
+		viewPoint: function(place_id){
+			var self = this;
+			if (self.currentMarker) {
+				self.map.removeLayer(self.currentMarker);
+			}
+			if (self.currentPolygon) {
+				self.map.removeLayer(self.currentPolygon);
+			}
+			
+			self.geo_search.result.forEach(function(elm){
+				if(elm.place_id === place_id){
+					//console.log(place_id);
+					console.log('Encontrado: ' + place_id);
+					
+					var poss = new L.LatLng(elm.lat, elm.lon);
+					self.map.setView(poss, elm.place_rank);
+					
+					self.currentMarker = new L.Marker(poss);
+					self.map.addLayer(self.currentMarker)
+					
+					var polygonPoints = [];
+					elm.polygonpoints.forEach(function(a){
+						// a[0] => Lon // a[1] => Lat console.log(JSON.stringify(a));
+						polygonPoints.push(new L.LatLng(a[1], a[0]))
+					});
+					self.currentPolygon = new L.Polygon(polygonPoints);
+					self.map.addLayer(self.currentPolygon);
+				}
+			});
+		}
+	}
+});
 
 var PageMeAccountsList = Vue.extend({
 	template: '#page-me-accounts-list',
@@ -2204,6 +2606,8 @@ var router = new VueRouter({
 		{ path: '/contact', component: PageContact, name: 'contact-page' },
 		{ path: '/me', component: PageMeHome, name: 'me-home-page' },
 		{ path: '/me/accounts', component: PageMeAccounts, name: 'me-accounts-page' },
+		{ path: '/me/account/addresses/add', component: PageMeAddressesAdd, name: 'me-addresses-add-page' },
+		
 		{ path: '/me/account/:account_id', component: PageMeAccountView, name: 'me-account-view-page' },
 		{ path: '/me/account/:account_id/edit', component: PageMeAccountUpdate, name: 'me-account-edit-page' },
 		{ path: '/me/account/:account_id/contacts', component: PageMeContacts, name: 'me-contacts-page' },
