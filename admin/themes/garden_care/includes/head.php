@@ -1,6 +1,4 @@
 <title>Home | CRM :: Monteverde LTDA</title>
-
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="" />
@@ -21,15 +19,10 @@
 <link href="<?php echo $website->get_assets_folder(); ?>css/nav.css" rel="stylesheet" type="text/css" media="all" />
 <link href="<?php echo $website->get_assets_folder(); ?>css/lsb.css" rel="stylesheet" type="text/css" media="all">
 
-
-
-
-
 <?php 
 	// Vue && GrapeJS && NotifyJS && BootBoxJS
 	$website->get_global('head'); 
 ?>
-
 <!-- // Primes Face 4 -->
 <!--
 	<link rel="stylesheet" href="<?php echo $website->get_assets_libs(); ?>primesui/4.1.14/themes/afterdark/theme.css" />

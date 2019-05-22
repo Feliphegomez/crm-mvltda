@@ -3,9 +3,7 @@
 <link rel="stylesheet" href="https://harrywood.co.uk/maps/examples/leaflet/leaflet/leaflet.css" /> 
 <!--[if lte IE 8]><link rel="stylesheet" href="https://harrywood.co.uk/maps/examples/leaflet/leaflet/leaflet.ie.css" /><![endif]-->
 <script src="https://harrywood.co.uk/maps/examples/leaflet/leaflet/leaflet.js"></script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.11/lib/OpenLayers.js"></script> 
-
 <style type="text/css">
 	#controls {
 		width: 512px;
@@ -23,6 +21,7 @@
 	}
 </style>
 <script src="https://ol2.dataservix.com/lib/OpenLayers.js"></script>
+
 <div class="body-page" id="app">
 	<banner-page></banner-page>
 	<div class="container">
@@ -35,6 +34,7 @@
 </div>
 <template id="component-sidebar-meaccount">
 	<div>
+		<hr>
 		<div class="custom-collapse">
 			<button class="collapse-toggle visible-xs-no btn btn-sm btn-primary " type="button" data-toggle="collapse" data-parent="custom-collapse" data-target="#side-menu-collapse">
 				<span class="fa fa-list"></span>
@@ -52,11 +52,27 @@
 			<div id="trigger-overlay">
 				<ul class="list-group collapse" id="side-menu-collapse">
 					<router-link v-bind:to="{ name: 'me-home-page' }" tag="li" class="list-group-item dropdown-toggle text-muted cursor-pointer">
-						<i class="fa fa-dashboard fa-1x"></i> Inicio
+						<i class="fa fa-home" aria-hidden="true"></i> 
+						Inicio
 					</router-link>
 					<router-link v-bind:to="{ name: 'me-accounts-page' }" tag="li" class="list-group-item dropdown-toggle text-muted cursor-pointer">
-						<i class="fa fa-dashboard fa-1x"></i> Mis Cuentas
+						<i class="fa fa-briefcase" aria-hidden="true"></i> 
+						Mis Cuentas 
+						<b-badge>{{ busineses.length }}</b-badge>
 					</router-link>
+					<router-link v-bind:to="{ name: 'me-addresses-list-page' }" tag="li" class="list-group-item dropdown-toggle text-muted cursor-pointer">
+						<i class="fa fa-map-marker" aria-hidden="true"></i> 
+						Mis Direcciones 
+						<b-badge>{{ addresses.length }}</b-badge>
+					</router-link>
+					<router-link v-bind:to="{ name: 'me-requests-list-page' }" tag="li" class="list-group-item dropdown-toggle text-muted cursor-pointer">
+						<i class="fa fa-cart-plus" aria-hidden="true"></i>
+						Mis Solicitudes 
+						<b-badge>{{ requests.length }}</b-badge>
+						<!-- // <b-badge>Agregar solicitud</b-badge> -->
+					</router-link>
+					
+					
 				</ul>
 			</div>
 			<b-list-group class="list-group collapse" id="side-menu-collapse-2">
@@ -64,20 +80,28 @@
 					<i class="fa fa-dashboard fa-1x"></i> 
 					Conteo 
 				</b-list-group-item>
+				
+				<!-- //
 				<b-list-group-item v-bind:to="{ name: 'me-accounts-list-page' }" class="cursor-pointer">
 					Cuentas 
 					<b-badge>{{ busineses.length }}</b-badge>
 				</b-list-group-item>
+				
 				<b-list-group-item v-bind:to="{ name: 'me-addresses-list-page' }" class="cursor-pointer">
 					Direcciones 
-					<b-badge>{{ busineses.length }}</b-badge>
+					<b-badge>{{ addresses.length }}</b-badge>
 				</b-list-group-item>
+				
+				<b-list-group-item v-bind:to="{ name: 'me-quotations-list-page' }">
+					Propuestas 
+					<b-badge>{{ quotations.length }}</b-badge>
+				</b-list-group-item>
+				-->
 				
 				<b-list-group-item v-bind:to="{ name: 'me-auditors-list-page' }">
 					Auditores 
 					<b-badge>{{ auditors.length }}</b-badge>
 				</b-list-group-item>
-				
 				<b-list-group-item v-bind:to="{ name: 'me-contracts-list-page' }">
 					Contratos 
 					<b-badge>{{ contracts.length }}</b-badge>
@@ -90,17 +114,9 @@
 					Facturas 
 					<b-badge>{{ invoices.length }}</b-badge>
 				</b-list-group-item>
-				<b-list-group-item v-bind:to="{ name: 'me-quotations-list-page' }">
-					Propuestas 
-					<b-badge>{{ quotations.length }}</b-badge>
-				</b-list-group-item>
 				<b-list-group-item v-bind:to="{ name: 'me-redicateds-list-page' }">
 					Radicados 
 					<b-badge>{{ redicateds.length }}</b-badge>
-				</b-list-group-item>
-				<b-list-group-item v-bind:to="{ name: 'me-requests-list-page' }">
-					Solicitudes 
-					<b-badge>{{ requests.length }}</b-badge>
 				</b-list-group-item>
 				<b-list-group-item v-bind:to="{ name: 'me-users-list-page' }">
 					Usuarios 
@@ -110,36 +126,9 @@
 					Usuarios Pdte de Aprobacion 
 					<b-badge>{{ users_pending.length }}</b-badge>
 				</b-list-group-item>
-				<!-- //
-				<b-list-group-item href="http://apple.com">
-					iPhone
-					<b-badge>5</b-badge>
-				</b-list-group-item>
-				<b-list-group-item>OnePlus 3T</b-list-group-item>
-				-->
 			</b-list-group>
 		</div>
 		<hr>
-		   <!-- //
-		   <ul class="list-group">
-				<li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
-			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Shares</strong></span> 125</li>
-			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Likes</strong></span> 13</li>
-			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Posts</strong></span> 37</li>
-			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Followers</strong></span> 78</li>
-		   </ul>
-		   <ul class="list-group">
-			  <li class="list-group-item text-muted" contenteditable="false">Profile</li>
-			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Joined</strong></span> 2.13.2014</li>
-			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Last seen</strong></span> Yesterday</li>
-			  <li class="list-group-item text-right"><span class="pull-left"><strong class="">Real name</strong></span> Joseph Doe</li>
-				<li class="list-group-item text-right"><span class="pull-left"><strong class="">Role: </strong></span> Pet Sitter</li>
-			</ul>
-			<div class="panel panel-default">
-				<div class="panel-heading">Insured / Bonded?</div>
-				<div class="panel-body"><i style="color:green" class="fa fa-check-square"></i> Yes, I am insured and bonded.</div>
-			</div>
-			-->
 	</div>
 </template>
 <style scope="component-sidebar-meaccount">
@@ -150,7 +139,6 @@
 		  }  
 	}
 </style>
-
 <template id="component-menu-meaccount">
    <div>
       <nav class="menu-meaccount">
@@ -181,17 +169,6 @@
             </router-link>
          </ul>
       </nav>
-      <!-- //
-         <router-link class="p-2 btn btn-info btn-circle" v-bind:to="{ name: 'Business-Contracts-List' }">
-         	<i class="fa fa-gavel fa-lg"></i>
-         	Contratos
-         </router-link>
-         
-         <router-link class="p-2 btn btn-info btn-circle" v-bind:to="{ name: 'Business-Invoices-List' }">
-         	<i class="fa fa-file-invoice fa-lg"></i>
-         	Facturas
-         </router-link>
-         -->
       <hr>
    </div>
 </template>
@@ -849,7 +826,7 @@
 						 <div class="row">
 							<div class="col-md-4">
 							   <div class="thumbnail">
-								  <img alt="300x200" src="http://lorempixel.com/600/200/people">
+								  <img alt="300x200" src="https://placekitten.com/640/200">
 								  <div class="caption">
 									 <h3>Rover</h3>
 									 <p>Cocker Spaniel who loves treats.</p>
@@ -859,7 +836,7 @@
 							</div>
 							<div class="col-md-4">
 							   <div class="thumbnail">
-								  <img alt="300x200" src="http://lorempixel.com/600/200/city">
+								  <img alt="300x200" src="https://placekitten.com/640/200">
 								  <div class="caption">
 									 <h3>Marmaduke</h3>
 									 <p>Is just another friendly dog.</p>
@@ -869,7 +846,7 @@
 							</div>
 							<div class="col-md-4">
 							   <div class="thumbnail">
-								  <img alt="300x200" src="http://lorempixel.com/600/200/sports">
+								  <img alt="300x200" src="https://placekitten.com/640/200">
 								  <div class="caption">
 									 <h3>Rocky</h3>
 									 <p>Loves catnip and naps. Not fond of children.</p>
@@ -975,14 +952,6 @@
 							  <div class="panel-heading">
 								 <h3 class=" text-center">
 									<b>{{ post.names }}</b>
-									<router-link class="p-2 btn btn-sm btn-info btn-circle" v-bind:to="{ name: 'me-account-edit-page', params: { account_id: $route.params.account_id } }" type="button">
-									   <i class="fa fa-edit"></i>
-									   <!-- // Modificar Datos -->
-									</router-link>
-									<router-link class="p-2 btn btn-sm btn-info btn-circle" v-bind:to="{ name: 'me-account-edit-page', params: { account_id: $route.params.account_id } }" type="button">
-									   <i class="fa fa-flag-checkered"></i>
-									   <!-- // Solicitar Interventoria Datos -->
-									</router-link>
 								 </h3>
 								 <br>
 								 <table class="table table-responsive">
@@ -1074,6 +1043,18 @@
 										  </tbody>
 									   </table>
 									   <a v-if="post.audit_enabled == 1" href="#" class="btn btn-primary">Mis Interventores</a>
+									</div>
+									<div class="col-sm-12">
+										<div class="pull-right">
+											<router-link class="p-2 btn btn-sm btn-info btn-circle" v-bind:to="{ name: 'me-account-edit-page', params: { account_id: $route.params.account_id } }" type="button">
+											   <i class="fa fa-edit"></i>
+											   <!-- // Modificar Datos -->
+											</router-link>
+											<router-link class="p-2 btn btn-sm btn-info btn-circle" v-bind:to="{ name: 'me-account-edit-page', params: { account_id: $route.params.account_id } }" type="button">
+											   <i class="fa fa-flag-checkered"></i>
+											   <!-- // Solicitar Interventoria Datos -->
+											</router-link>
+										</div>
 									</div>
 								 </div>
 							  </div>
@@ -1236,30 +1217,41 @@
 							<div class="row">
 								<div class="col-sm-6" v-for="item in posts" style="padding: 15px;">
 									<div class="panel panel-default">
-										<div class="panel-heading text-right">
-											<b class="title-contact">
-												{{ item.contact.first_name }} {{ item.contact.second_name }} {{ item.contact.surname }} {{ item.contact.second_surname }} 
-												<span class="icons glyphicon glyphicon-user" aria-hidden="true"></span>
+										<div class="panel-heading text-left">
+											<b class="title-contact">								
+												<h4>
+													<span class="icons glyphicon glyphicon-user" aria-hidden="true"></span>
+													<b>{{ item.contact.first_name }} {{ item.contact.second_name }} {{ item.contact.surname }} {{ item.contact.second_surname }} </b>
+												</h4>
 											 </b>
-											 <p>Relacion: {{ item.type_contact.name }} - {{ item.contact.identification_type.name }} - {{ item.contact.identification_number }}</p>
+											 <p>
+												<b-badge>{{ item.type_contact.name }}</b-badge>
+												{{ item.contact.identification_type.name }} - {{ item.contact.identification_number }}
+											 </p>
 										</div>
-										<div class="panel-body">
-											 <div>
-												<div class="col-md-6">
-												   <a href="#"><i class="glyphicon glyphicon-phone icons"></i> {{ item.contact.phone }}</a>
-												</div>
-												<div class="col-md-6 pull-right">
-												   <a href="#"><i class="glyphicon glyphicon-phone icons"></i> {{ item.contact.phone_mobile }}</a>
-												</div>
-											 </div>
-											 <div>
-												<div class="col-md-6">
-												   <a href="#"><i class="glyphicon glyphicon-envelope icons"></i> {{ item.contact.mail }}</a>
-												</div>
-												<div class="col-md-6 pull-right">
-												   <a href="#"><i class="glyphicon glyphicon-home icons"></i> {{ item.contact.department.name }}, {{ item.contact.city.name }}</a>
-												</div>
-											 </div>
+										<div class="panel-body table-responsive">
+											<table class="table table-hover">
+												<tr>
+													<td>
+														<i class="glyphicon glyphicon-phone icons"></i> {{ item.contact.phone }}
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<i class="glyphicon glyphicon-phone icons"></i> {{ item.contact.phone_mobile }}
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<i class="glyphicon glyphicon-envelope icons"></i> {{ item.contact.mail }}
+													</td>
+												</tr>
+												<tr>
+													<td>
+														<i class="glyphicon glyphicon-home icons"></i> {{ item.contact.department.name }}, {{ item.contact.city.name }}
+													</td>
+												</tr>
+											</table>
 										</div>
 									</div>
 								</div>
@@ -1566,7 +1558,10 @@
 										<div class="col-sm-12" v-for="(address,i) in post.addresses">
 											<div class="panel panel-default">
 												<div class="panel-heading">
-													<h3 class="panel-title">{{ $parent.zfill((i+1), 2) }} - <b>{{ address.address }}</b></h3>
+													<h3 class="panel-title">
+														<!-- // {{ $parent.zfill((i+1), 2) }} - -->
+														<b>{{ address.display_name }}</b>
+													</h3>
 												</div>
 												<table class="table table-bordered">
 													<tr v-for="(service, i) in address.services">
@@ -1673,7 +1668,6 @@
 		</div>
    </div>
 </template>
-
 <template id="page-me-requests-quotations-view">
    <div>
 		<div class="container">
@@ -1794,7 +1788,6 @@
 		</div>
    </div>
 </template>
-
 <template id="page-me-requests-add">
    <div>
 		<div class="container">
@@ -1807,20 +1800,19 @@
 						<b-col sm="12">
 						   <component-menu-meaccount></component-menu-meaccount>
 						</b-col>
-						<b-col sm="7">
-							<b-form @submit="onSubmit" @reset="onReset" v-if="show">
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h4 class="card-title">
-											<i class="glyphicon glyphicon-search text-gold"></i>
-											<b>INFORMACION BASICA</b>
-										</h4>
-									</div>
-									<div class="panel-body">
-										<b-row>
-											<b-col sm="12">
-												<b-form-group id="input-group-3" label="Contacto de la Solicitud" label-for="input-3">
-													<select class="form-control custom-select" v-model="form.contact" name="contact">
+						<b-col sm="4">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="card-title">
+										<i class="glyphicon glyphicon-search text-gold"></i>
+										<b>CONTACTO</b>
+									</h4>
+								</div>
+								<div class="panel-body">
+									<b-row>
+										<b-col sm="12">
+											<b-form-group id="input-group-3" label="Contacto de la Solicitud" label-for="input-3">
+												<select class="form-control custom-select" v-model="form.contact" name="contact">
 													<option value="0">Elije una opcion...</option>
 													<option v-bind:value="item.contact.id" v-for="item in list_contacts">
 														{{ item.contact.first_name }} 
@@ -1828,165 +1820,139 @@
 														{{ item.contact.surname }} 
 														{{ item.contact.second_surname }} 
 													</option>
-													</select>
-												</b-form-group>
-												
-												<b-form-group 
-												id="input-group-3" 
-												label="Notas de la Solicitud" 
-												label-for="input-3" 
-												description=".">
-													<b-form-textarea
-													  id="textarea"
-													  v-model="form.request_notes"
-													  placeholder="Ingrese aquí las notas adicionales, observaciones, etc.."
-													  rows="3"
-													  max-rows="6" 
-													></b-form-textarea>
-												</b-form-group>
-												
-											</b-col>
-										</b-row>
-									</div>
-									<div class="panel-footer ">
-										<div class="row">
-											<div class="col-sm-12">
-												<div class="pull-right">
-													<b-button type="submit" variant="primary"><i class="fa fa-paper-plane"></i>  Enviar Solicitud </b-button>
-													<b-button type="reset" variant="danger">Reset</b-button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</b-form>
-						</b-col>
-						<b-col sm="5">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="card-title">
-										<i class="glyphicon glyphicon-search text-gold"></i>
-										<b>SERVICIOS A SOLICITAR</b>
-									</h4>
-								</div>
-								<div class="panel-body">
-									<ul class="list-unstyled multilevels">
-										<li v-for="address in form.addresses">
-											<ul>
-												<li><b>{{ address.address }}</b>
-												</li>
-												<li v-for="service in address.services">
-													<ul>
-														<li>• {{ service.name }}</li>
-														<li>
-															<ul>
-																<li><span>{{ service.repeat.name }}</span></li>
-															</ul>
-														</li>
-													</ul>
-												</li>
-											</ul>
-										</li>
-									</ul>
+												</select>
+											</b-form-group>
+											
+											<b-form-group 
+											id="input-group-3" 
+											label="Notas de la Solicitud" 
+											label-for="input-3" 
+											description=".">
+												<b-form-textarea
+												  id="textarea"
+												  v-model="form.request_notes"
+												  placeholder="Ingrese aquí las notas adicionales, observaciones, etc.."
+												  rows="3"
+												  max-rows="6" 
+												></b-form-textarea>
+											</b-form-group>
+										</b-col>
+									</b-row>
 								</div>
 								<div class="panel-footer">
 								</div>
 							</div>
-							<!-- //
-							<div class="row">
-								<div class="col-sm-12">
-									<p>Toda la información, incluyendo precios, servicios, características, opciones, planos y disponibilidad están sujetos a cambio sin previo aviso. </p>
+						</b-col>
+						<b-col sm="8">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="card-title">
+										<i class="fa fa-map-signs" aria-hidden="true"></i>
+										<b>MIS DIRECCIONES</b>
+									</h4>
+								</div>
+								<div class="panel-body">
+									<table class="table table-bordered table-responsive">
+										<tr>
+											<th>Direccion</th>
+											<th></th>
+										</tr>
+										<tr v-for="(address, i) in addresses">
+											<td>{{ address.display_name }}</td>
+											<td>											
+												<button v-if="selected_addresses_ids.indexOf(address.id) < 0" class="btn btn-xs btn-success" @click="toogleAddress(i)">
+													<i class="fa fa-plus-circle" aria-hidden="true"></i>
+												</button>
+												 
+												<button v-else="" class="btn btn-xs btn-danger" @click="toogleAddress(i)">
+													<i class="fa fa-minus-circle" aria-hidden="true"></i>
+												</button>
+											</td>
+										</tr>
+									</table>
+									<hr>
+								</div>
+								<div class="panel-footer">
+									{{ selected_addresses_ids }}
 								</div>
 							</div>
-							-->
 						</b-col>
 						<b-col sm="12">
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h4 class="card-title">
-										<i class="glyphicon glyphicon-lock text-gold"></i>
-										<b>AGREGAR DIRECCIONES DETALLES</b>
+										<i class="fa fa-info" aria-hidden="true"></i>
+										<b>AGREGAR DETALLES</b>
 									</h4>
 								</div>
-								<div class="panel-body">
-									<b-row>
-										<b-col sm="6">
-											<div class="row">
-												<div class="col-md-12">
-													<p>¿Que servicios deseas para la direccion que estan ingresando?</p>											
-													<table class="table table-bordered">
-														<tr>
-														   <th></th>
-														   <th>Servicio</th>
-														   <th>Frecuencia</th>
-														   <th></th>
-														</tr>
-														<tr v-if="list_services.length > 0" v-for="(item, i) in list_services" >
-															<td>
-																<b-form-checkbox v-bind:value="item" v-model="form_add_address.services[item.id]" name="check-button" switch>
-																</b-form-checkbox>
-															</td>
-															<td>{{ item.name }} </td>
-															<td>
-																<div class="form-group" v-if="form_add_address.services[item.id]">
-																	<select class="form-control custom-select" v-model="form_add_address.services[item.id].repeat">
-																		<option v-bind:value="false">Elije una opcion...</option>
-																		<option v-bind:value="item2" v-for="item2 in repeats_services">{{ item2.name }}</option>
-																	</select>
-																</div>
-															</td>
-															<td>
-																<div class="form-group" v-if="form_add_address.services[item.id] && form_add_address.services[item.id].repeat != false && form_add_address.services[item.id].repeat != undefined && form_add_address.services[item.id].repeat.id != undefined">
-																	<i class="fa fa-check"></i>
-																</div>
-																<div class="form-group" v-else=""><i class="fa fa-ban"></i></div>
-															</td>
-														</tr>
-													</table>
-												</div>
-											</div>
-										</b-col>
-										<b-col sm="6">
-											<div class="row">
-												<div class="col-sm-6">
-													<div class="form-group">
-														<label class="control-label">Departamento</label>
-														<select class="form-control" @change="departmentChangeToCity" v-model="form_add_address.department">
-															<option v-bind:value="{ id: 0, code: '', name: '' }">Elije una opcion...</option>
-															<option v-bind:value="item" v-for="item in list_departments">{{ item.name }}</option>
-														</select>
-													</div>
-												</div>
-												<div class="col-sm-6">
-													<div class="form-group">
-														<label class="control-label">Ciudad</label>
-														<select class="form-control" v-model="form_add_address.city" @change="address_search">
-														<option v-bind:value="{ id: 0, name: '' }">Elije una opcion...</option>
-														<option v-for="item in list_citys" v-bind:value="item">{{ item.name }}</option>
-														</select>
-													</div>
-												</div>
-												<div class="col-sm-12">
-													<div class="form-group">
-														<label class="control-label">Direccion del Servicio</label>
-														<input class="form-control" type="text" v-model="geo_search.search" @change="address_search" />
-														<p>{{ geo_search.textResult }}</p>
-													</div>
-												</div>
-											</div>
-											<div class="col-md-12" style="border-radius: 15% !important;overflow: overlay;">
-												<iframe frameborder="0" style="height: 350px;width:100%;margin:0;padding:0;" v-bind:src="geo_search.urlMapSearchNewIframe"></iframe>
-											</div>
-											<div class="col-md-12">
-												<br>
-												 <div class="pull-right">
-													<button type="button" class="btn btn-warning btn-lg" @click="addAddress" id="btnToTop"><i class="fa fa-plus"></i> Agregar esta Direccion</button>
-												 </div>
-											</div>
-										</b-col>
-									</b-row>
+							</div>
+							<hr>
+							
+							<div class="panel panel-default" v-for="(address, i) in selected_addresses">
+								<div class="panel-heading">
+									<h4 class="card-title">										
+										<i class="fa fa-map-marker" aria-hidden="true"></i>
+										<b>{{ address.display_name }}</b>
+									</h4>
+									
+									<hr>
+									
+									<div class="row">
+										<div class="col-sm-4 pull-right">
+											<button class="btn btn-info" type="button" @click="addServiceInAddressModal(i)">
+												<i class="fa fa-plus-circle"></i>
+												Agregar / Quitar Servicios
+											</button>
+										</div>
+									</div>
+								</div>
+								
+								<div class="panel-body table-responsive">
+									<table class="table table-bordered table-holder">
+										<tr>
+											<th colspan="2">Servicio</th>
+											<th>Frecuencia</th>
+											<th></th>
+										</tr>
+										
+										<tr v-for="(service, a) in selected_addresses[i].services">
+											<td>{{ service.name }}</td>
+											<td>{{ service.type_medition.code }}</td>
+											<td>
+												<select class="form-control" v-model="service.repeat">
+													<option value=""></option>
+													<option v-for="(item, c) in repeats_services" v-bind:value="item">
+														{{ item.name }}
+													</option>
+												</select>
+											</td>
+											<td>
+												
+											</td>
+										</tr>
+									</table>
+									<hr>
+									
 								</div>
 								<div class="panel-footer">
+									{{ address.services_ids }}
+								</div>
+							</div>
+						</b-col>
+						
+						<b-col sm="12">
+							<div class="panel panel-default">
+								<div class="panel-footer">
+									<div class="row">
+										<div class="col-sm-12">
+											<div class="pull-right">
+												<b-form @submit="createRequest" @reset="onReset" v-if="show">
+													<b-button type="submit" variant="primary"><i class="fa fa-paper-plane"></i>  Enviar Solicitud </b-button>
+													<b-button type="reset" variant="danger">Reset</b-button>
+												</b-form>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</b-col>
@@ -1996,7 +1962,6 @@
 		</div>
    </div>
 </template>
-
 <template id="page-me-addresses-add">
    <div>
 		<div class="container">
@@ -2015,12 +1980,21 @@
 								<div class="panel-heading">
 									<h4 class="card-title">
 										<i class="glyphicon glyphicon-lock text-gold"></i>
-										<b>BUSCAR DIRECCION</b>
+										<b>BUSCAR</b>
 									</h4>
 								</div>
 								<div class="panel-body">
 									<div class="row">
-										<div class="col-sm-6">
+										<div class="col-sm-12">
+											<div class="form-group">
+												<label class="control-label">Cuenta</label>
+												<select class="form-control" v-model="form.client">
+													<option v-bind:value="0">Elije una opcion...</option>
+													<option v-bind:value="item.id" v-for="item in list_accounts">{{ item.names }}</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-sm-12">
 											<div class="form-group">
 												<label class="control-label">Departamento</label>
 												<select class="form-control" @change="departmentChangeToCity" v-model="form_add_address.department">
@@ -2029,7 +2003,7 @@
 												</select>
 											</div>
 										</div>
-										<div class="col-sm-6">
+										<div class="col-sm-12">
 											<div class="form-group">
 												<label class="control-label">Ciudad</label>
 												<select class="form-control" v-model="form_add_address.city" @change="address_search">
@@ -2040,16 +2014,9 @@
 										</div>
 										<div class="col-sm-12">
 											<div class="form-group">
-												<label class="control-label">Direccion del Servicio</label>
+												<label class="control-label">Nombre / Nomenclatura</label>
 												<input class="form-control" type="text" v-model="geo_search.street" @change="address_search" />
 												<p></p>
-											</div>
-										</div>
-										<div class="col-sm-12">
-											<div class="form-group">
-												<label class="control-label">Buscar por nombre</label>
-												<input class="form-control" type="text" v-model="geo_search.search" @change="address_search" />
-												<p>{{ geo_search.textResult }}</p>
 											</div>
 										</div>
 									</div>
@@ -2059,7 +2026,7 @@
 								<div class="panel-heading">
 									<h4 class="card-title">
 										<i class="glyphicon glyphicon-lock text-gold"></i>
-										<b>DIRECCIONES ENCONTRADAS</b>
+										<b>RESULTADOS</b>
 									</h4>
 								</div>
 								<div class="panel-body table-responsive">
@@ -2103,27 +2070,18 @@
 								</div>
 							</div>
 						</b-col>
-						<b-col sm="8">		
-							<div class="row">
-								<div class="col-sm-12">
-									<p>Toda la información, incluyendo precios, servicios, características, opciones, planos y disponibilidad están sujetos a cambio sin previo aviso. </p>
-								</div>
-							</div>
+						<b-col sm="8">
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h4 class="card-title">
 										<i class="glyphicon glyphicon-lock text-gold"></i>
-										<b></b>
+										<b>UBICACION</b>
 									</h4>
 								</div>
 								<div class="panel-body">
 									<b-row>
-										<b-col sm="12">
-											<div class="col-md-12" style="overflow: overlay;">
-												<div id="map" class="smallmap"></div>
-											</div>
-											<div class="col-md-12">
-											</div>
+										<b-col sm="12" style="overflow: overlay;">
+											<div id="map" class="smallmap" ></div>
 										</b-col>
 									</b-row>
 								</div>	
@@ -2140,6 +2098,8 @@
 								<div class="panel-body">
 									<table class="table table-bordered">
 										<tr v-for="(address, i) in form.addresses">
+											<td>{{ address.id }}</td>
+											<!-- // <td>{{ address.address_input }}</td> -->
 											<td>{{ address.display_name }}</td>
 											<td>
 												<button type="button" class="btn btn-danger btn-md" @click="delAddress(i)" id="btnToTop">
@@ -2152,16 +2112,9 @@
 								<div class="panel-footer">
 									<div class="row">
 										 <div class="col-sm-6 pull-left">
-											<div class="form-group">
-												<label class="control-label">Cuenta</label>
-												<select class="form-control" @change="departmentChangeToCity" v-model="form.client">
-													<option v-bind:value="0">Elije una opcion...</option>
-													<option v-bind:value="item.id" v-for="item in list_accounts">{{ item.names }}</option>
-												</select>
-											</div>
 										 </div>
 										 <div class="col-sm-6 pull-right">
-											<button type="button" class="btn btn-success btn-md" @click="addAddress" id="btnToTop"><i class="fa fa-plus"></i> Agregar estas Direcciones</button>
+											<button type="button" class="btn btn-success btn-md" @click="addAddresses" id="btnToTop"><i class="fa fa-plus"></i> Agregar estas Direcciones</button>
 										 </div>
 									</div>
 								</div>
@@ -2186,209 +2139,6 @@
 		font-weight:normal;
 	}
 </style>
-
-<template id="page-me-requests-add">
-   <div>
-		<div class="container">
-			<div class="row">
-				<b-col sm="3">
-					<component-sidebar-meaccount></component-sidebar-meaccount>
-				</b-col>
-				<b-col sm="9">
-					<b-row>
-						<b-col sm="12">
-						   <component-menu-meaccount></component-menu-meaccount>
-						</b-col>
-						<b-col sm="7">
-							<b-form @submit="onSubmit" @reset="onReset" v-if="show">
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h4 class="card-title">
-											<i class="glyphicon glyphicon-search text-gold"></i>
-											<b>INFORMACION BASICA</b>
-										</h4>
-									</div>
-									<div class="panel-body">
-										<b-row>
-											<b-col sm="12">
-												<b-form-group id="input-group-3" label="Contacto de la Solicitud" label-for="input-3">
-													<select class="form-control custom-select" v-model="form.contact" name="contact">
-													<option value="0">Elije una opcion...</option>
-													<option v-bind:value="item.contact.id" v-for="item in list_contacts">
-														{{ item.contact.first_name }} 
-														{{ item.contact.second_name }} 
-														{{ item.contact.surname }} 
-														{{ item.contact.second_surname }} 
-													</option>
-													</select>
-												</b-form-group>
-												
-												<b-form-group 
-												id="input-group-3" 
-												label="Notas de la Solicitud" 
-												label-for="input-3" 
-												description=".">
-													<b-form-textarea
-													  id="textarea"
-													  v-model="form.request_notes"
-													  placeholder="Ingrese aquí las notas adicionales, observaciones, etc.."
-													  rows="3"
-													  max-rows="6" 
-													></b-form-textarea>
-												</b-form-group>
-												
-											</b-col>
-										</b-row>
-									</div>
-									<div class="panel-footer ">
-										<div class="row">
-											<div class="col-sm-12">
-												<div class="pull-right">
-													<b-button type="submit" variant="primary"><i class="fa fa-paper-plane"></i>  Enviar Solicitud </b-button>
-													<b-button type="reset" variant="danger">Reset</b-button>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</b-form>
-						</b-col>
-						<b-col sm="5">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="card-title">
-										<i class="glyphicon glyphicon-search text-gold"></i>
-										<b>SERVICIOS A SOLICITAR</b>
-									</h4>
-								</div>
-								<div class="panel-body">
-									<ul class="list-unstyled multilevels">
-										<li v-for="address in form.addresses">
-											<ul>
-												<li><b>{{ address.address }}</b>
-												</li>
-												<li v-for="service in address.services">
-													<ul>
-														<li>• {{ service.name }}</li>
-														<li>
-															<ul>
-																<li><span>{{ service.repeat.name }}</span></li>
-															</ul>
-														</li>
-													</ul>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</div>
-								<div class="panel-footer">
-								</div>
-							</div>
-							<!-- //
-							<div class="row">
-								<div class="col-sm-12">
-									<p>Toda la información, incluyendo precios, servicios, características, opciones, planos y disponibilidad están sujetos a cambio sin previo aviso. </p>
-								</div>
-							</div>
-							-->
-						</b-col>
-						<b-col sm="12">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="card-title">
-										<i class="glyphicon glyphicon-lock text-gold"></i>
-										<b>AGREGAR DIRECCIONES DETALLES</b>
-									</h4>
-								</div>
-								<div class="panel-body">
-									<b-row>
-										<b-col sm="6">
-											<div class="row">
-												<div class="col-md-12">
-													<p>¿Que servicios deseas para la direccion que estan ingresando?</p>											
-													<table class="table table-bordered">
-														<tr>
-														   <th></th>
-														   <th>Servicio</th>
-														   <th>Frecuencia</th>
-														   <th></th>
-														</tr>
-														<tr v-if="list_services.length > 0" v-for="(item, i) in list_services" >
-															<td>
-																<b-form-checkbox v-bind:value="item" v-model="form_add_address.services[item.id]" name="check-button" switch>
-																</b-form-checkbox>
-															</td>
-															<td>{{ item.name }} </td>
-															<td>
-																<div class="form-group" v-if="form_add_address.services[item.id]">
-																	<select class="form-control custom-select" v-model="form_add_address.services[item.id].repeat">
-																		<option v-bind:value="false">Elije una opcion...</option>
-																		<option v-bind:value="item2" v-for="item2 in repeats_services">{{ item2.name }}</option>
-																	</select>
-																</div>
-															</td>
-															<td>
-																<div class="form-group" v-if="form_add_address.services[item.id] && form_add_address.services[item.id].repeat != false && form_add_address.services[item.id].repeat != undefined && form_add_address.services[item.id].repeat.id != undefined">
-																	<i class="fa fa-check"></i>
-																</div>
-																<div class="form-group" v-else=""><i class="fa fa-ban"></i></div>
-															</td>
-														</tr>
-													</table>
-												</div>
-											</div>
-										</b-col>
-										<b-col sm="6">
-											<div class="row">
-												<div class="col-sm-6">
-													<div class="form-group">
-														<label class="control-label">Departamento</label>
-														<select class="form-control" @change="departmentChangeToCity" v-model="form_add_address.department">
-															<option v-bind:value="{ id: 0, code: '', name: '' }">Elije una opcion...</option>
-															<option v-bind:value="item" v-for="item in list_departments">{{ item.name }}</option>
-														</select>
-													</div>
-												</div>
-												<div class="col-sm-6">
-													<div class="form-group">
-														<label class="control-label">Ciudad</label>
-														<select class="form-control" v-model="form_add_address.city" @change="address_search">
-														<option v-bind:value="{ id: 0, name: '' }">Elije una opcion...</option>
-														<option v-for="item in list_citys" v-bind:value="item">{{ item.name }}</option>
-														</select>
-													</div>
-												</div>
-												<div class="col-sm-12">
-													<div class="form-group">
-														<label class="control-label">Direccion del Servicio</label>
-														<input class="form-control" type="text" v-model="geo_search.search" @change="address_search" />
-														<p>{{ geo_search.textResult }}</p>
-													</div>
-												</div>
-											</div>
-											<div class="col-md-12" style="border-radius: 15% !important;overflow: overlay;">
-												<iframe frameborder="0" style="height: 350px;width:100%;margin:0;padding:0;" v-bind:src="geo_search.urlMapSearchNewIframe"></iframe>
-											</div>
-											<div class="col-md-12">
-												<br>
-												 <div class="pull-right">
-													<button type="button" class="btn btn-warning btn-lg" @click="addAddress" id="btnToTop"><i class="fa fa-plus"></i> Agregar esta Direccion</button>
-												 </div>
-											</div>
-										</b-col>
-									</b-row>
-								</div>
-								<div class="panel-footer">
-								</div>
-							</div>
-						</b-col>
-					 </b-row>
-				</b-col>
-			</div>
-		</div>
-   </div>
-</template>
-
 <template id="page-me-addresses-list">
 	<div>
 		<div class="container">
@@ -2398,99 +2148,127 @@
 				</div>
 				<div class="col-sm-9">
 					<br>
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							<b-row>
-								<b-col sm="3">
-									<router-link tag="button" type="button" v-bind:to="{ name: 'me-addresses-add-page' }" class="btn btn-success btn-md">
-										<i class="fa fa-plus fa-lg"></i>
-										Nueva dirección
-									</router-link>
-								</b-col>
-							</b-row>
+					<div class="row">
+						<div class="col-sm-5">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<b-row>
+										<b-col sm="3">
+											<router-link tag="button" type="button" v-bind:to="{ name: 'me-addresses-add-page' }" class="btn btn-success btn-md">
+												<i class="fa fa-plus fa-lg"></i>
+												Nueva dirección
+											</router-link>
+										</b-col>
+									</b-row>
+								</div>
+								<div class="panel-body">
+									<b-row>
+										<b-col sm="3">
+											<b-form-group >
+												<b-input-group>
+													<b-form-input class="form-control" v-model="filter" placeholder="Busqueda rápida."></b-form-input>
+												</b-input-group>
+											</b-form-group>
+										</b-col>
+										<b-col sm="1">
+											<b-button class="btn btn-secondary" :disabled="!filter" @click="filter = ''">
+												<i class="fa fa-trash"></i>
+											</b-button>
+										</b-col>
+										<b-col sm="3">
+											<b-form-group>
+												<b-input-group>
+													<b-form-select v-model="sortBy" :options="sortOptions" class="form-control">
+														<option slot="first" :value="null">-- none --</option>
+													</b-form-select>
+												</b-input-group>
+											</b-form-group>
+										</b-col>
+										<b-col sm="2">
+											<b-form-group >
+												<b-input-group>
+													<b-form-select v-model="sortDesc" :disabled="!sortBy" slot="append" class="form-control">
+														<option :value="false">Asc</option> <option :value="true">Desc</option>
+													</b-form-select>
+												</b-input-group>
+											</b-form-group>
+										</b-col>
+										<b-col sm="2">
+											<b-form-group >
+												<b-input-group>
+													<b-form-select v-model="sortDirection" slot="append" class="form-control">
+													  <option value="asc">Asc</option> <option value="desc">Desc</option>
+													  <option value="last">Last</option>
+													</b-form-select>
+												</b-input-group>
+											</b-form-group>
+										</b-col>
+									</b-row>
+									
+									<b-container fluid class="table table-responsive">
+										<b-table show-empty 
+										stacked="sm" 
+										:items="posts" 
+										:fields="fields" 
+										:current-page="currentPage" 
+										:per-page="perPage" 
+										:filter="filter" 
+										:sort-by.sync="sortBy" 
+										:sort-desc.sync="sortDesc" 
+										:sort-direction="sortDirection" 
+										@filtered="onFiltered">
+											<template slot="address" slot-scope="row">
+												<button class="btn btn-xs btn-info" @click="viewMarker(row.item.lat, row.item.lon,  row.item.place_rank)">
+													<i class="fa fa-eye"></i>
+												</button>
+												
+												<button class="btn btn-xs btn-danger" @click="removeAddress(row.item.id)">
+													<i class="fa fa-trash"></i>
+												</button>
+												<b-badge>
+													{{ row.item.client.names }}
+												</b-badge>
+												{{ row.value }} {{ row.item.display_name }}
+												<br>
+											</template>
+										</b-table>
+									</b-container>
+								</div>
+								<div class="panel-footer">
+									<b-row>
+										<b-col sm="8">
+											<b-pagination 
+											v-model="currentPage" 
+											:total-rows="totalRows" 
+											:per-page="perPage" ></b-pagination>
+										</b-col>
+										<b-col sm="4">
+											<br><b-form-select v-model="perPage" :options="pageOptions" class="form-control"></b-form-select>
+										</b-col>
+									</b-row>
+								</div>
+							</div>
 						</div>
-						<div class="panel-body">
-							<b-row>
-								<b-col sm="3">
-									<b-form-group >
-										<b-input-group>
-											<b-form-input class="form-control" v-model="filter" placeholder="Busqueda rápida."></b-form-input>
-										</b-input-group>
-									</b-form-group>
-								</b-col>
-								<b-col sm="1">
-									<b-button class="btn btn-secondary" :disabled="!filter" @click="filter = ''">
-										<i class="fa fa-trash"></i>
-									</b-button>
-								</b-col>
-								<b-col sm="3">
-									<b-form-group>
-										<b-input-group>
-											<b-form-select v-model="sortBy" :options="sortOptions" class="form-control">
-												<option slot="first" :value="null">-- none --</option>
-											</b-form-select>
-										</b-input-group>
-									</b-form-group>
-								</b-col>
-								<b-col sm="2">
-									<b-form-group >
-										<b-input-group>
-											<b-form-select v-model="sortDesc" :disabled="!sortBy" slot="append" class="form-control">
-												<option :value="false">Asc</option> <option :value="true">Desc</option>
-											</b-form-select>
-										</b-input-group>
-									</b-form-group>
-								</b-col>
-								<b-col sm="2">
-									<b-form-group >
-										<b-input-group>
-											<b-form-select v-model="sortDirection" slot="append" class="form-control">
-											  <option value="asc">Asc</option> <option value="desc">Desc</option>
-											  <option value="last">Last</option>
-											</b-form-select>
-										</b-input-group>
-									</b-form-group>
-								</b-col>
-							</b-row>
-							
-							<b-container fluid class="table table-responsive">
-								<b-table show-empty 
-								stacked="sm" 
-								:items="posts" 
-								:fields="fields" 
-								:current-page="currentPage" 
-								:per-page="perPage" 
-								:filter="filter" 
-								:sort-by.sync="sortBy" 
-								:sort-desc.sync="sortDesc" 
-								:sort-direction="sortDirection" 
-								@filtered="onFiltered">
-									<template slot="represent_legal" slot-scope="row">
-										{{ row.value.first_name }} {{ row.value.second_name }} {{ row.value.surname }} {{ row.value.second_surname }} 
-									</template>
-									<template slot="contact" slot-scope="row">
-										{{ row.value.first_name }} {{ row.value.second_name }} {{ row.value.surname }} {{ row.value.second_surname }} 
-									</template>
-									<template slot="actions" slot-scope="row">
-									   <router-link class="btn btn-sm btn-info" v-bind:to="{ name: 'me-account-view-page', params: { account_id: row.item.id } }">
-										  <i class="fa fa-eye"></i>
-									   </router-link>
-									</template>
-								</b-table>
-							</b-container>
-						</div>
-						<div class="panel-footer">
-							<b-row>
-								<b-col sm="10">
-									<b-pagination 
-									v-model="currentPage" 
-									:total-rows="totalRows" 
-									:per-page="perPage" ></b-pagination>
-								</b-col>
-								<b-col sm="2">
-									<br><b-form-select v-model="perPage" :options="pageOptions" class="form-control"></b-form-select>
-								</b-col>
-							</b-row>
+						<div class="col-sm-7">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="card-title">
+										<i class="glyphicon glyphicon-pushpin"></i>
+										<b>Mapa</b>
+									</h4>
+								</div>
+								<div class="panel-body">
+									<b-row>
+										<div class="col-md-12" style="overflow: overlay;">
+											<div id="map" class="smallmap"style="height: calc(50vh);"></div>
+										</div>
+									</b-row>
+								</div>
+								<div class="panel-footer">
+									<b-row>
+									</b-row>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -2498,7 +2276,6 @@
 		</div>
 	</div>
 </template>
-
 
 <template id="page-me-accounts-list">
 	<div>
@@ -2600,7 +2377,6 @@
 		</div>
 	</div>
 </template>
-
 <template id="page-me-auditors-list">
 	<div>
 		<div class="container">
@@ -3274,7 +3050,14 @@
 				<div class="col-sm-9">
 					<br>
 					<div class="panel panel-default">
-						<div class="panel-heading"></div>
+						<div class="panel-heading">
+							<!-- //
+							<button class="btn btn-success btn-md">
+								<i class="fa fa-plus"></i>
+								Nueva Solicitud
+							</button>
+							-->
+						</div>
 						<div class="panel-body">
 							<b-row>
 								<b-col sm="3">
@@ -3344,7 +3127,7 @@
 										<ul class="list-unstyled text-left multilevels">
 											<li v-for="address in row.item.addresses">
 												<ul>
-													<li><b>{{ address.address }}</b>
+													<li><b>{{ address.display_name }}</b>
 													</li>
 													<li v-for="service in address.services">
 														<ul>
@@ -3468,7 +3251,6 @@
 		</div>
 	</div>
 </template>
-
 <!-- // Estilos CSS -->
 <style scope="page-me-accounts">
    center>img{
@@ -3660,4 +3442,3 @@
 		</div>
 	</div>
 </div>
-

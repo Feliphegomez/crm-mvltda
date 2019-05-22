@@ -2,7 +2,8 @@
 <link href="<?php echo $website->get_assets_global(); ?>css/font-awesome.min.css" rel="stylesheet">
 <!-- js-->
 <script src="<?php echo $website->get_assets_global(); ?>js/jquery-1.11.1.min.js"></script>
-
+<!-- AnimateCSS -->
+<link href="<?php echo $website->get_assets_global(); ?>css/animate.css" rel="stylesheet">
 
 
 <!-- Load required Bootstrap and BootstrapVue CSS -->
@@ -10,17 +11,18 @@
 <!-- Style-CSS -->
 <link rel="stylesheet" href="<?php echo $website->get_assets_folder(); ?>css/style.css" type="text/css" media="all" />
 <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+
+
 <!-- Load polyfills to support older browsers -->
 <script src="//polyfill.io/v3/polyfill.min.js?features=es2015%2CMutationObserver" crossorigin="anonymous"></script>
 <!-- Load Vue followed by BootstrapVue -->
 <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/vue-router/2.2.1/vue-router.js"></script>
+
 <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
+<script src="<?php echo $website->get_assets_folder(); ?>js/bootstrap.js"></script>
+
 <!-- // <script src="<?php echo $website->get_assets_libs(); ?>bootstrap/v3/js/bootstrap.min.js"></script> -->
-
-
-
-
 
 <!-- // <script src="<?php echo $website->get_assets_global(); ?>js/jquery-1.11.1.min.js"></script> -->
 <!--<script src="<?php echo $website->get_assets_global(); ?>../libs/bootstrap/v3/js/bootstrap.min.js"></script> -->
@@ -59,8 +61,8 @@
 <!-- // <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.js"></script> -->
 
 
-
-
+<!--<script src="<?php echo $website->get_assets_global(); ?>js/jquery-1.11.1.min.js"></script>-->
+<!-- <script src="<?php echo $website->get_assets_folder(); ?>js/bootstrap.js"></script> -->
 
 <script src="<?php echo $website->get_assets_global(); ?>../libs/bootbox/bootbox.min.js"></script>
 <script src="<?php echo $website->get_assets_global(); ?>../libs/bootbox/bootbox.locales.min.js"></script>
